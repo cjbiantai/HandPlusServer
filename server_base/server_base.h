@@ -12,12 +12,12 @@
 #include "../common/consts.h"
 #include "base_data.h"
 
-class socketBase {
+class serverBase {
 protected:
-    socketBase(int);
-    virtual ~socketBase();
+    serverBase(int);
+    virtual ~serverBase();
     void Work();
-    virtual void HandleEvent(int) {}
+    virtual void HandleEvent(int,int) {}
     virtual void HandleClose(int) {}
     baseData bData;
 

@@ -4,7 +4,9 @@
 int main()
 {
     SETTRACELEVEL(log_mask_all);
-    hallServer server(16000);
+    
+    //printf("%d %d\n", c, (unsigned char)c);
+    hallServer server;
     while(true) {
         server.Work();
     }

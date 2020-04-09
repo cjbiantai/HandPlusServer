@@ -1,16 +1,16 @@
-#include "socket.h"
+#include "server_base.h"
 
-socketBase::socketBase(int port) {
+serverBase::serverBase(int port) {
     this -> port = port;
     Init();
     InitEpoll();
 }
 
-socketBase::~socketBase() {
+serverBase::~serverBase() {
     free(events);
 }
 
-void socketBase::Init() {
+void serverBase::Init() {
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if(server_fd == -1) {
         printf("create socket error, errno = %d, (%s)\n", errno, strerror(errno));
@@ -41,7 +41,7 @@ void socketBase::Init() {
     }
 }
 
-void socketBase::InitEpoll() {
+void serverBase::InitEpoll() {
     epoll_fd = epoll_create(1);
     ev.data.fd = server_fd;
     ev.events = EPOLLIN;
@@ -54,7 +54,7 @@ void socketBase::InitEpoll() {
     events = (struct epoll_event*)malloc(sizeof(ev)*MAX_EVENTS);
 }
 
-void socketBase::Work() {
+void serverBase::Work() {
     int nfds = epoll_wait(epoll_fd, events, MAX_EVENTS, 1);
     for(int i = 0; i < nfds; ++i) {
         int fd = events[i].data.fd;
@@ -89,9 +89,9 @@ void socketBase::Work() {
             }
         }else {
             int clientFd = events[i].data.fd,ret;
-            ret = recv(clientFd, bData.GetDataArray(), BUFF_SIZE, 0);
+            ret = recv(clientFd, bData.GetBuffArray(), BUFF_SIZE, 0);
             if(ret > 0) {
-                HandleEvent(clientFd);
+                HandleEvent(clientFd, ret);
             }else if(ret < 0) {
                 printf("recv data from fd: %d error, errno = %d, (%s)\n", clientFd, errno, strerror(errno));
                 if(errno != EINTR && errno != EWOULDBLOCK && errno != EAGAIN) {

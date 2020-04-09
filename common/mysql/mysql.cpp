@@ -1,7 +1,7 @@
 ﻿#include "mysql.h"
 
 
-int query_sql(char* sql)
+int query_sql(const char* sql)
 {
 	MYSQL my_connection; /*这是一个数据库连接*/
 	int res; /*执行sql語句后的返回标志*/
@@ -43,6 +43,15 @@ int query_sql(char* sql)
 				column = mysql_num_fields(res_ptr);
 				row = mysql_num_rows(res_ptr);
 			    mysql_close(&my_connection);
+                /*
+                for(int i = 0; i < row; ++i) {
+                    MYSQL_ROW res_row = mysql_fetch_row(res_ptr);
+                    for(int j = 0; j < column; ++j) {
+                        printf("%s ", res_row[j]);
+                    }
+                    printf("\n=======================\n");
+                }
+                */
 				if (row > 0) return QUERY_OK;
                 return QUERY_EMPTY;
 			}

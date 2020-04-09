@@ -1,49 +1,108 @@
 #include "hall_server.h"
 
-hallServer::hallServer(int port) : socketBase(port) {
+hallServer::hallServer() : serverBase(HALL_PORT) {
+}
+
+void hallServer::HandleEvent(int clientFd, int dataLength) {
+    if(c2SDataMap.find(clientFd) == c2SDataMap.end()) {
+        c2SDataMap[clientFd] = RecvDataManager();    
+    }
+    RecvDataManager &recvDataManager = c2SDataMap[clientFd];
+    GameProto::ClientMsg clientMsg;
+    for(int i = 0; i < dataLength; ++i) {
+        recvDataManager.PushByte((byte)bData.GetBuffCharAt(i));
+    }
+    while(true) {
+        int packageLength = recvDataManager.GetPackageLength();
+        if(packageLength == -1) {
+            break;
+        }
+        for(int i = 0; i < HEAD_LENGTH; ++i) {
+            recvDataManager.PopByte();
+        }
+        for(int i = 0; i < packageLength; ++i) {
+            bData.ChangeDataAt(recvDataManager.PopByte(), i);
+        }
+        int ret = clientMsg.ParseFromArray(bData.GetDataArray(), packageLength);
+        switch(clientMsg.type()) {
+            case 0 :
+                HandleLogIn(clientMsg, clientFd);
+                break;
+            case 1 :
+                HandleRegist(clientMsg, clientFd);
+                break;
+            case 2 :
+                HandleSelectRoom(clientMsg, clientFd);
+                break;
+        }
+        break;
+    }
+}
+void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
+    GameProto::ServerMsg serverMsg;
+    std::string sqlQuery = "select * from " + TABLENAME + " where name = '" + clientMsg.name() + "' and password = '" + clientMsg.password() + "';";
+    int ret = query_sql(sqlQuery.c_str());
+    switch(ret) {
+        case CONNECT_TO_SQL_ERROR:
+            serverMsg.set_code(1);
+            serverMsg.set_str("服务器出错了");
+            //连接数据库出错
+            break;
+        case QUERY_SQL_ERROR:
+            serverMsg.set_code(1);
+            serverMsg.set_str("服务器出错了");
+            //数据库语句出错
+            break;
+        case QUERY_EMPTY:
+            serverMsg.set_code(1);
+            serverMsg.set_str("账号或密码错误");
+            //用户账号或密码错误
+            break;
+        case QUERY_OK:
+            serverMsg.set_code(0);
+            serverMsg.set_str("登录成功");
+            //登录成功
+            break;
+    }
+    printf("%s\n", serverMsg.str().c_str());
+}
+
+void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
+    GameProto::ServerMsg serverMsg;
+    std::string sqlQuery = "insert into " + TABLENAME + " values('" + clientMsg.name() + "', '" + clientMsg.password() + "');";
+    printf("%s\n", sqlQuery.c_str());
+    int ret = query_sql(sqlQuery.c_str());   
+    switch(ret) {
+        case CONNECT_TO_SQL_ERROR :
+            serverMsg.set_code(1);
+            serverMsg.set_str("服务器出错了");
+            //连接数据库出错
+            break;
+        case QUERY_SQL_ERROR:
+            serverMsg.set_code(1);
+            serverMsg.set_str("用户已存在");
+            //用户已存在
+            break;
+        default:
+            serverMsg.set_code(0);
+            serverMsg.set_str("注册成功");
+            //注册成功
+    }
+    printf("%s\n", serverMsg.str().c_str());
+}
+
+void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) {
+    
+}
+std::string hallServer::GetServer() {
+    return SERVER_IP + std::to_string(SERVER_PORTS[0]);
+}
+void hallServer::HandleClose(int clientFd) {
+    printf("---->_<----!!!\n");
+
 }
 
 void hallServer::Work() {
-    int nfds = epoll_wait(epoll_fd, events, MAX_EVENTS, 1);
-    for(int i = 0; i < nfds; ++i) {
-        int fd = events[i].data.fd;
-        int fd_events = events[i].events;
-        if((fd_events & EPOLLERR) || (fd_events & EPOLLHUP) || (!(fd_events & EPOLLIN))) {
-            printf("fd:%d error \n", fd);
-            /*
-            clientDatas.clientData.erase(fd);
-            clientDatas.ClientFDSet.erase(fd);
-            clientDatas.ClientFrameData.erase(fd);
-            if(clientDatas.FdToUser.find(fd) != clientDatas.FdToUser.end())
-            {
-                clientDatas.Users.erase(clientDatas.FdToUser[fd]);
-                clientDatas.FdToUser.erase(fd);
-            }
-            */
-            close(fd);
-            continue;
-        }
-        if(events[i].data.fd == server_fd) {
-            int client_fd = accept(server_fd, (struct sockaddr*)NULL, NULL);
-            if(client_fd == -1) {
-                printf("accpet socket error: errno = %d, (%s)\n", errno,strerror(errno));
-            }
-            ev.data.fd = client_fd;
-            ev.events = EPOLLIN;
-            int epoll_ret = epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
-            if(epoll_ret == -1) {
-                printf("epoll_ctl error: errno = %d, (%s)\n", errno, strerror(errno));
-                continue;
-            }
-        }else {
-            int client_fd = events[i].data.fd;
-            /*
-            if(clientDatas.clientData.find(client_fd) == clientDatas.clientData.end()) {
-                clientDatas.clientData[client_fd] = RecvDataManager();
-            }
-            HandleRecvData(client_fd);
-            */
-        }
-    }
-
+    serverBase::Work();
 }
+
