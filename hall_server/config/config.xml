@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 大厅服务器配置文件 -->
+<process hall_port="17000">
+    <!-- 数据库表名 -->
+    <sql_table table_name = "USER" />
+    <!-- 房间配置 -->
+    <room room_number="10" room_max_user="5" />
+    <!-- 战斗服务器配置 -->
+    <service_array ip="117.78.9.170" port="17001"/>
+    <service_array ip="117.78.9.170" port="17002"/>
+    <service_array ip="117.78.9.170" port="17003"/>
+    <service_array ip="117.78.9.170" port="17004"/>
+    <service_array ip="117.78.9.170" port="17005"/>
+</process>
+

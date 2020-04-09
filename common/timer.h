@@ -1,10 +1,5 @@
 #pragma once
-
-#include <sys/time.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
+#include "heads.h"
 
 class Timer
 {

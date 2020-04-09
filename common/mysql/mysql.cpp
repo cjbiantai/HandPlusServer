@@ -57,7 +57,7 @@ int query_sql(const char* sql)
 			}
 			/*不要忘了关闭连接*/
 			mysql_close(&my_connection);
-            return QUERY_SQL_ERROR;
+            return QUERY_OK;
 		}
 	}
 	return CONNECT_TO_SQL_ERROR;

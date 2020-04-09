@@ -1,6 +1,13 @@
 #include "hall_server.h"
 
-hallServer::hallServer() : serverBase(HALL_PORT) {
+hallServer::hallServer(Config config) : serverBase(config.hallPort) {
+    for(int i = 0; i < config.serviceConfigs.size(); ++i) {
+        serviceConfig tmpServiceConfig = config.serviceConfigs[i];
+        serviceList.push_back(service_mgr(tmpServiceConfig.ip, tmpServiceConfig.port, i+1));
+    }
+    oneRoomMaxUsers = config.roomconfig.roomMaxUser;
+    maxRoomNumber = config.roomconfig.roomNumber;
+    tableName = config.tableName;
 }
 
 void hallServer::HandleEvent(int clientFd, int dataLength) {
@@ -8,10 +15,10 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
         c2SDataMap[clientFd] = RecvDataManager();    
     }
     RecvDataManager &recvDataManager = c2SDataMap[clientFd];
-    GameProto::ClientMsg clientMsg;
     for(int i = 0; i < dataLength; ++i) {
-        recvDataManager.PushByte((byte)bData.GetBuffCharAt(i));
+        recvDataManager.PushByte(bData.GetBuffCharAt(i));
     }
+    GameProto::ClientMsg clientMsg;
     while(true) {
         int packageLength = recvDataManager.GetPackageLength();
         if(packageLength == -1) {
@@ -40,8 +47,9 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
 }
 void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
-    std::string sqlQuery = "select * from " + TABLENAME + " where name = '" + clientMsg.name() + "' and password = '" + clientMsg.password() + "';";
+    std::string sqlQuery = "select * from " + tableName + " where name = '" + clientMsg.name() + "' and password = '" + clientMsg.password() + "';";
     int ret = query_sql(sqlQuery.c_str());
+    printf("%s\n", sqlQuery.c_str());
     switch(ret) {
         case CONNECT_TO_SQL_ERROR:
             serverMsg.set_code(1);
@@ -59,8 +67,16 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             //用户账号或密码错误
             break;
         case QUERY_OK:
+            if(onlineUsers.find(clientMsg.name()) != onlineUsers.end()) {
+                serverMsg.set_code(1);
+                serverMsg.set_str("用户已登录");
+                break;
+            }
             serverMsg.set_code(0);
             serverMsg.set_str("登录成功");
+            fdUserMap[clientFd] = clientMsg.name();
+            onlineUsers.insert(clientMsg.name());
+            onlineClients.insert(clientFd);
             //登录成功
             break;
     }
@@ -69,8 +85,7 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
 
 void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
-    std::string sqlQuery = "insert into " + TABLENAME + " values('" + clientMsg.name() + "', '" + clientMsg.password() + "');";
-    printf("%s\n", sqlQuery.c_str());
+    std::string sqlQuery = "insert into " + tableName + " values('" + clientMsg.name() + "', '" + clientMsg.password() + "');";
     int ret = query_sql(sqlQuery.c_str());   
     switch(ret) {
         case CONNECT_TO_SQL_ERROR :
@@ -94,12 +109,12 @@ void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
 void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) {
     
 }
-std::string hallServer::GetServer() {
-    return SERVER_IP + std::to_string(SERVER_PORTS[0]);
-}
-void hallServer::HandleClose(int clientFd) {
-    printf("---->_<----!!!\n");
 
+void hallServer::HandleClose(int clientFd) {
+    c2SDataMap.erase(clientFd);
+    onlineUsers.erase(fdUserMap[clientFd]);
+    fdUserMap.erase(clientFd);
+    onlineClients.erase(clientFd);
 }
 
 void hallServer::Work() {

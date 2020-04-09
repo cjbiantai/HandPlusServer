@@ -2,6 +2,7 @@
 
 RecvDataManager::RecvDataManager() {
     head = 0;
+    length = 0;
     size = BUFF_SIZE * 10;
 }
 
@@ -37,5 +38,12 @@ byte RecvDataManager::PopByte() {
     byte ret = buff[head];
     head = (head + 1) % size;
     return ret;
+}
+
+void RecvDataManager::Log() {
+    for(int i = 0; i < length; ++i) {
+        printf("%03d ", buff[(head + i) % size]);
+    }
+    puts("");
 }
 

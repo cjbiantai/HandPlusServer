@@ -18,6 +18,35 @@
 
 	};
 
+int32_t CLogEngine::get_string_datetime(const time_t time, char* pszBuffer)
+{
+	if (NULL == pszBuffer)
+	{
+		return fail;
+	}
+
+	struct tm stTime;
+	struct tm* pstTime = NULL;
+	pstTime = localtime_r(&time, &stTime);
+	if (NULL == pstTime)
+	{
+		return fail;
+	}
+	sprintf(pszBuffer, "%02d:%02d:%02d",
+			stTime.tm_hour, stTime.tm_min, stTime.tm_sec);
+
+	return success;
+}
+
+int CLogEngine::get_current_string_datetime(char* pszBuffer)
+{
+	time_t now;
+	time(&now);
+
+	return get_string_datetime((const time_t) now, pszBuffer);
+}
+
+
 
 bool CLogEngine::whether_do_log(int mask)
 {

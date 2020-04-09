@@ -6,33 +6,6 @@
 
 
 
-static int32_t get_string_datetime(const time_t time, char* pszBuffer)
-{
-	if (NULL == pszBuffer)
-	{
-		return fail;
-	}
-
-	struct tm stTime;
-	struct tm* pstTime = NULL;
-	pstTime = localtime_r(&time, &stTime);
-	if (NULL == pstTime)
-	{
-		return fail;
-	}
-	sprintf(pszBuffer, "%02d:%02d:%02d",
-			stTime.tm_hour, stTime.tm_min, stTime.tm_sec);
-
-	return success;
-}
-
-static int get_current_string_datetime(char* pszBuffer)
-{
-	time_t now;
-	time(&now);
-
-	return get_string_datetime((const time_t) now, pszBuffer);
-}
 
 #define STRNCPY(dst, src, length)					      \
 	do								      \
@@ -110,10 +83,10 @@ public:
 	bool whether_do_log(int mask);
 
 	void set_logmask(int mask);
-
+    int32_t get_string_datetime(const time_t, char*);
+    int get_current_string_datetime(char*);
 	int log(const char* pszFileName, int iMaxFileSize, int iMaxFileNumber, char* title, const char* pszLogInfo, va_list vaList);
 	int log(FILE* pstFile, char* pszFileName, int iMaxFileSize, int iMaxFileNumber, char* title, const char* pszLogInfo, va_list vaList);
-
 	int log(const char* pszFileName, int iMaxFileSize, int iMaxFileNumber, char* title, const char *szSrcFileName , const char* szFuncion, int iLine, const char* pszLogInfo, va_list vaList);
 
 	int log(const char* pszFileName, int iMaxFileSize, int iMaxFileNumber, char* title, const char* pszLogInfo, ...);
