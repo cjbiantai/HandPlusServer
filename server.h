@@ -1,6 +1,5 @@
 #include "common/all.h"
 #include "common/consts.h"
-#include "base_data.h"
 
 class Server {
 	private:
@@ -10,7 +9,7 @@ class Server {
 	    struct timeval start,end;
 	    ll tick;
 	public:
-	    Server(int,DataHandler);
+	    Server(int port,ServerSync sync);
 	    ~Server();
 	    bool Init();
 	    void WorkOnce();

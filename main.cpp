@@ -1,10 +1,9 @@
-#include "server_sync/server_sync.h"
-#include "server_sync/hall_sync.h"
-#include "server_sync/game_sync.h"
-#include "common/process_log.h"
+#include "server_sync.h"
+#include "hall_sync.h"
+#include "game_sync.h"
 #include "server.h"
 
-#define HALLSERVER
+#define GAMESERVER
 
 int main(){
 #ifdef HALLSERVER
@@ -13,8 +12,8 @@ int main(){
 #ifdef GAMESERVER
 	ServerSync sync=GameSync();
 #endif
-    SETTRACELEVEL(log_mask_all);
-    Server server(16000,sync);
+    //SETTRACELEVEL(log_mask_all);
+    Server server(233,sync);
     while(true) {
         server.WorkOnce();
     }
