@@ -1,14 +1,15 @@
 #pragma once
+#include"common/all.h"
 
 class Player{
 	private:
 		int len;
-		char buffer[SIZE<<1];		
+		char buffer[SIZE<<1];
 	public:
 		bool online;
 		int room_id,sockfd;
 		string name;
-		PlayInput input;
+		PlayerInput input;
 		
 		Player(int sockfd,string name,int room_id);
 		int SendMsg(ServerMsg smsg);

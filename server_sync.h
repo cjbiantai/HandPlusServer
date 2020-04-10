@@ -1,4 +1,6 @@
 #pragma once
+#include"common/all.h"
+
 class ServerSync{
 	public:
 		virtual void Broadcast()=0;

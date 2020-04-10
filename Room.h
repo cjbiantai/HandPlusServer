@@ -1,4 +1,5 @@
 #pragma once
+#include"common/all.h"
 #include"Player.h"
 
 class Room{

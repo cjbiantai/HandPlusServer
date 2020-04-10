@@ -14,6 +14,7 @@
 #include<string>
 #include<vector>
 #include<map>
+#include"game_proto.pb.h"
 #include"consts.h"
 
 using namespace std;

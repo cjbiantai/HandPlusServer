@@ -1,4 +1,5 @@
 #pragma once
+#include"common/all.h"
 #include"server_sync.h"
 #include"Player.h"
 #include"Room.h"
