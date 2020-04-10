@@ -4,7 +4,7 @@
     <!-- 数据库表名 -->
     <sql_table table_name = "USER" />
     <!-- 房间配置 -->
-    <room room_number="10" room_max_user="1" />
+    <room room_number="10" room_max_user="2" />
     <!-- 战斗服务器配置 -->
     <service service_pressure_limit = "10" />
     <service_array ip="117.78.9.170" port="17001"/>

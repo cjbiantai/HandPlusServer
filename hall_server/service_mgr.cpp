@@ -4,6 +4,7 @@ service_mgr::service_mgr(std::string serviceIp, int servicePort, int serviceId) 
     this -> serviceIp = serviceIp;
     this -> servicePort = servicePort;
     this -> serviceId = serviceId;
+    this -> servicePressure = 0;
 }
 
 bool service_mgr::operator<(const service_mgr service) {

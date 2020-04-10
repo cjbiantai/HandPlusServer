@@ -83,6 +83,7 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             onlineUsers.insert(clientMsg.name());
             onlineClients.insert(clientFd);
             hallClients.insert(clientFd);
+            BroadRoomInfo();
             //登录成功
             break;
     }
@@ -127,9 +128,12 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
         roominfo.userSet.insert(clientFd);
         serverMsg.set_code(0);
         serverMsg.set_str("进入房间成功");
+        //hallClients.erase(clientFd);
     }
+    printf("room: %s %d\n", clientMsg.name().c_str(), clientMsg.id());
+    printf("%d %s\n", serverMsg.code(), serverMsg.str().c_str());
     HandleSendDataToClient(serverMsg, clientFd); 
-    if(roominfo.userSet.size() == oneRoomMaxUsers) {
+    if(roominfo.userSet.size() == oneRoomMaxUsers && serverMsg.code() == 0) {
         int minPressure = servicePressureLimit - oneRoomMaxUsers, serviceId = -1;
         for(int i = 0; i < serviceList.size(); ++i) {
             if(serviceList[i].servicePressure <= minPressure) {
@@ -142,14 +146,17 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
             serverMsg.set_str("服务器满了 ！！！\n");
         }else {
             serverMsg.set_code(0);
+            roominfo.serviceId = serviceId;
             serverMsg.set_str(serviceList[serviceId].serviceIp + ":"+ std::to_string(serviceList[serviceId].servicePort));
+            serviceList[serviceId].servicePressure += oneRoomMaxUsers;
         }
+        printf("%d %s\n", serverMsg.code(), serverMsg.str().c_str());
+    
         for(auto fd : roominfo.userSet) {
             HandleSendDataToClient(serverMsg, fd);
         }
     }
-    printf("room: %s %d\n", clientMsg.name().c_str(), clientMsg.id());
-    printf("%d %s\n", serverMsg.code(), serverMsg.str().c_str());
+
     BroadRoomInfo();    
 }
 
@@ -186,9 +193,6 @@ void hallServer::HandleClose(int clientFd) {
     fdUserMap.erase(clientFd);
     onlineClients.erase(clientFd);
     hallClients.erase(clientFd);
-    for(int i = 0; i < roomNumber; ++i) {
-        roomMap[i+1].userSet.erase(clientFd);
-    }
 }
 
 void hallServer::Work() {
