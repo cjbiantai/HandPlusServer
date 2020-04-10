@@ -4,7 +4,7 @@
 class Player{
 	private:
 		int len;
-		char buffer[SIZE<<1];
+		char buffer[BUFFER_SIZE<<1];
 	public:
 		bool online;
 		int room_id,sockfd;

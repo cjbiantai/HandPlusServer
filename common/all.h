@@ -15,7 +15,13 @@
 #include<vector>
 #include<map>
 #include"game_proto.pb.h"
-#include"consts.h"
+
+#define HEAD_LENGTH 5
+#define BROADCAST_RATE 50
+#define BUFFER_SIZE 1024
 
 using namespace std;
 using namespace GameProto;
+typedef long long ll;
+
+

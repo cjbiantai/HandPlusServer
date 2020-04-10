@@ -1,5 +1,4 @@
 #include "common/all.h"
-#include "common/consts.h"
 
 class Server {
 	private:

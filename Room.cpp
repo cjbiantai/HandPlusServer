@@ -6,7 +6,7 @@ Room::Room(int max=2){
 }
 
 void Room::AddPlayer(Player player){
-	players.push_back(player);
+	players.push_back(&player);
 	if(players.size()==max){
 		state=1;
 		//SendToAll(smsg); smsg game start state
@@ -23,7 +23,7 @@ void Room::SendToAll(ServerMsg smsg){
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
 	for(int i=0;i<players.size();i++){
-		ret=send(players[i].sockfd,sendbuf,len+HEADER_LEN,0);
+		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 		if(ret<=0)
 			continue;
 	}
@@ -41,7 +41,7 @@ void Room::Broadcast(){
 		//	duplicate(players[i].input);
 		//players[i].updated=false;
 		input=frame.add_inputs();
-		*input=players[i].input;
+		*input=players[i]->input;
 	}
 	frames.push_back(frame);
 	SendToAll(frame);
@@ -50,7 +50,7 @@ void Room::Broadcast(){
 void Room::Retransmission(int sockfd,int beg_fid){
 	Player &player;
 	for(int i=0;i<players.size();i++)
-		if(players[i].sockfd==sockfd){
+		if(players[i]->sockfd==sockfd){
 			player=players[i];
 			break;
 		}

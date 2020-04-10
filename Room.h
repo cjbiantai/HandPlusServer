@@ -5,7 +5,7 @@
 class Room{
 	private:
 		static char sendbuf[BUFFER_SIZE];
-		vector<Player&> players;
+		vector<Player*> players;
 		vector<ServerMsg> frames;
 	public:
 		int max,state;
