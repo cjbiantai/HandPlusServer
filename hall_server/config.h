@@ -30,7 +30,7 @@ public:
 	char m_szTmp[2048];
 
 public:
-    int hallPort;
+    int hallPort,servicePressureLimit;
     std::string tableName;
     roomConfig roomconfig;
     std::vector<serviceConfig> serviceConfigs;

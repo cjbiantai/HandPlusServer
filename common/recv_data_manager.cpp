@@ -1,17 +1,17 @@
-#include "RecvDataManager.h"
+#include "recv_data_manager.h"
 
-RecvDataManager::RecvDataManager() {
+recvDataManager::recvDataManager() {
     head = 0;
     length = 0;
     size = BUFF_SIZE * 10;
 }
 
 
-int RecvDataManager::EmptySize() {
+int recvDataManager::EmptySize() {
     return size - length;
 }
 
-int RecvDataManager::GetPackageLength() {
+int recvDataManager::GetPackageLength() {
     if(EmptySize() < HEAD_LENGTH) {
         return -1;
     }
@@ -21,7 +21,7 @@ int RecvDataManager::GetPackageLength() {
     }
     return ret;
 }
-int RecvDataManager::PushByte(byte data) {
+int recvDataManager::PushByte(byte data) {
     if(EmptySize() == 0) {
         return -1;
     }
@@ -30,7 +30,7 @@ int RecvDataManager::PushByte(byte data) {
     return 0;
 }
 
-byte RecvDataManager::PopByte() {
+byte recvDataManager::PopByte() {
     if(length == 0) {
         return -1;
     }
@@ -40,7 +40,7 @@ byte RecvDataManager::PopByte() {
     return ret;
 }
 
-void RecvDataManager::Log() {
+void recvDataManager::Log() {
     for(int i = 0; i < length; ++i) {
         printf("%03d ", buff[(head + i) % size]);
     }

@@ -23,7 +23,12 @@ message PlayerInput{
 	bool grasp=3;
 	bool attach=4;
 }
-
+//房间信息
+message RoomInfo{
+	int32 id=1;
+	int32 maxUsers=2;
+	repeated string members=3;
+}
 //客户端数据包
 //登录：type=0,name,password
 //注册：type=1,name,password
@@ -44,10 +49,12 @@ message ClientMsg{
 //进房间成功：code=0,fid=房间人数
 //登录，注册，进房间失败：code=1,str
 //同步：code=2,fid,inputs,(states?)
+//更新房间信息: code=3,roomInfos
 message ServerMsg{
 	int32 code=1;
 	int32 fid=2;
 	string str=3;
 	repeated PlayerInput inputs=4;
 	repeated PlayerState states=5;
+	repeated RoomInfo roomInfos=6;
 }

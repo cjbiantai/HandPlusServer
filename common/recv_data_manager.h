@@ -2,11 +2,11 @@
 #include "consts.h"
 #include "heads.h"
 
-class RecvDataManager
+class recvDataManager
 {
 public:
-    RecvDataManager();
-    ~RecvDataManager(){}
+    recvDataManager();
+    ~recvDataManager(){}
     int EmptySize();
     int GetPackageLength();
     int PushByte(byte);

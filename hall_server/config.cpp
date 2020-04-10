@@ -96,6 +96,9 @@ bool Config::LoadConfig(const char* pszFileName)
     ParseIntegerValue(childNode, "room_number", roomconfig.roomNumber, -1);
     ParseIntegerValue(childNode, "room_max_user", roomconfig.roomMaxUser, -1);
 
+    childNode = node->first_node("service");
+    ParseIntegerValue(childNode, "service_pressure_limit", servicePressureLimit, -1);
+
 
     //下面是数组的示例
     childNode = node->first_node("service_array");

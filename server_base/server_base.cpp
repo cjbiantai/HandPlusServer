@@ -109,3 +109,12 @@ void serverBase::Work() {
         }
     }
 }
+
+void serverBase::SendDataToClient(int clientFd, int length) {
+    int ret = send(clientFd, bData.GetBuffArray(), length, 0);
+    if(ret == -1) {
+        printf("send to client error: clientFd = %d, errno = %d, (%s)\n", clientFd, errno, strerror(errno));
+        HandleClose(clientFd);
+        close(clientFd);
+    }
+}

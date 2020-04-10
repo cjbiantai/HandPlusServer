@@ -6,15 +6,20 @@ hallServer::hallServer(Config config) : serverBase(config.hallPort) {
         serviceList.push_back(service_mgr(tmpServiceConfig.ip, tmpServiceConfig.port, i+1));
     }
     oneRoomMaxUsers = config.roomconfig.roomMaxUser;
-    maxRoomNumber = config.roomconfig.roomNumber;
+    roomNumber = config.roomconfig.roomNumber;
+    for(int i = 0; i < roomNumber; ++i) {
+        roomMap[i+1] = roomInfo();
+        roomMap[i+1].roomId = i + 1;
+    }
     tableName = config.tableName;
+    servicePressureLimit = config.servicePressureLimit;
 }
 
 void hallServer::HandleEvent(int clientFd, int dataLength) {
     if(c2SDataMap.find(clientFd) == c2SDataMap.end()) {
-        c2SDataMap[clientFd] = RecvDataManager();    
+        c2SDataMap[clientFd] = recvDataManager();    
     }
-    RecvDataManager &recvDataManager = c2SDataMap[clientFd];
+    recvDataManager &recvDataManager = c2SDataMap[clientFd];
     for(int i = 0; i < dataLength; ++i) {
         recvDataManager.PushByte(bData.GetBuffCharAt(i));
     }
@@ -77,10 +82,12 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             fdUserMap[clientFd] = clientMsg.name();
             onlineUsers.insert(clientMsg.name());
             onlineClients.insert(clientFd);
+            hallClients.insert(clientFd);
             //登录成功
             break;
     }
     printf("%s\n", serverMsg.str().c_str());
+    HandleSendDataToClient(serverMsg, clientFd);
 }
 
 void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
@@ -104,10 +111,73 @@ void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
             //注册成功
     }
     printf("%s\n", serverMsg.str().c_str());
+    HandleSendDataToClient(serverMsg, clientFd);
 }
 
 void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) {
-    
+    GameProto::ServerMsg serverMsg;
+    roomInfo &roominfo = roomMap[clientMsg.id()];
+    if(onlineUsers.find(clientMsg.name()) == onlineUsers.end()) {
+        serverMsg.set_code(1);
+        serverMsg.set_str("请先登录");
+    }else  if(roominfo.userSet.size() == oneRoomMaxUsers) {
+        serverMsg.set_code(1);
+        serverMsg.set_str("房间人数已满");
+    }else {
+        roominfo.userSet.insert(clientFd);
+        serverMsg.set_code(0);
+        serverMsg.set_str("进入房间成功");
+    }
+    HandleSendDataToClient(serverMsg, clientFd); 
+    if(roominfo.userSet.size() == oneRoomMaxUsers) {
+        int minPressure = servicePressureLimit - oneRoomMaxUsers, serviceId = -1;
+        for(int i = 0; i < serviceList.size(); ++i) {
+            if(serviceList[i].servicePressure <= minPressure) {
+                serviceId = i;
+                minPressure = serviceList[i].servicePressure;
+            }
+        }
+        if(serviceId == -1) {
+            serverMsg.set_code(1);
+            serverMsg.set_str("服务器满了 ！！！\n");
+        }else {
+            serverMsg.set_code(0);
+            serverMsg.set_str(serviceList[serviceId].serviceIp + ":"+ std::to_string(serviceList[serviceId].servicePort));
+        }
+        for(auto fd : roominfo.userSet) {
+            HandleSendDataToClient(serverMsg, fd);
+        }
+    }
+    printf("room: %s %d\n", clientMsg.name().c_str(), clientMsg.id());
+    printf("%d %s\n", serverMsg.code(), serverMsg.str().c_str());
+    BroadRoomInfo();    
+}
+
+void hallServer::BroadRoomInfo() {
+    GameProto::ServerMsg serverMsg;
+    serverMsg.set_code(3);
+    GameProto::RoomInfo* roominfo;
+    for(int i = 0; i < roomNumber; ++i) {
+        roominfo = serverMsg.add_roominfos();
+        roominfo -> set_id(i+1);
+        roominfo -> set_maxusers(oneRoomMaxUsers);
+        for(auto fd : roomMap[i+1].userSet) {
+            roominfo -> add_members(fdUserMap[fd]);
+        }
+    }
+    for(auto fd : hallClients) {
+        HandleSendDataToClient(serverMsg, fd);
+    }
+}
+
+void hallServer::HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd) {
+    if(!serverMsg.SerializeToArray(bData.GetBuffArray() + HEAD_LENGTH, BUFF_SIZE)) {
+        return ;
+    }
+    for(int i = 0; i < HEAD_LENGTH; ++i) {
+        bData.ChangeBuffAt(serverMsg.ByteSize() >> ((HEAD_LENGTH - i -1) * 8), i);
+    }
+    SendDataToClient(clientFd, HEAD_LENGTH + serverMsg.ByteSize());
 }
 
 void hallServer::HandleClose(int clientFd) {
@@ -115,6 +185,10 @@ void hallServer::HandleClose(int clientFd) {
     onlineUsers.erase(fdUserMap[clientFd]);
     fdUserMap.erase(clientFd);
     onlineClients.erase(clientFd);
+    hallClients.erase(clientFd);
+    for(int i = 0; i < roomNumber; ++i) {
+        roomMap[i+1].userSet.erase(clientFd);
+    }
 }
 
 void hallServer::Work() {
