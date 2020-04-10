@@ -16,7 +16,7 @@ int main(){
     SETTRACELEVEL(log_mask_all);
     Server server(16000,sync);
     while(true) {
-        server.Work();
+        server.WorkOnce();
     }
     return 0;
 }
