@@ -6,6 +6,6 @@ class GameSync:public ServerSync {
 		char sendbuf[BUFFER_SIZE];
 		GameManager gameManager;
 	public:
-		void Broadcast();
 		void RecvAndHandle(int sockfd);
+		void Broadcast();
 };

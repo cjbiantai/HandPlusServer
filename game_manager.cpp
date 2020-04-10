@@ -1,10 +1,10 @@
-#include"GameManager.h"
+#include"game_manager.h"
 
 bool GameManager::isOnline(int sockfd){
 	return sockstate[sockfd].online;
 }
 
-int GameManager::Getroom_id(int sockfd){
+int GameManager::GetRoomId(int sockfd){
 	return sockstate[sockfd].room_id;
 }
 
@@ -82,28 +82,13 @@ void GameManager::RoomInit(int room_id){
 	room[room_id].frames.push_back(smsg);
 	SendToRoom(room_id,smsg);
 }
-#include"game_manager.h"
 
-void GameManager::JoinRoom(int sockfd,int room_id){
-	ServerMsg smsg;
-	if(!room.count(room_id)){
-		room[room_id]=Room();
-		room[room_id].max=2;
-	}
-	if(room[room_id].state){
-		smsg.set_code(1);
-		smsg.set_str("room is full");
-		SendMsg(sockfd,smsg);
-		return;
-	}
-	room[room_id].sockfd.push_back(sockfd);
-	sockstate[sockfd].room_id=room_id;
-	name2room[sockstate[sockfd].name]=room_id;
-	smsg.set_code(0);
-	smsg.set_str("join room success");
-	//SendMsg(sockfd,smsg);
-	if(room[room_id].max==room[room_id].sockfd.size())
-		RoomInit(room_id);
+void GameManager::JoinRoom(int sockfd,string name,int room_id){
+	if(!room.count(room_id))
+		room[room_id]=Room(2);
+	player[sockfd]=Player(sockfd,name,room_id);
+	name2room[name]=room_id;
+	room[room_id].AddPlayer(player[sockfd]);
 }
 
 void GameManager::Exit(int sockfd){
@@ -122,4 +107,9 @@ void GameManager::Exit(int sockfd){
 	sockstate.erase(sockfd);
 }
 
+void GameManager::Broadcast(){
+	map<int,Room>::iterator it;
+	for(it=room.begin().it!=room.end();it++)
+		it->second.Broadcast();
+}
 

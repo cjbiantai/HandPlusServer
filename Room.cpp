@@ -1,6 +1,19 @@
 #include"Room.h"
 
-void Room::Broadcast(ServerMsg smsg){
+Room::Room(int max=2){
+	state=0;
+	this.max=max;
+}
+
+void Room::AddPlayer(Player player){
+	players.push_back(player);
+	if(players.size()==max){
+		state=1;
+		//SendToAll(smsg); smsg game start state
+	}
+}
+
+void Room::SendToAll(ServerMsg smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
 	sendbuf[1]=(len>>24)&0xff;
@@ -14,6 +27,24 @@ void Room::Broadcast(ServerMsg smsg){
 		if(ret<=0)
 			continue;
 	}
+}
+
+void Room::Broadcast(){
+	if(!state)
+		return;
+	ServerMsg frame;
+	frame.set_code(3);
+	frame.set_fid(frames.size());
+	PlayerInput *input;
+	for(int i=0;i<players.size();i++){
+		//if(!players[i].updated)
+		//	duplicate(players[i].input);
+		//players[i].updated=false;
+		input=frame.add_inputs();
+		*input=players[i].input;
+	}
+	frames.push_back(frame);
+	SendToAll(frame);
 }
 
 void Room::Retransmission(int sockfd,int beg_fid){

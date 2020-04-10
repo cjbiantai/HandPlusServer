@@ -20,4 +20,5 @@ class GameManager{
 		void JoinRoom(int sockfd,int roomId);
 		void Exit(int sockfd);
 		void InitRoom(int roomId);
+		void Broadcast();
 }gameManager;

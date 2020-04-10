@@ -2,13 +2,15 @@
 
 class Player{
 	private:
-		int len,room_id,sockfd;
-		char buffer[SIZE<<1];
-		string name;
+		int len;
+		char buffer[SIZE<<1];		
 	public:
-		bool online,updated;
+		bool online;
+		int room_id,sockfd;
+		string name;
 		PlayInput input;
 		
+		Player(int sockfd,string name,int room_id);
 		int SendMsg(ServerMsg smsg);
 		void Update(PlayerInput input);
 		int Recv();

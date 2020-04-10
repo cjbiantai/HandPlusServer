@@ -1,5 +1,13 @@
 #include"Player.h"
 
+Player::Player(int sockfd,string name,int room_id){
+	len=0;
+	this.sockfd=sockfd;
+	this.name=name;
+	this.room_id=room_id;
+	online=true;
+}
+
 int Player::SendMsg(ServerMsg smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
@@ -12,7 +20,6 @@ int Player::SendMsg(ServerMsg smsg){
 }
 
 void Player::Update(PlayerInput input){
-	updated=true;
 	this.input=input;
 }
 
