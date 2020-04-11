@@ -1,17 +1,14 @@
-GameServer.out: GameSync.o Server.o main.o Player.o Room.o game_proto.pb.o
-	g++ -o GameServer.out GameSync.o Server.o main.o Player.o Room.o -lprotobuf game_proto.pb.o
+GameServer.out: game_sync.o server.o main.o player.o room.o common/game_proto.pb.o
+	g++ -o GameServer.out game_sync.o server.o main.o player.o room.o -lprotobuf common/game_proto.pb.o
 main.o: main.cpp
 	g++ -c main.cpp
-Player.o: Player.cpp
-	g++ -c Player.cpp
-Room.o: Room.cpp
-	g++ -c Room.cpp
-Server.o: Server.cpp
-	g++ -c Server.cpp
-GameSync.o: game_sync.cpp
+player.o: player.cpp
+	g++ -c player.cpp
+room.o: room.cpp
+	g++ -c room.cpp
+server.o: server.cpp
+	g++ -c server.cpp
+game_sync.o: game_sync.cpp
 	g++ -c game_sync.cpp
-game_proto.pb.o: common/game_proto.proto
-	protoc --cpp_out=.. common/game_proto.proto
-	g++ -c game_proto.pb.cc -lprotobuf
 clean:
-	sudo rm *.o game_proto.pb.*  GameServer.out
+	sudo rm *.o  GameServer.out

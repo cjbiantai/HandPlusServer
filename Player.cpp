@@ -1,10 +1,12 @@
-#include"Player.h"
+#include"player.h"
+
+char Player::sendbuf[BUFFER_SIZE]={};
 
 Player::Player(int sockfd,string name,int room_id){
 	len=0;
-	this.sockfd=sockfd;
-	this.name=name;
-	this.room_id=room_id;
+	this->sockfd=sockfd;
+	this->name=name;
+	this->room_id=room_id;
 	online=true;
 }
 
@@ -20,35 +22,34 @@ int Player::SendMsg(ServerMsg smsg){
 }
 
 void Player::Update(PlayerInput input){
-	this.input=input;
+	this->input=input;
 }
 
 int Player::Recv(){
 	int ret;
-	if(ret=recv(sockfd,buffer+len,SIZE-len,MSG_DONTWAIT),sockfd<=0)
+	if(ret=recv(sockfd,buffer+len,BUFFER_SIZE-len,MSG_DONTWAIT),sockfd<=0)
 		return ret;
 	len+=ret;
 	return 1;
 }
 
-ClientMsg Player::Parse(){
+bool Player::Parse(ClientMsg &cmsg){
 	if(len<HEADER_LEN)
 		return NULL;
-	int msg_len=(buffer[i+1]<<24)+(buffer[i+2]<<16)+(buffer[i+3]<<8)+buffer[i+4];
-	if(msg_len+HEADER_LEN>SIZE){
+	int msg_len=(buffer[1]<<24)+(buffer[2]<<16)+(buffer[3]<<8)+buffer[4];
+	if(msg_len+HEADER_LEN>BUFFER_SIZE){
 		printf("size error\n");
 		memset(buffer,len=0,sizeof(buffer));
-		return NULL;
+		return false;
 	}
 	if(len<msg_len+HEADER_LEN)
-		return NULL;
-	ClientMsg cmsg;
+		return false;
 	int ret=cmsg.ParseFromArray(buffer+HEADER_LEN,msg_len);
 	if(!ret){
 		printf("parse error\n");
 		memset(buffer,len=0,sizeof(buffer));
-		return NULL;
+		return false;
 	}
 	memcpy(buffer,buffer+HEADER_LEN+msg_len,len-=HEADER_LEN+msg_len);
-	return cmsg;
+	return true;
 }

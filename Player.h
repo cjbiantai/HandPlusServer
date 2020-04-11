@@ -3,6 +3,7 @@
 
 class Player{
 	private:
+		static char sendbuf[BUFFER_SIZE];
 		int len;
 		char buffer[BUFFER_SIZE<<1];
 	public:
@@ -11,9 +12,11 @@ class Player{
 		string name;
 		PlayerInput input;
 		
+		Player(){}
 		Player(int sockfd,string name,int room_id);
 		int SendMsg(ServerMsg smsg);
 		void Update(PlayerInput input);
 		int Recv();
-		ClientMsg Parse();
+		bool Parse(ClientMsg &cmsg);
 };
+

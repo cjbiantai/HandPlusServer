@@ -1,6 +1,6 @@
 #pragma once
 #include"common/all.h"
-#include"Player.h"
+#include"player.h"
 
 class Room{
 	private:
@@ -9,9 +9,12 @@ class Room{
 		vector<ServerMsg> frames;
 	public:
 		int max,state;
-		Room(int max=2);
-		void AddPlayer(Player player);
-		int SendToAll(ServerMsg smsg);
+		Room(){}
+		Room(int max);
+		void AddPlayer(Player *player);
+		void Reconnect(string name,Player *player);
+		void SendToAll(ServerMsg smsg);
 		void Broadcast();
 		void Retransmission(int sockfd,int beg_fid);
 };
+

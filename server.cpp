@@ -1,6 +1,6 @@
-#include "socket.h"
+#include "server.h"
 
-Server::Server(int port,ServerSync sync) {
+Server::Server(int port,ServerSync *sync) {
     this->port=port;
     this->sync=sync;
     tick=0;
@@ -49,6 +49,7 @@ void Server::WorkOnce() {
     socklen_t len;
     int sockfd;
 	int n=epoll_wait(epfd,events,MAX_EVENTS,1);
+	struct epoll_event event;
    	for(int i=0;i<n;i++){
    		if(events[i].data.fd==listenfd){
    			len=sizeof(caddr);
@@ -63,16 +64,15 @@ void Server::WorkOnce() {
    				printf("epoll_ctl new sock error,address :%s\n",caddr.sa_data);
    				continue;
    			}
-   			sockstate[sockfd]=SockState();
    		}else{
 	        sockfd=events[i].data.fd;
-	        sync.RecvAndHandle(sockfd);
+	        sync->RecvAndHandle(sockfd);
    		}
    	}
    	gettimeofday(&end,NULL);
    	tick+=(end.tv_sec-start.tv_sec)*1000LL+(end.tv_usec-start.tv_usec)/1000;
    	if(tick>=BROADCAST_RATE){
    		tick-=BROADCAST_RATE;
-	   	sync.Broadcast();
+	   	sync->Broadcast();
 	}
 }

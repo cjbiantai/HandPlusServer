@@ -1,8 +1,8 @@
 #pragma once
 #include"common/all.h"
 #include"server_sync.h"
-#include"Player.h"
-#include"Room.h"
+#include"player.h"
+#include"room.h"
 
 class GameSync:public ServerSync{
 	private:
@@ -20,12 +20,11 @@ class GameSync:public ServerSync{
 		int Check(int ret,int sockfd);
 
 		void Recv(int sockfd);
-		ClientMsg Parse(int sockfd);
-		void Update(PlayerInput input);
+		bool Parse(int sockfd,ClientMsg &cmsg);
+		void Update(int sockfd,PlayerInput input);
 		void Retransmission(int sockfd,int beg_fid);
 		
-		void JoinRoom(int sockfd,int roomId);
+		void JoinRoom(int sockfd,string name,int room_id);
 		void Exit(int sockfd);
 		void InitRoom(int roomId);
-		void Broadcast();
-}gameManager;
+};

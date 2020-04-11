@@ -1,19 +1,29 @@
-#include"Room.h"
+#include"room.h"
 
-Room::Room(int max=2){
+char Room::sendbuf[BUFFER_SIZE]={};
+
+Room::Room(int max){
 	state=0;
-	this.max=max;
+	this->max=max;
 }
 
-void Room::AddPlayer(Player player){
-	players.push_back(&player);
+void Room::AddPlayer(Player *player){
+	players.push_back(player);
 	if(players.size()==max){
 		state=1;
 		//SendToAll(smsg); smsg game start state
 	}
 }
 
-void Room::SendToAll(ServerMsg smsg){
+void Room::Reconnect(string name,Player *player){
+	for(int i=0;i<players.size();i++)
+		if(players[i]->name==name){
+			players[i]=player;
+			return;
+		}
+}
+
+void Room::SendToAll(ServerMsg smsg){///////////////////error
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
 	sendbuf[1]=(len>>24)&0xff;
@@ -48,15 +58,17 @@ void Room::Broadcast(){
 }
 
 void Room::Retransmission(int sockfd,int beg_fid){
-	Player &player;
+	Player *player=NULL;
 	for(int i=0;i<players.size();i++)
 		if(players[i]->sockfd==sockfd){
 			player=players[i];
 			break;
 		}
-	if(player.SendMsg(frames[beg_fid])<=0)
+	if(player==NULL)
+		return;
+	if(player->SendMsg(frames[beg_fid])<=0)
 		return;
 	for(int i=beg_fid;i<frames.size();i++)
-		if(player.SendMsg(frames[i])<=0)
+		if(player->SendMsg(frames[i])<=0)
 			return;///////////////////////////check
 }
