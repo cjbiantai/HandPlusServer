@@ -2,9 +2,12 @@
 
 char Player::sendbuf[BUFFER_SIZE]={};
 
-Player::Player(int sockfd,string name,int room_id){
+Player::Player(int sockfd){
 	len=0;
 	this->sockfd=sockfd;
+}
+
+void Player::JoinRoom(string name,int room_id){
 	this->name=name;
 	this->room_id=room_id;
 	online=true;

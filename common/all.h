@@ -21,6 +21,7 @@
 #define BROADCAST_RATE 50
 #define BUFFER_SIZE 1024
 #define MAX_EVENTS 10000
+#define ROOM_MAX 1
 
 using namespace std;
 using namespace GameProto;

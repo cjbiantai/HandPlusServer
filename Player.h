@@ -13,7 +13,8 @@ class Player{
 		PlayerInput input;
 		
 		Player(){}
-		Player(int sockfd,string name,int room_id);
+		Player(int sockfd);
+		void JoinRoom(string name,int room_id);
 		int SendMsg(ServerMsg smsg);
 		void Update(PlayerInput input);
 		int Recv();

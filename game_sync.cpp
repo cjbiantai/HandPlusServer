@@ -61,8 +61,9 @@ int GameSync::Check(int ret,int sockfd){
 }
 
 void GameSync::Recv(int sockfd){
-	if(!player.count(sockfd))
-		return;
+	if(!player.count(sockfd)){
+		player[sockfd]=Player(sockfd);
+	}
 	Check(player[sockfd].Recv(),sockfd);
 }
 
@@ -84,13 +85,13 @@ void GameSync::Retransmission(int sockfd,int beg_fid){
 
 void GameSync::JoinRoom(int sockfd,string name,int room_id){
 	if(name2room[name]){
-		player[sockfd]=Player(sockfd,name,room_id);
+		player[sockfd].JoinRoom(name,room_id);
 		room[name2room[name]].Reconnect(name,&player[sockfd]);
 		return;
 	}
 	if(!room.count(room_id))
-		room[room_id]=Room(2);
-	player[sockfd]=Player(sockfd,name,room_id);
+		room[room_id]=Room(ROOM_MAX);
+	player[sockfd].JoinRoom(name,room_id);
 	name2room[name]=room_id;
 	room[room_id].AddPlayer(&player[sockfd]);
 }
