@@ -13,7 +13,7 @@
 #define BUFF_SIZE 10240
 #define BACKLOG 100
 #define MAX_EVENTS 1024
-#define HEAD_LENGTH 4
+#define HEAD_LENGTH 5
 #define ONE_ROOM 1
 #define MAX_FRAMEDATAS 100000
 const int HALL_PORT = 17000;

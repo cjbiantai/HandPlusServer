@@ -67,9 +67,9 @@ private:
     std::map<int, recvDataManager> c2SDataMap; //clientfd对应的缓冲区，处理沾包
     std::map<int, std::string> fdUserMap;   //clientfd到用户名的映射
     std::map<int, roomInfo> roomMap;    //房间id到房间信息的映射
+    std::map<std::string, std::string> userHostMap; //用户名到服务器信息的映射
     std::vector<service_mgr> serviceList;  //存放战斗服务器信息
     std::set<std::string> onlineUsers;  //在线用户用户名集合
     std::set<int> onlineClients;    //在线clientfd集合
-    std::set<int> hallClients; //在大厅的clientfd的集合 
 };
 

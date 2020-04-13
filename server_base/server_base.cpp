@@ -111,6 +111,10 @@ void serverBase::Work() {
 }
 
 void serverBase::SendDataToClient(int clientFd, int length) {
+    for(int i = 0; i < length; ++i) {
+        printf("%03d ", bData.GetBuffCharAt(i));
+    }
+    printf("\n");
     int ret = send(clientFd, bData.GetBuffArray(), length, 0);
     if(ret == -1) {
         printf("send to client error: clientFd = %d, errno = %d, (%s)\n", clientFd, errno, strerror(errno));

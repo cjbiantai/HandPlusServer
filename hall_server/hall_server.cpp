@@ -77,12 +77,15 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
                 serverMsg.set_str("用户已登录");
                 break;
             }
-            serverMsg.set_code(0);
-            serverMsg.set_str("登录成功");
             fdUserMap[clientFd] = clientMsg.name();
             onlineUsers.insert(clientMsg.name());
             onlineClients.insert(clientFd);
-            hallClients.insert(clientFd);
+            serverMsg.set_code(0);
+            if(userHostMap.find(clientMsg.name()) != userHostMap.end()) {
+                serverMsg.set_str(userHostMap[clientMsg.name()]);
+            }else {
+                serverMsg.set_str("登录成功");
+            }
             BroadRoomInfo();
             //登录成功
             break;
@@ -147,7 +150,8 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
         }else {
             serverMsg.set_code(0);
             roominfo.serviceId = serviceId;
-            serverMsg.set_str(serviceList[serviceId].serviceIp + ":"+ std::to_string(serviceList[serviceId].servicePort));
+            userHostMap[clientMsg.name()] = serviceList[serviceId].serviceIp + ":"+ std::to_string(serviceList[serviceId].servicePort);
+            serverMsg.set_str(userHostMap[clientMsg.name()]);
             serviceList[serviceId].servicePressure += oneRoomMaxUsers;
         }
         printf("%d %s\n", serverMsg.code(), serverMsg.str().c_str());
@@ -172,7 +176,7 @@ void hallServer::BroadRoomInfo() {
             roominfo -> add_members(fdUserMap[fd]);
         }
     }
-    for(auto fd : hallClients) {
+    for(auto fd : onlineClients) {
         HandleSendDataToClient(serverMsg, fd);
     }
 }
@@ -181,18 +185,20 @@ void hallServer::HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clie
     if(!serverMsg.SerializeToArray(bData.GetBuffArray() + HEAD_LENGTH, BUFF_SIZE)) {
         return ;
     }
-    for(int i = 0; i < HEAD_LENGTH; ++i) {
-        bData.ChangeBuffAt(serverMsg.ByteSize() >> ((HEAD_LENGTH - i -1) * 8), i);
+    for(int i = 1; i < HEAD_LENGTH; ++i) {
+        bData.ChangeBuffAt(serverMsg.ByteSize() >> ((i -1) * 8), i);
     }
     SendDataToClient(clientFd, HEAD_LENGTH + serverMsg.ByteSize());
 }
 
 void hallServer::HandleClose(int clientFd) {
+    for(auto room : roomMap) {
+        room.second.userSet.erase(clientFd);
+    }
     c2SDataMap.erase(clientFd);
     onlineUsers.erase(fdUserMap[clientFd]);
     fdUserMap.erase(clientFd);
     onlineClients.erase(clientFd);
-    hallClients.erase(clientFd);
 }
 
 void hallServer::Work() {

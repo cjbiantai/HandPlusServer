@@ -12,9 +12,11 @@ baseData::~baseData() {
 }
 
 void baseData::AddHead(int length) {    
-    for(int i = 0; i < HEAD_LENGTH; ++i) {
-        buff[i] = (byte)(length >> ((HEAD_LENGTH - i -1)*8));
-    }
+    buff[0] = 0;
+    buff[1] = length & 0xff;
+    buff[2] = (length >> 8) & 0xff;
+    buff[3] = (length >> 16) & 0xff;
+    buff[4] = (length >> 24) & 0xff;
 }
 void baseData::ChangeDataAt(char c, int idx) {
     data[idx] = c;

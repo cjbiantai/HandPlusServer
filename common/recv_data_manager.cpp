@@ -16,8 +16,8 @@ int recvDataManager::GetPackageLength() {
         return -1;
     }
     int ret = 0;
-    for(int i = 0; i < HEAD_LENGTH; ++i) {
-        ret += buff[(head + i) % size] << ((HEAD_LENGTH -i - 1) * 8);
+    for(int i = 1; i < HEAD_LENGTH; ++i) {
+        ret += buff[(head + i) % size] << ((i - 1) * 8);
     }
     return ret;
 }
