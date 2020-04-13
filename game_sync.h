@@ -1,6 +1,7 @@
 #pragma once
 #include"common/all.h"
 #include"server_sync.h"
+#include"socket_error.h"
 #include"player.h"
 #include"room.h"
 
@@ -14,17 +15,16 @@ class GameSync:public ServerSync{
 	public:
 		void RecvAndHandle(int sockfd);
 		void Broadcast();
+		void Exit(int sockfd);
 		
 		bool isOnline(int sockfd);
 		int GetRoomId(int sockfd);
-		int Check(int ret,int sockfd);
 
-		void Recv(int sockfd);
+		bool Recv(int sockfd);
 		bool Parse(int sockfd,ClientMsg &cmsg);
 		void Update(int sockfd,PlayerInput input);
 		void Retransmission(int sockfd,int beg_fid);
 		
 		void JoinRoom(int sockfd,string name,int room_id);
-		void Exit(int sockfd);
 		void InitRoom(int roomId);
 };

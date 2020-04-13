@@ -4,18 +4,12 @@ Server::Server(int port,ServerSync *sync) {
     this->port=port;
     this->sync=sync;
     tick=0;
-    Init();
-}
-
-Server::~Server() {
-    free(events);
-    close(epfd);
-}
-
-bool Server::Init() {
-	listenfd=socket(AF_INET,SOCK_STREAM,0);
-    if(listenfd==-1)
-        return 0*printf("socket error: %d\n", errno);
+    
+    listenfd=socket(AF_INET,SOCK_STREAM,0);
+    if(listenfd==-1){
+    	printf("socket error: %d\n", errno);
+    	exit(0);
+    }
     struct sockaddr_in saddr;
     saddr.sin_family=AF_INET;
     saddr.sin_addr.s_addr=htonl(INADDR_ANY);
@@ -27,21 +21,28 @@ bool Server::Init() {
     	printf("bind error: %d\n",errno);
     	if(close(listenfd)==-1)
 		    printf("close socket error: %d\n",errno);
-    	return 0;
+    	exit(0);
     }
     if(listen(listenfd,128)<0){
 		printf("listen error:%d\n",errno);
 		if(close(listenfd)==-1)
 		    printf("close socket error: %d\n",errno);
-    	return 0;
+    	exit(0);
     }
-	epfd=epoll_create(MAX_EVENTS);
+	SocketError::epfd=epfd=epoll_create(MAX_EVENTS);
 	struct epoll_event event;
 	event.data.fd=listenfd;
 	event.events=EPOLLIN;
-	if(epoll_ctl(epfd,EPOLL_CTL_ADD,listenfd,&event)<0)
-		return 0*printf("epoll_ctl listenfd error\n");
+	if(epoll_ctl(epfd,EPOLL_CTL_ADD,listenfd,&event)<0){
+		printf("epoll_ctl listenfd error\n");
+		exit(0);
+	}
 	events=(struct epoll_event*)malloc(sizeof(event)*MAX_EVENTS);
+}
+
+Server::~Server() {
+    free(events);
+    close(epfd);
 }
 
 void Server::WorkOnce() {

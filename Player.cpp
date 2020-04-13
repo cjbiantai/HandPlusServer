@@ -29,8 +29,8 @@ void Player::Update(PlayerInput input){
 }
 
 int Player::Recv(){
-	int ret;
-	if(ret=recv(sockfd,buffer+len,BUFFER_SIZE-len,MSG_DONTWAIT),sockfd<=0)
+	int ret=recv(sockfd,buffer+len,BUFFER_SIZE-len,MSG_DONTWAIT);
+	if(SocketError::Check(ret,sockfd)<=0)
 		return ret;
 	len+=ret;
 	return 1;

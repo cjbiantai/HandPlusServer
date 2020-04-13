@@ -1,3 +1,4 @@
+#include"socket_error.h"
 #include "server_sync.h"
 //#include "hall_sync.h"
 #include "game_sync.h"
@@ -13,6 +14,7 @@ int main(){
 	ServerSync *sync=new GameSync();
 #endif
     //SETTRACELEVEL(log_mask_all);
+    SocketError::sync=sync;
     Server server(233,sync);
     while(true) {
         server.WorkOnce();

@@ -2,6 +2,10 @@ main: 入口
 
 server:服务器主进程
 
+room:房间类
+
+player:玩家类
+
 common: 日志系统，常量，mysql，protobuf等
 
 server_sync:

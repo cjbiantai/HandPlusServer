@@ -1,7 +1,8 @@
 #include"game_sync.h"
 
 void GameSync::RecvAndHandle(int sockfd){
-	Recv(sockfd);
+	if(Recv(sockfd)<=0)
+		return;
 	ClientMsg cmsg;
 	while(Parse(sockfd,cmsg)){
 		switch(cmsg.type()){
@@ -26,6 +27,15 @@ void GameSync::Broadcast(){
 		it->second.Broadcast();
 }
 
+void GameSync::Exit(int sockfd){
+	int room_id=player[sockfd].room_id;
+	if(!room_id){
+		player.erase(sockfd);
+		return;
+	}
+	room[room_id].state=0;
+}
+
 bool GameSync::isOnline(int sockfd){
 	return player[sockfd].online;
 }
@@ -34,37 +44,11 @@ int GameSync::GetRoomId(int sockfd){
 	return player[sockfd].room_id;
 }
 
-int GameSync::Check(int ret,int sockfd){
-	if(ret>0)
-		return 1;
-	if(ret<0){
-		printf("recv fail: %d\n",errno);
-       	if(errno==EINTR||errno==EWOULDBLOCK||errno==EAGAIN)
-       		return 0;
-       	else{
-       		//if(epoll_ctl(epfd,EPOLL_CTL_DEL,sockfd,NULL)<0)
-       		//	printf("delete socket error\n");
-       		if(close(sockfd)==-1)
-       			printf("close socket error: %d\n",errno);
-       		Exit(sockfd);
-       		return -1;
-       	}
-	}
-    if(ret==0){
-	    //if(epoll_ctl(epfd,EPOLL_CTL_DEL,sockfd,NULL)<0)
-		//  	printf("delete socket error\n");
-		if(close(sockfd)==-1)
-		    printf("close socket error: %d\n",errno);
-		Exit(sockfd);
-		return 0;
-	}
-}
-
-void GameSync::Recv(int sockfd){
+bool GameSync::Recv(int sockfd){
 	if(!player.count(sockfd)){
 		player[sockfd]=Player(sockfd);
 	}
-	Check(player[sockfd].Recv(),sockfd);
+	return SocketError::Check(player[sockfd].Recv(),sockfd);
 }
 
 bool GameSync::Parse(int sockfd,ClientMsg &cmsg){
@@ -96,12 +80,4 @@ void GameSync::JoinRoom(int sockfd,string name,int room_id){
 	room[room_id].AddPlayer(&player[sockfd]);
 }
 
-void GameSync::Exit(int sockfd){
-	int room_id=player[sockfd].room_id;
-	if(!room_id){
-		player.erase(sockfd);
-		return;
-	}
-	room[room_id].state=0;
-}
 

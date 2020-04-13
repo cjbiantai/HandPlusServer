@@ -23,7 +23,7 @@ void Room::Reconnect(string name,Player *player){
 		}
 }
 
-void Room::SendToAll(ServerMsg smsg){///////////////////error
+void Room::SendToAll(ServerMsg smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
 	sendbuf[1]=(len>>24)&0xff;
@@ -34,8 +34,10 @@ void Room::SendToAll(ServerMsg smsg){///////////////////error
 	int ret;
 	for(int i=0;i<players.size();i++){
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
-		if(ret<=0)
-			continue;
+		if(SocketError::Check(ret,players[i]->sockfd)<=0){
+			state=0;
+			players[i]->online=false;
+		}
 	}
 }
 
@@ -69,6 +71,6 @@ void Room::Retransmission(int sockfd,int beg_fid){
 	if(player->SendMsg(frames[beg_fid])<=0)
 		return;
 	for(int i=beg_fid;i<frames.size();i++)
-		if(player->SendMsg(frames[i])<=0)
-			return;///////////////////////////check
+		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0)
+			return;
 }

@@ -1,4 +1,5 @@
 #include"common/all.h"
+#include"socket_error.h"
 #include"server_sync.h"
 
 class Server {
@@ -11,7 +12,6 @@ class Server {
 	public:
 	    Server(int port,ServerSync *sync);
 	    ~Server();
-	    bool Init();
 	    void WorkOnce();
 };
 

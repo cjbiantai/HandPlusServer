@@ -1,5 +1,6 @@
 #pragma once
 #include"common/all.h"
+#include"socket_error.h"
 
 class Player{
 	private:
