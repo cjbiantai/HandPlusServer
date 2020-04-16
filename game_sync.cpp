@@ -44,11 +44,11 @@ int GameSync::GetRoomId(int sockfd){
 	return player[sockfd].room_id;
 }
 
-bool GameSync::Recv(int sockfd){
+int GameSync::Recv(int sockfd){
 	if(!player.count(sockfd)){
 		player[sockfd]=Player(sockfd);
 	}
-	return SocketError::Check(player[sockfd].Recv(),sockfd);
+	return player[sockfd].Recv();
 }
 
 bool GameSync::Parse(int sockfd,ClientMsg &cmsg){

@@ -20,7 +20,7 @@ class GameSync:public ServerSync{
 		bool isOnline(int sockfd);
 		int GetRoomId(int sockfd);
 
-		bool Recv(int sockfd);
+		int Recv(int sockfd);
 		bool Parse(int sockfd,ClientMsg &cmsg);
 		void Update(int sockfd,PlayerInput input);
 		void Retransmission(int sockfd,int beg_fid);

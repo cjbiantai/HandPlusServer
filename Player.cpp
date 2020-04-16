@@ -16,10 +16,10 @@ void Player::JoinRoom(string name,int room_id){
 int Player::SendMsg(ServerMsg smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
-	sendbuf[1]=(len>>24)&0xff;
-	sendbuf[2]=(len>>16)&0xff;
-	sendbuf[3]=(len>>8)&0xff;
-	sendbuf[4]=len&0xff;
+	sendbuf[1]=len&0xff;
+	sendbuf[2]=(len>>8)&0xff;
+	sendbuf[3]=(len>>16)&0xff;
+	sendbuf[4]=(len>>24)&0xff;
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	return send(sockfd,sendbuf,len+HEADER_LEN,0);
 }
@@ -39,7 +39,7 @@ int Player::Recv(){
 bool Player::Parse(ClientMsg &cmsg){
 	if(len<HEADER_LEN)
 		return NULL;
-	int msg_len=(buffer[1]<<24)+(buffer[2]<<16)+(buffer[3]<<8)+buffer[4];
+	int msg_len=(buffer[4]<<24)+(buffer[3]<<16)+(buffer[2]<<8)+buffer[1];
 	if(msg_len+HEADER_LEN>BUFFER_SIZE){
 		printf("size error\n");
 		memset(buffer,len=0,sizeof(buffer));
