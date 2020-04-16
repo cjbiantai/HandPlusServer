@@ -28,6 +28,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -85,6 +86,62 @@ extern ServerMsgDefaultTypeInternal _ServerMsg_default_instance_;
 }  // namespace GameProto
 namespace GameProto {
 
+enum ServerEventCode {
+  LogInSuccess = 0,
+  RegisterSuccess = 1,
+  EnterRoomSuccess = 2,
+  LogInError_AccountDontExist = 3,
+  LogInError_PasswordWrong = 4,
+  LogInError_ReLogIn = 5,
+  RegisterError_AccountAlreadyExist = 6,
+  EnterRoomError_DontLogIn = 7,
+  EnterRoomError_RoomIsFull = 8,
+  InternalError = 9,
+  BroadRoomInfo = 10,
+  JumpToBattleServer = 11,
+  S2CSync = 12,
+  ServerEventCode_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ServerEventCode_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool ServerEventCode_IsValid(int value);
+const ServerEventCode ServerEventCode_MIN = LogInSuccess;
+const ServerEventCode ServerEventCode_MAX = S2CSync;
+const int ServerEventCode_ARRAYSIZE = ServerEventCode_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ServerEventCode_descriptor();
+inline const ::std::string& ServerEventCode_Name(ServerEventCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ServerEventCode_descriptor(), value);
+}
+inline bool ServerEventCode_Parse(
+    const ::std::string& name, ServerEventCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ServerEventCode>(
+    ServerEventCode_descriptor(), name, value);
+}
+enum ClientEventCode {
+  LogIn = 0,
+  Regist = 1,
+  EnterRoom = 2,
+  C2SSync = 3,
+  Follow = 4,
+  ClientEventCode_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ClientEventCode_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool ClientEventCode_IsValid(int value);
+const ClientEventCode ClientEventCode_MIN = LogIn;
+const ClientEventCode ClientEventCode_MAX = Follow;
+const int ClientEventCode_ARRAYSIZE = ClientEventCode_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ClientEventCode_descriptor();
+inline const ::std::string& ClientEventCode_Name(ClientEventCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ClientEventCode_descriptor(), value);
+}
+inline bool ClientEventCode_Parse(
+    const ::std::string& name, ClientEventCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ClientEventCode>(
+    ClientEventCode_descriptor(), name, value);
+}
 // ===================================================================
 
 class Position : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameProto.Position) */ {
@@ -576,9 +633,9 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 id() const;
   void set_id(::google::protobuf::int32 value);
 
-  // int32 maxUsers = 2;
+  // int32 maxusers = 2;
   void clear_maxusers();
-  static const int kMaxUsersFieldNumber = 2;
+  static const int kMaxusersFieldNumber = 2;
   ::google::protobuf::int32 maxusers() const;
   void set_maxusers(::google::protobuf::int32 value);
 
@@ -714,11 +771,11 @@ class ClientMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::GameProto::PlayerInput* mutable_input();
   void set_allocated_input(::GameProto::PlayerInput* input);
 
-  // int32 type = 1;
+  // .GameProto.ClientEventCode type = 1;
   void clear_type();
   static const int kTypeFieldNumber = 1;
-  ::google::protobuf::int32 type() const;
-  void set_type(::google::protobuf::int32 value);
+  ::GameProto::ClientEventCode type() const;
+  void set_type(::GameProto::ClientEventCode value);
 
   // int32 id = 4;
   void clear_id();
@@ -733,7 +790,7 @@ class ClientMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr password_;
   ::GameProto::PlayerInput* input_;
-  ::google::protobuf::int32 type_;
+  int type_;
   ::google::protobuf::int32 id_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
@@ -847,10 +904,10 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   const ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState >&
       states() const;
 
-  // repeated .GameProto.RoomInfo roomInfos = 6;
+  // repeated .GameProto.RoomInfo roominfos = 6;
   int roominfos_size() const;
   void clear_roominfos();
-  static const int kRoomInfosFieldNumber = 6;
+  static const int kRoominfosFieldNumber = 6;
   const ::GameProto::RoomInfo& roominfos(int index) const;
   ::GameProto::RoomInfo* mutable_roominfos(int index);
   ::GameProto::RoomInfo* add_roominfos();
@@ -873,11 +930,11 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::std::string* release_str();
   void set_allocated_str(::std::string* str);
 
-  // int32 code = 1;
-  void clear_code();
-  static const int kCodeFieldNumber = 1;
-  ::google::protobuf::int32 code() const;
-  void set_code(::google::protobuf::int32 value);
+  // .GameProto.ServerEventCode type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::GameProto::ServerEventCode type() const;
+  void set_type(::GameProto::ServerEventCode value);
 
   // int32 fid = 2;
   void clear_fid();
@@ -893,7 +950,7 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState > states_;
   ::google::protobuf::RepeatedPtrField< ::GameProto::RoomInfo > roominfos_;
   ::google::protobuf::internal::ArenaStringPtr str_;
-  ::google::protobuf::int32 code_;
+  int type_;
   ::google::protobuf::int32 fid_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
@@ -1218,18 +1275,18 @@ inline void RoomInfo::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:GameProto.RoomInfo.id)
 }
 
-// int32 maxUsers = 2;
+// int32 maxusers = 2;
 inline void RoomInfo::clear_maxusers() {
   maxusers_ = 0;
 }
 inline ::google::protobuf::int32 RoomInfo::maxusers() const {
-  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.maxUsers)
+  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.maxusers)
   return maxusers_;
 }
 inline void RoomInfo::set_maxusers(::google::protobuf::int32 value) {
   
   maxusers_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.maxUsers)
+  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.maxusers)
 }
 
 // repeated string members = 3;
@@ -1305,15 +1362,15 @@ RoomInfo::mutable_members() {
 
 // ClientMsg
 
-// int32 type = 1;
+// .GameProto.ClientEventCode type = 1;
 inline void ClientMsg::clear_type() {
   type_ = 0;
 }
-inline ::google::protobuf::int32 ClientMsg::type() const {
+inline ::GameProto::ClientEventCode ClientMsg::type() const {
   // @@protoc_insertion_point(field_get:GameProto.ClientMsg.type)
-  return type_;
+  return static_cast< ::GameProto::ClientEventCode >(type_);
 }
-inline void ClientMsg::set_type(::google::protobuf::int32 value) {
+inline void ClientMsg::set_type(::GameProto::ClientEventCode value) {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:GameProto.ClientMsg.type)
@@ -1493,18 +1550,18 @@ inline void ClientMsg::set_allocated_input(::GameProto::PlayerInput* input) {
 
 // ServerMsg
 
-// int32 code = 1;
-inline void ServerMsg::clear_code() {
-  code_ = 0;
+// .GameProto.ServerEventCode type = 1;
+inline void ServerMsg::clear_type() {
+  type_ = 0;
 }
-inline ::google::protobuf::int32 ServerMsg::code() const {
-  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.code)
-  return code_;
+inline ::GameProto::ServerEventCode ServerMsg::type() const {
+  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.type)
+  return static_cast< ::GameProto::ServerEventCode >(type_);
 }
-inline void ServerMsg::set_code(::google::protobuf::int32 value) {
+inline void ServerMsg::set_type(::GameProto::ServerEventCode value) {
   
-  code_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.ServerMsg.code)
+  type_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.ServerMsg.type)
 }
 
 // int32 fid = 2;
@@ -1634,7 +1691,7 @@ ServerMsg::states() const {
   return states_;
 }
 
-// repeated .GameProto.RoomInfo roomInfos = 6;
+// repeated .GameProto.RoomInfo roominfos = 6;
 inline int ServerMsg::roominfos_size() const {
   return roominfos_.size();
 }
@@ -1642,25 +1699,25 @@ inline void ServerMsg::clear_roominfos() {
   roominfos_.Clear();
 }
 inline const ::GameProto::RoomInfo& ServerMsg::roominfos(int index) const {
-  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.roomInfos)
+  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.roominfos)
   return roominfos_.Get(index);
 }
 inline ::GameProto::RoomInfo* ServerMsg::mutable_roominfos(int index) {
-  // @@protoc_insertion_point(field_mutable:GameProto.ServerMsg.roomInfos)
+  // @@protoc_insertion_point(field_mutable:GameProto.ServerMsg.roominfos)
   return roominfos_.Mutable(index);
 }
 inline ::GameProto::RoomInfo* ServerMsg::add_roominfos() {
-  // @@protoc_insertion_point(field_add:GameProto.ServerMsg.roomInfos)
+  // @@protoc_insertion_point(field_add:GameProto.ServerMsg.roominfos)
   return roominfos_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::GameProto::RoomInfo >*
 ServerMsg::mutable_roominfos() {
-  // @@protoc_insertion_point(field_mutable_list:GameProto.ServerMsg.roomInfos)
+  // @@protoc_insertion_point(field_mutable_list:GameProto.ServerMsg.roominfos)
   return &roominfos_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::GameProto::RoomInfo >&
 ServerMsg::roominfos() const {
-  // @@protoc_insertion_point(field_list:GameProto.ServerMsg.roomInfos)
+  // @@protoc_insertion_point(field_list:GameProto.ServerMsg.roominfos)
   return roominfos_;
 }
 
@@ -1681,6 +1738,23 @@ ServerMsg::roominfos() const {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace GameProto
+
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::GameProto::ServerEventCode> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::GameProto::ServerEventCode>() {
+  return ::GameProto::ServerEventCode_descriptor();
+}
+template <> struct is_proto_enum< ::GameProto::ClientEventCode> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::GameProto::ClientEventCode>() {
+  return ::GameProto::ClientEventCode_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

@@ -18,6 +18,7 @@
 #define MAX_FRAMEDATAS 100000
 const int HALL_PORT = 17000;
 const int SERVER_PORTS[] = {17001, 17002, 17003, 17004, 17005};
+const int inf = 1e9+7;
 
 typedef unsigned char byte;
 typedef unsigned int uint;

@@ -184,6 +184,7 @@ void InitDefaultsServerMsg() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[6];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[2];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -236,7 +237,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, code_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, fid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, str_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, inputs_),
@@ -266,7 +267,7 @@ void protobuf_AssignDescriptors() {
   ::google::protobuf::MessageFactory* factory = NULL;
   AssignDescriptors(
       "game_proto.proto", schemas, file_default_instances, TableStruct::offsets, factory,
-      file_level_metadata, NULL, NULL);
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
@@ -290,18 +291,30 @@ void AddDescriptorsImpl() {
       "ion\022\r\n\005state\030\005 \001(\005\"J\n\013PlayerInput\022\014\n\004nam"
       "e\030\001 \001(\t\022\016\n\006torque\030\002 \001(\002\022\r\n\005grasp\030\003 \001(\010\022\016"
       "\n\006attach\030\004 \001(\010\"9\n\010RoomInfo\022\n\n\002id\030\001 \001(\005\022\020"
-      "\n\010maxUsers\030\002 \001(\005\022\017\n\007members\030\003 \003(\t\"l\n\tCli"
-      "entMsg\022\014\n\004type\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\020\n\010pa"
-      "ssword\030\003 \001(\t\022\n\n\002id\030\004 \001(\005\022%\n\005input\030\005 \001(\0132"
-      "\026.GameProto.PlayerInput\"\253\001\n\tServerMsg\022\014\n"
-      "\004code\030\001 \001(\005\022\013\n\003fid\030\002 \001(\005\022\013\n\003str\030\003 \001(\t\022&\n"
-      "\006inputs\030\004 \003(\0132\026.GameProto.PlayerInput\022&\n"
-      "\006states\030\005 \003(\0132\026.GameProto.PlayerState\022&\n"
-      "\troomInfos\030\006 \003(\0132\023.GameProto.RoomInfob\006p"
-      "roto3"
+      "\n\010maxusers\030\002 \001(\005\022\017\n\007members\030\003 \003(\t\"\210\001\n\tCl"
+      "ientMsg\022(\n\004type\030\001 \001(\0162\032.GameProto.Client"
+      "EventCode\022\014\n\004name\030\002 \001(\t\022\020\n\010password\030\003 \001("
+      "\t\022\n\n\002id\030\004 \001(\005\022%\n\005input\030\005 \001(\0132\026.GameProto"
+      ".PlayerInput\"\307\001\n\tServerMsg\022(\n\004type\030\001 \001(\016"
+      "2\032.GameProto.ServerEventCode\022\013\n\003fid\030\002 \001("
+      "\005\022\013\n\003str\030\003 \001(\t\022&\n\006inputs\030\004 \003(\0132\026.GamePro"
+      "to.PlayerInput\022&\n\006states\030\005 \003(\0132\026.GamePro"
+      "to.PlayerState\022&\n\troominfos\030\006 \003(\0132\023.Game"
+      "Proto.RoomInfo*\324\002\n\017ServerEventCode\022\020\n\014Lo"
+      "gInSuccess\020\000\022\023\n\017RegisterSuccess\020\001\022\024\n\020Ent"
+      "erRoomSuccess\020\002\022\037\n\033LogInError_AccountDon"
+      "tExist\020\003\022\034\n\030LogInError_PasswordWrong\020\004\022\026"
+      "\n\022LogInError_ReLogIn\020\005\022%\n!RegisterError_"
+      "AccountAlreadyExist\020\006\022\034\n\030EnterRoomError_"
+      "DontLogIn\020\007\022\035\n\031EnterRoomError_RoomIsFull"
+      "\020\010\022\021\n\rInternalError\020\t\022\021\n\rBroadRoomInfo\020\n"
+      "\022\026\n\022JumpToBattleServer\020\013\022\013\n\007S2CSync\020\014*P\n"
+      "\017ClientEventCode\022\t\n\005LogIn\020\000\022\n\n\006Regist\020\001\022"
+      "\r\n\tEnterRoom\020\002\022\013\n\007C2SSync\020\003\022\n\n\006Follow\020\004b"
+      "\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 605);
+      descriptor, 1087);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_proto.proto", &protobuf_RegisterTypes);
 }
@@ -318,6 +331,48 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_game_5fproto_2eproto
 namespace GameProto {
+const ::google::protobuf::EnumDescriptor* ServerEventCode_descriptor() {
+  protobuf_game_5fproto_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_game_5fproto_2eproto::file_level_enum_descriptors[0];
+}
+bool ServerEventCode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* ClientEventCode_descriptor() {
+  protobuf_game_5fproto_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_game_5fproto_2eproto::file_level_enum_descriptors[1];
+}
+bool ClientEventCode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -1422,7 +1477,7 @@ void RoomInfo::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int RoomInfo::kIdFieldNumber;
-const int RoomInfo::kMaxUsersFieldNumber;
+const int RoomInfo::kMaxusersFieldNumber;
 const int RoomInfo::kMembersFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1521,7 +1576,7 @@ bool RoomInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 maxUsers = 2;
+      // int32 maxusers = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
@@ -1583,7 +1638,7 @@ void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // int32 maxUsers = 2;
+  // int32 maxusers = 2;
   if (this->maxusers() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->maxusers(), output);
   }
@@ -1617,7 +1672,7 @@ void RoomInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // int32 maxUsers = 2;
+  // int32 maxusers = 2;
   if (this->maxusers() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->maxusers(), target);
   }
@@ -1664,7 +1719,7 @@ size_t RoomInfo::ByteSizeLong() const {
         this->id());
   }
 
-  // int32 maxUsers = 2;
+  // int32 maxusers = 2;
   if (this->maxusers() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1863,14 +1918,15 @@ bool ClientMsg::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 type = 1;
+      // .GameProto.ClientEventCode type = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &type_)));
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_type(static_cast< ::GameProto::ClientEventCode >(value));
         } else {
           goto handle_unusual;
         }
@@ -1961,9 +2017,10 @@ void ClientMsg::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 type = 1;
+  // .GameProto.ClientEventCode type = 1;
   if (this->type() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
   }
 
   // string name = 2;
@@ -2011,9 +2068,10 @@ void ClientMsg::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 type = 1;
+  // .GameProto.ClientEventCode type = 1;
   if (this->type() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
   }
 
   // string name = 2;
@@ -2088,11 +2146,10 @@ size_t ClientMsg::ByteSizeLong() const {
         *this->input_);
   }
 
-  // int32 type = 1;
+  // .GameProto.ClientEventCode type = 1;
   if (this->type() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->type());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
   }
 
   // int32 id = 4;
@@ -2194,12 +2251,12 @@ void ClientMsg::InternalSwap(ClientMsg* other) {
 void ServerMsg::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int ServerMsg::kCodeFieldNumber;
+const int ServerMsg::kTypeFieldNumber;
 const int ServerMsg::kFidFieldNumber;
 const int ServerMsg::kStrFieldNumber;
 const int ServerMsg::kInputsFieldNumber;
 const int ServerMsg::kStatesFieldNumber;
-const int ServerMsg::kRoomInfosFieldNumber;
+const int ServerMsg::kRoominfosFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerMsg::ServerMsg()
@@ -2222,17 +2279,17 @@ ServerMsg::ServerMsg(const ServerMsg& from)
   if (from.str().size() > 0) {
     str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.str_);
   }
-  ::memcpy(&code_, &from.code_,
+  ::memcpy(&type_, &from.type_,
     static_cast<size_t>(reinterpret_cast<char*>(&fid_) -
-    reinterpret_cast<char*>(&code_)) + sizeof(fid_));
+    reinterpret_cast<char*>(&type_)) + sizeof(fid_));
   // @@protoc_insertion_point(copy_constructor:GameProto.ServerMsg)
 }
 
 void ServerMsg::SharedCtor() {
   str_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&code_, 0, static_cast<size_t>(
+  ::memset(&type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&fid_) -
-      reinterpret_cast<char*>(&code_)) + sizeof(fid_));
+      reinterpret_cast<char*>(&type_)) + sizeof(fid_));
   _cached_size_ = 0;
 }
 
@@ -2278,9 +2335,9 @@ void ServerMsg::Clear() {
   states_.Clear();
   roominfos_.Clear();
   str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&code_, 0, static_cast<size_t>(
+  ::memset(&type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&fid_) -
-      reinterpret_cast<char*>(&code_)) + sizeof(fid_));
+      reinterpret_cast<char*>(&type_)) + sizeof(fid_));
   _internal_metadata_.Clear();
 }
 
@@ -2294,14 +2351,15 @@ bool ServerMsg::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 code = 1;
+      // .GameProto.ServerEventCode type = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &code_)));
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_type(static_cast< ::GameProto::ServerEventCode >(value));
         } else {
           goto handle_unusual;
         }
@@ -2360,7 +2418,7 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .GameProto.RoomInfo roomInfos = 6;
+      // repeated .GameProto.RoomInfo roominfos = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
@@ -2397,9 +2455,10 @@ void ServerMsg::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 code = 1;
-  if (this->code() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
+  // .GameProto.ServerEventCode type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
   }
 
   // int32 fid = 2;
@@ -2431,7 +2490,7 @@ void ServerMsg::SerializeWithCachedSizes(
       5, this->states(static_cast<int>(i)), output);
   }
 
-  // repeated .GameProto.RoomInfo roomInfos = 6;
+  // repeated .GameProto.RoomInfo roominfos = 6;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->roominfos_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -2452,9 +2511,10 @@ void ServerMsg::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 code = 1;
-  if (this->code() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
+  // .GameProto.ServerEventCode type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
   }
 
   // int32 fid = 2;
@@ -2489,7 +2549,7 @@ void ServerMsg::SerializeWithCachedSizes(
         5, this->states(static_cast<int>(i)), deterministic, target);
   }
 
-  // repeated .GameProto.RoomInfo roomInfos = 6;
+  // repeated .GameProto.RoomInfo roominfos = 6;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->roominfos_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -2536,7 +2596,7 @@ size_t ServerMsg::ByteSizeLong() const {
     }
   }
 
-  // repeated .GameProto.RoomInfo roomInfos = 6;
+  // repeated .GameProto.RoomInfo roominfos = 6;
   {
     unsigned int count = static_cast<unsigned int>(this->roominfos_size());
     total_size += 1UL * count;
@@ -2554,11 +2614,10 @@ size_t ServerMsg::ByteSizeLong() const {
         this->str());
   }
 
-  // int32 code = 1;
-  if (this->code() != 0) {
+  // .GameProto.ServerEventCode type = 1;
+  if (this->type() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->code());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
   }
 
   // int32 fid = 2;
@@ -2604,8 +2663,8 @@ void ServerMsg::MergeFrom(const ServerMsg& from) {
 
     str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.str_);
   }
-  if (from.code() != 0) {
-    set_code(from.code());
+  if (from.type() != 0) {
+    set_type(from.type());
   }
   if (from.fid() != 0) {
     set_fid(from.fid());
@@ -2640,7 +2699,7 @@ void ServerMsg::InternalSwap(ServerMsg* other) {
   states_.InternalSwap(&other->states_);
   roominfos_.InternalSwap(&other->roominfos_);
   str_.Swap(&other->str_);
-  swap(code_, other->code_);
+  swap(type_, other->type_);
   swap(fid_, other->fid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
