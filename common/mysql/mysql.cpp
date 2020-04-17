@@ -1,7 +1,7 @@
 ﻿#include "mysql.h"
 
 
-int query_sql(const char* sql)
+int query_sql(const char* sql, std::string &result)
 {
 	MYSQL my_connection; /*这是一个数据库连接*/
 	int res; /*执行sql語句后的返回标志*/
@@ -52,7 +52,11 @@ int query_sql(const char* sql)
                     printf("\n=======================\n");
                 }
                 */
-				if (row > 0) return QUERY_OK;
+                if (row > 0) {
+                    MYSQL_ROW res_row = mysql_fetch_row(res_ptr);
+                    result = res_row[1];
+                    return QUERY_OK;
+                }
                 return QUERY_EMPTY;
 			}
 			/*不要忘了关闭连接*/

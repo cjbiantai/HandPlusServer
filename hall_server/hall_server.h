@@ -9,6 +9,13 @@
 #include "service_mgr.h"
 #include "room_info.h"
 #include "config.h"
+#include "player_info.h"
+
+struct ResPlayerInfo {
+    std::string account;
+    std::string password;
+    std::string nickname;
+};
 
 //大厅服务器进程，处理登录,注册，房间等事件
 class hallServer : serverBase {
@@ -63,13 +70,19 @@ public:
 
 private:
     std::string tableName; //数据库表名
-    int oneRoomMaxUsers, roomNumber, servicePressureLimit;    //单个房间最大的用户数量, 房间的最大数量, 服务器最大负载
-    std::map<int, recvDataManager> c2SDataMap; //clientfd对应的缓冲区，处理沾包
-    std::map<int, std::string> fdUserMap;   //clientfd到用户名的映射
-    std::map<int, roomInfo> roomMap;    //房间id到房间信息的映射
-    std::map<std::string, std::string> userHostMap; //用户名到服务器信息的映射
-    std::vector<service_mgr> serviceList;  //存放战斗服务器信息
-    std::set<std::string> onlineUsers;  //在线用户用户名集合
-    std::set<int> onlineClients;    //在线clientfd集合
+    int oneRoomMaxUsers, roomNumber, servicePressureLimit;      //单个房间最大的用户数量, 房间的最大数量, 服务器最大负载
+    std::map<int, recvDataManager> c2SDataMap;                  //clientfd对应的缓冲区，处理沾包
+    std::map<int, int> fdUserMap;                               //clientfd 到玩家uid的映射
+    std::map<int, int> userFdMap;                               //玩家uid到clientfd的映射
+    std::map<int, roomInfo> roomMap;                            //房间rid到房间信息的映射
+    std::map<int, int> userRoomMap;                             //用户uid到房间rid的映射
+    std::map<int, std::string> uidAccountMap;                   //用户uid到账号的映射
+    std::map<int, playerInfo> userInfoMap;                      //用户uid到用户信息的映射
+    std::set<int> onlineUsers;                                  //在线用户uid集合
+    std::set<int> inHallUsers;                                  //未进入房间的用户uid集合
+    std::set<std::string> loginAccount;                         //所有已登录的账号集合
+    std::vector<service_mgr> serviceList;                       //存放战斗服务器信息
+    std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
+    ///
 };
 

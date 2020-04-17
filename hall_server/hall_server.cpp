@@ -1,5 +1,15 @@
 #include "hall_server.h"
 
+unsigned int uid = 0, rid = 0;
+
+unsigned int GetUid() {
+    return ++uid;
+}
+
+unsigned int GetRid() {
+    return ++rid;
+}
+
 hallServer::hallServer(Config config) : serverBase(config.hallPort) {
     for(int i = 0; i < config.serviceConfigs.size(); ++i) {
         serviceConfig tmpServiceConfig = config.serviceConfigs[i];
@@ -45,22 +55,27 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
                 HandleRegist(clientMsg, clientFd);
                 break;
             case GameProto::EnterRoom :
-                HandleSelectRoom(clientMsg, clientFd);
+ //               HandleSelectRoom(clientMsg, clientFd);
                 break;
         }
         break;
     }
 }
+
+
 void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
-    std::string sqlQuery = "select * from " + tableName + " where name = '" + clientMsg.name() + "' and password = '" + clientMsg.password() + "';";
-    int ret = query_sql(sqlQuery.c_str());
+    std::string queryResult;
+    std::string sqlQuery = "select * from " + tableName + " where account = '" + clientMsg.playerinfo().account() + "';";
+    GameProto::PlayerInfo playerData;
+    int ret = query_sql(sqlQuery.c_str(), queryResult);
+    playerData.ParseFromString(queryResult);
     printf("%s\n", sqlQuery.c_str());
     switch(ret) {
         case CONNECT_TO_SQL_ERROR:
             serverMsg.set_type(GameProto::InternalError);
             serverMsg.set_str("服务器出错了");
-            //连接数据库出错
+             //连接数据库出错
             break;
         case QUERY_SQL_ERROR:
             serverMsg.set_type(GameProto::InternalError);
@@ -68,36 +83,43 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             //数据库语句出错
             break;
         case QUERY_EMPTY:
-            sqlQuery = "select * from " + tableName + " where name = '" + clientMsg.name() + "';";
-            ret = query_sql(sqlQuery.c_str());
-            if(ret == QUERY_EMPTY) {
-                serverMsg.set_type(GameProto::LogInError_AccountDontExist);
-                serverMsg.set_str("账号不存在");
-            }else if(ret == QUERY_OK) {
-                serverMsg.set_type(GameProto::LogInError_PasswordWrong);
-                serverMsg.set_str("密码错误");
-            }else {
-                serverMsg.set_type(GameProto::InternalError);
-                serverMsg.set_str("服务器错误");
-            }
+            serverMsg.set_type(GameProto::LogInError_AccountDontExist);
+            serverMsg.set_str("账号不存在");
             //用户账号或密码错误
             break;
         case QUERY_OK:
-            if(onlineUsers.find(clientMsg.name()) != onlineUsers.end()) {
+            if(clientMsg.playerinfo().password() != playerData.password()) {
+                serverMsg.set_type(GameProto::LogInError_PasswordWrong);
+                serverMsg.set_str("密码错误");
+                break;
+            }
+            if(loginAccount.find(clientMsg.playerinfo().account()) != loginAccount.end()) {
                 serverMsg.set_type(GameProto::LogInError_ReLogIn);
                 serverMsg.set_str("用户已登录");
                 break;
             }
-            fdUserMap[clientFd] = clientMsg.name();
-            onlineUsers.insert(clientMsg.name());
-            onlineClients.insert(clientFd);
+            playerInfo tempPlayerInfo = playerInfo(playerData.account(), playerData.nickname());
+            fdUserMap[clientFd] = tempPlayerInfo.GetUid();
+            userFdMap[tempPlayerInfo.GetUid()] = clientFd;
+            uidAccountMap[tempPlayerInfo.GetUid()] = playerData.account();
+            userInfoMap[tempPlayerInfo.GetUid()] = tempPlayerInfo;
+            onlineUsers.insert(tempPlayerInfo.GetUid());
+            inHallUsers.insert(tempPlayerInfo.GetUid());
+            loginAccount.insert(playerData.account());
             serverMsg.set_type(GameProto::LogInSuccess);
-            if(userHostMap.find(clientMsg.name()) != userHostMap.end()) {
-                serverMsg.set_str(userHostMap[clientMsg.name()]);
-            }else {
+            GameProto::PlayerInfo playerInfoMsg;
+            playerInfoMsg.set_account(playerData.account());
+            playerInfoMsg.set_nickname(playerData.nickname());
+            playerInfoMsg.set_uid(playerData.uid());
+            GameProto::PlayerInfo *ptr = serverMsg.mutable_playerinfo();
+            ptr -> CopyFrom(playerInfoMsg);
+            std::cout <<" === " << serverMsg.playerinfo().nickname() << std::endl;
+            if(accountRoomMap.find(playerData.account()) != accountRoomMap.end()) {
+                serverMsg.set_str(roomMap[accountRoomMap[playerData.account()]].serviceAddr);
+            } else {
                 serverMsg.set_str("登录成功");
             }
-            BroadRoomInfo();
+ //           BroadRoomInfo();
             //登录成功
             break;
     }
@@ -107,8 +129,9 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
 
 void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
-    std::string sqlQuery = "insert into " + tableName + " values('" + clientMsg.name() + "', '" + clientMsg.password() + "');";
-    int ret = query_sql(sqlQuery.c_str());   
+    std::string playerData = clientMsg.playerinfo().SerializeAsString();
+    std::string sqlQuery = "insert into " + tableName + " values('" + clientMsg.playerinfo().account() + "', '" + playerData + "');";
+    int ret = query_sql(sqlQuery.c_str(), playerData);   
     switch(ret) {
         case CONNECT_TO_SQL_ERROR :
             serverMsg.set_type(GameProto::InternalError);
@@ -129,6 +152,7 @@ void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
     HandleSendDataToClient(serverMsg, clientFd);
 }
 
+/*
 void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
     roomInfo &roominfo = roomMap[clientMsg.id()];
@@ -166,7 +190,7 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
         }
     }
 
-    BroadRoomInfo();    
+   // BroadRoomInfo();    
 }
 
 void hallServer::BroadRoomInfo() {
@@ -186,6 +210,7 @@ void hallServer::BroadRoomInfo() {
         HandleSendDataToClient(serverMsg, fd);
     }
 }
+*/
 
 void hallServer::HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd) {
     if(!serverMsg.SerializeToArray(bData.GetBuffArray() + HEAD_LENGTH, BUFF_SIZE)) {
@@ -202,9 +227,9 @@ void hallServer::HandleClose(int clientFd) {
         room.second.userSet.erase(clientFd);
     }
     c2SDataMap.erase(clientFd);
+    loginAccount.erase(uidAccountMap[fdUserMap[clientFd]]);
     onlineUsers.erase(fdUserMap[clientFd]);
     fdUserMap.erase(clientFd);
-    onlineClients.erase(clientFd);
 }
 
 void hallServer::Work() {
