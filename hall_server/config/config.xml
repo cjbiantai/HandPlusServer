@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- 大厅服务器配置文件 -->
-<process hall_port="16000">
+<process hall_port="17000">
     <!-- 数据库表名 -->
     <sql_table table_name = "USER" />
     <!-- 房间配置 -->

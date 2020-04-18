@@ -21,12 +21,23 @@ enum ServerEventCode {
 	
 	EnterRoomError_DontLogIn = 7;
 	EnterRoomError_RoomIsFull = 8;
+    EnterRoomError_RoomDontExit = 9;
 
-	InternalError = 9;
+	InternalError = 10;
 
-    BroadRoomInfo = 10;
-	JumpToBattleServer = 11;
-	S2CSync = 12;
+    BroadRoomListInfo = 11;
+    BroadRoomInfo = 12;
+	JumpToBattleServer = 13;
+	S2CSync = 14;
+
+
+    ExitRoomSuccess = 15;
+    ExitRoomError_DontLogIn = 16;
+    ExitRoomError_RoomIsEmpty = 17;
+
+    CreateRoomSuccess = 18;
+
+
 }
 
 //C2S事件码
@@ -35,8 +46,11 @@ enum ClientEventCode {
 	Regist = 1;
     CreateRoom = 2;
 	EnterRoom = 3;
-	C2SSync = 4;
-	Follow = 5;
+    ExitRoom = 4;
+	C2SSync = 5;
+	Follow = 6;
+    ChangeStateInRoom = 7;
+    StartGame = 8;
 }
 
 //玩家信息
@@ -59,10 +73,18 @@ message PlayerState{
 
 //玩家一次操作
 message PlayerInput{
-	string name=1;
-	float torque=2;
-	bool grasp=3;
-	bool attach=4;
+
+	//玩家头(视角)朝向
+	int64 headTowardsX = 1;
+	int64 headTowardsY = 2;
+	int64 headTowardsZ = 3;
+
+	//玩家移动速度
+	int64 moveDirectionX = 4;
+	int64 moveDirectionY = 5;
+
+	//使用的道具在背包中的ID   技能也是道具
+	int32 usePropsInPackID = 6;
 }
 
 //房间信息
@@ -79,13 +101,14 @@ message RoomInfo {
     int32 id = 1;
     int32 roundTime = 2;
     int32 roundNumber = 3;
-    string roomName =4;
+    string roomName = 4;
     string mapName = 5;
     string password = 6;
     int32 maxPlayers = 7;
-    repeated int32 preparedPlayers = 8;
-    repeated int32 unPreparedPlayers = 9;
-    int32 master = 10;
+    int32 curPlayerNumber = 8;
+    repeated PlayerInfo preparedPlayers = 9;
+    repeated PlayerInfo unPreparedPlayers = 10;
+    int32 master = 11;
 }
 
 //客户端数据包
@@ -95,12 +118,10 @@ message RoomInfo {
 //同步：type=Sync,input
 //追帧：type=Follow, playerinfo(uid),id=fid
 message ClientMsg{
-	ClientEventCode type=1;
-	string name=2;
-	string password=3;
-	int32 id=4;
-    PlayerInfo playerinfo = 5;
-	PlayerInput input=6;
+	ClientEventCode type = 1;
+    PlayerInfo playerinfo = 2;
+	PlayerInput input = 3 ;
+	RoomInfo roominfo = 4;
 }
 
 
@@ -116,7 +137,8 @@ message ServerMsg{
 	int32 fid=2;
 	string str=3;
     PlayerInfo playerInfo = 4;
-	repeated PlayerInput inputs=5;
-	repeated PlayerState states=6;
-    repeated RoomInfo roominfos=7;
+	int32 framID = 5;
+	repeated PlayerInput inputs=6;
+	repeated PlayerState states=7;
+    repeated RoomInfo roominfos=8;
 }

@@ -51,18 +51,43 @@ public:
      */
     void HandleRegist(GameProto::ClientMsg clientMsg, int clientFd);
     /**
+     * @brief 处理创建房间事件
+     * @param clientMsg 反序列化的客户端发送的数据
+     * @param clientFd 客户端fd
+     */
+    void HandleCreateRoom(GameProto::ClientMsg clientMsg, int clientFd);
+
+    /**
      * @brief 处理进入房间事件
      * @param clientMsg 反序列化的客户端发送的数据
      * @param clientFd 客户端fd
      */
     void HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd);
-    /*
+    /**
+     * @brief 处理退出房间事件
+     * @param clientMsg  反序列化的客户端发送的数据
+     * @param clientFd 客户端fd
+     */
+    void HandleExitRoom(GameProto::ClientMsg clientMsg, int clientFd);
+    /**
+     * @brief 处理准备未准备改变
+     * @param clientMsg  反序列化的客户端发送的数据
+     * @param clientFd 客户端fd
+     */
+    void HandleChangeStateInRoom(GameProto::ClientMsg clientMsg, int clientFd);
+    /**
+     * @brief 处理开始游戏事件
+     * @param clientMsg  反序列化的客户端发送的数据
+     * @param clientFd 客户端fd
+     */
+    void HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd);
+    /**
      * @brief 处理发送数据给单个客户端的情况
      * @param serverMsg 未序列化的发给客户端的数据
      * @param clientFd 客户端fd
      */
     void HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd);
-    /*
+    /**
      * @brief 广播房间信息, 仅当房间信息改变了才会调用
      */
     void BroadRoomInfo();
@@ -83,6 +108,5 @@ private:
     std::set<std::string> loginAccount;                         //所有已登录的账号集合
     std::vector<service_mgr> serviceList;                       //存放战斗服务器信息
     std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
-    ///
 };
 

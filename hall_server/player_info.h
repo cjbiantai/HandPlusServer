@@ -19,18 +19,13 @@ public:
     }
 
     std::string GetNickName() {return nickName;}
-    int GetUid() {return uid;}
     void SetUid(int uid) {this->uid = uid;}
 
-    int GetRid() {return rid;}
     void SetRid(int rid) {this->rid = rid;}
 
-
-
+    int uid,rid;
 private:
-    int uid;
     std::string account;
     std::string nickName;
-    int rid;
 };
 
