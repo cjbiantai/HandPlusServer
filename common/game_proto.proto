@@ -2,53 +2,136 @@ syntax="proto3";
 package GameProto;
 
 message Position{
-	float x=1;
-	float y=2;
-	float z=3;
+        float x=1;
+        float y=2;
+        float z=3;
 }
 
+//S2C事件码
+enum ServerEventCode {
+        LogInSuccess = 0;
+        RegisterSuccess = 1;
+        EnterRoomSuccess = 2;
+        
+        LogInError_AccountDontExist = 3;
+        LogInError_PasswordWrong = 4;
+        LogInError_ReLogIn = 5;
+
+        RegisterError_AccountAlreadyExist = 6;
+        
+        EnterRoomError_DontLogIn = 7;
+        EnterRoomError_RoomIsFull = 8;
+
+        InternalError = 9;
+
+        BroadRoomInfo = 10;
+        JumpToBattleServer = 11;
+        S2CSync = 12;
+}
+
+//C2S事件码
+enum ClientEventCode {
+        LogIn = 0;
+        Regist = 1;
+        CreateRoom = 2;
+        EnterRoom = 3;
+        ExitRoom = 4;
+        C2SSync = 5;
+        Follow = 6;
+}
+
+//玩家信息
+message PlayerInfo{
+    int32 uid = 1;
+    string account = 2;
+    string password = 3;
+    string nickname = 4;
+    int32 roomid = 5;
+    //后续添加
+}
 //玩家状态
 message PlayerState{
-	int32 fid=1;
-	string name=2;
-	float yaw=3;
-	Position pos=4;
-	int32 state=5;
+        int32 fid=1;
+        string name=2;
+        float yaw=3;
+        Position pos=4;
+        int32 state=5;
 }
 
 //玩家一次操作
 message PlayerInput{
-	string name=1;
-	float torque=2;
-	bool grasp=3;
-	bool attach=4;
+
+        //玩家唯一标示符
+        int32 uID = 1;
+
+        //玩家头(视角)朝向
+        int64 headTowardsX = 2;
+        int64 headTowardsY = 3;
+        int64 headTowardsZ = 4;
+
+        //玩家移动速度
+        int64 moveDirectionX = 5;
+        int64 moveDirectionY = 6;
+
+        //使用的道具在背包中的ID   技能也是道具
+        int32 usePropsInPackID = 7;
+}
+
+//房间信息
+//房间id 
+//每局时间
+//局数
+//地图名
+//房间密码
+//最大玩家数量
+//准备中的玩家
+//未准备的玩家
+//房主
+message RoomInfo {
+    int32 id = 1;
+    int32 roundTime = 2;
+    int32 roundNumber = 3;
+    string roomName =4;
+    string mapName = 5;
+    string password = 6;
+    int32 maxPlayers = 7;
+    repeated int32 preparedPlayers = 8;
+    repeated int32 unPreparedPlayers = 9;
+    int32 master = 10;
 }
 
 //客户端数据包
-//登录：type=0,name,password
-//注册：type=1,name,password
-//进房间：type=2,name,id=room_id
-//同步：type=3,input
-//追帧：type=4,name,id=fid
+//登录：type=LogIn,playerinfo(account, password)
+//注册：type=Regist,playerinfo(account, password, nickname)
+//进房间：type=EnterRoom, playerInfo(uid),id=room_id
+//同步：type=Sync,input
+//追帧：type=Follow, playerinfo(uid),id=fid
 message ClientMsg{
-	int32 type=1;
-	string name=2;
-	string password=3;
-	int32 id=4;
-	PlayerInput input=5;
+        ClientEventCode type=1;
+        string name=2;
+        string password=3;
+        int32 id=4;
+        PlayerInfo playerinfo = 5;
+        PlayerInput input=6;
+        RoomInfo roominfo=7;
 }
 
+
 //服务器数据包
-//登录成功：code=0
-//注册成功：code=0
-//进房间成功：code=0,fid=房间人数
-//登录，注册，进房间失败：code=1,str
-//房间满：code=2,str=ip:port
-//同步：code=3,fid,inputs,(states?)
+//登录成功：type = LogInSuccess playerinfo(), roominfos
+//注册成功：type = RegistSuccess 
+//进房间成功：type = EnterRoomSuccess, roominfos
+//登录，注册，进房间失败：type=Failure,str
+//跳转服务器: type=JumpToBattleServer,str=ip:port
+//同步：type = Sync,fid,inputs,(states?)
 message ServerMsg{
-	int32 code=1;
-	int32 fid=2;
-	string str=3;
-	repeated PlayerInput inputs=4;
-	repeated PlayerState states=5;
+        ServerEventCode type=1;
+        int32 fid=2;
+        string str=3;
+        PlayerInfo playerInfo = 4;
+        int32 framID = 5;
+        repeated PlayerInput inputs=6;
+        repeated PlayerState states=7;
+        repeated RoomInfo roominfos=8;
 }
+

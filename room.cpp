@@ -45,7 +45,7 @@ void Room::Broadcast(){
 	if(!state)
 		return;
 	ServerMsg frame;
-	frame.set_code(3);
+	frame.set_type(S2CSync);
 	frame.set_fid(frames.size());
 	PlayerInput *input;
 	for(int i=0;i<players.size();i++){

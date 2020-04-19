@@ -15,7 +15,7 @@ int main(){
 #endif
     //SETTRACELEVEL(log_mask_all);
     SocketError::sync=sync;
-    Server server(233,sync);
+    Server server(12345,sync);
     while(true) {
         server.WorkOnce();
     }
