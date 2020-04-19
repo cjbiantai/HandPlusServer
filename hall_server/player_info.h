@@ -19,6 +19,10 @@ public:
     }
 
     std::string GetNickName() {return nickName;}
+    std::string GetCharacterName() {return characterName;}
+
+    void SetCharacterName(std::string characterName) {this->characterName = characterName;}
+
     void SetUid(int uid) {this->uid = uid;}
 
     void SetRid(int rid) {this->rid = rid;}
@@ -27,5 +31,6 @@ public:
 private:
     std::string account;
     std::string nickName;
+    std::string characterName;
 };
 

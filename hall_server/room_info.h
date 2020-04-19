@@ -17,8 +17,7 @@ public:
     std::string password;                       //房间密码
     int maxPlayers;                             //最大玩家数
     std::string serviceAddr;                    //房间的服务器地址
-    std::set<int> preparedPlayers;              //准备中的玩家uid集合
-    std::set<int> unPreparedPlayers;            //未准备的玩家
+    std::set<int> Players;              //准备中的玩家uid集合
     int master;                                 //房主uid
 };
 

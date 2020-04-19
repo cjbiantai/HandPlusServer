@@ -7,3 +7,7 @@ service_mgr::service_mgr(std::string serviceIp, int servicePort, int serviceId) 
     this -> servicePressure = 0;
 }
 
+bool service_mgr::operator < (const service_mgr &a)const {
+    return servicePressure < a.servicePressure;
+}
+

@@ -235,6 +235,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, password_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, nickname_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, roomid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, charactername_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, prepared_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerState, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -250,6 +252,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInput, uid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInput, headtowardsx_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInput, headtowardsy_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInput, headtowardsz_),
@@ -269,8 +272,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, password_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, maxplayers_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, curplayernumber_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, preparedplayers_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, unpreparedplayers_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, players_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, master_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ClientMsg, _internal_metadata_),
@@ -289,6 +291,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, fid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, str_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, ip_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, port_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, playerinfo_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, framid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::ServerMsg, inputs_),
@@ -298,11 +302,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::GameProto::Position)},
   { 8, -1, sizeof(::GameProto::PlayerInfo)},
-  { 18, -1, sizeof(::GameProto::PlayerState)},
-  { 28, -1, sizeof(::GameProto::PlayerInput)},
-  { 39, -1, sizeof(::GameProto::RoomInfo)},
-  { 55, -1, sizeof(::GameProto::ClientMsg)},
-  { 64, -1, sizeof(::GameProto::ServerMsg)},
+  { 20, -1, sizeof(::GameProto::PlayerState)},
+  { 30, -1, sizeof(::GameProto::PlayerInput)},
+  { 42, -1, sizeof(::GameProto::RoomInfo)},
+  { 57, -1, sizeof(::GameProto::ClientMsg)},
+  { 66, -1, sizeof(::GameProto::ServerMsg)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -338,54 +342,55 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\020game_proto.proto\022\tGameProto\"+\n\010Positio"
-      "n\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"^\n\nPl"
-      "ayerInfo\022\013\n\003uid\030\001 \001(\005\022\017\n\007account\030\002 \001(\t\022\020"
-      "\n\010password\030\003 \001(\t\022\020\n\010nickname\030\004 \001(\t\022\016\n\006ro"
-      "omid\030\005 \001(\005\"f\n\013PlayerState\022\013\n\003fid\030\001 \001(\005\022\014"
-      "\n\004name\030\002 \001(\t\022\013\n\003yaw\030\003 \001(\002\022 \n\003pos\030\004 \001(\0132\023"
-      ".GameProto.Position\022\r\n\005state\030\005 \001(\005\"\231\001\n\013P"
-      "layerInput\022\024\n\014headTowardsX\030\001 \001(\003\022\024\n\014head"
-      "TowardsY\030\002 \001(\003\022\024\n\014headTowardsZ\030\003 \001(\003\022\026\n\016"
-      "moveDirectionX\030\004 \001(\003\022\026\n\016moveDirectionY\030\005"
-      " \001(\003\022\030\n\020usePropsInPackID\030\006 \001(\005\"\222\002\n\010RoomI"
-      "nfo\022\n\n\002id\030\001 \001(\005\022\021\n\troundTime\030\002 \001(\005\022\023\n\013ro"
-      "undNumber\030\003 \001(\005\022\020\n\010roomName\030\004 \001(\t\022\017\n\007map"
-      "Name\030\005 \001(\t\022\020\n\010password\030\006 \001(\t\022\022\n\nmaxPlaye"
-      "rs\030\007 \001(\005\022\027\n\017curPlayerNumber\030\010 \001(\005\022.\n\017pre"
-      "paredPlayers\030\t \003(\0132\025.GameProto.PlayerInf"
-      "o\0220\n\021unPreparedPlayers\030\n \003(\0132\025.GameProto"
-      ".PlayerInfo\022\016\n\006master\030\013 \001(\005\"\256\001\n\tClientMs"
-      "g\022(\n\004type\030\001 \001(\0162\032.GameProto.ClientEventC"
-      "ode\022)\n\nplayerinfo\030\002 \001(\0132\025.GameProto.Play"
-      "erInfo\022%\n\005input\030\003 \001(\0132\026.GameProto.Player"
-      "Input\022%\n\010roominfo\030\004 \001(\0132\023.GameProto.Room"
-      "Info\"\202\002\n\tServerMsg\022(\n\004type\030\001 \001(\0162\032.GameP"
-      "roto.ServerEventCode\022\013\n\003fid\030\002 \001(\005\022\013\n\003str"
-      "\030\003 \001(\t\022)\n\nplayerInfo\030\004 \001(\0132\025.GameProto.P"
-      "layerInfo\022\016\n\006framID\030\005 \001(\005\022&\n\006inputs\030\006 \003("
-      "\0132\026.GameProto.PlayerInput\022&\n\006states\030\007 \003("
-      "\0132\026.GameProto.PlayerState\022&\n\troominfos\030\010"
-      " \003(\0132\023.GameProto.RoomInfo*\364\003\n\017ServerEven"
-      "tCode\022\020\n\014LogInSuccess\020\000\022\023\n\017RegisterSucce"
-      "ss\020\001\022\024\n\020EnterRoomSuccess\020\002\022\037\n\033LogInError"
-      "_AccountDontExist\020\003\022\034\n\030LogInError_Passwo"
-      "rdWrong\020\004\022\026\n\022LogInError_ReLogIn\020\005\022%\n!Reg"
-      "isterError_AccountAlreadyExist\020\006\022\034\n\030Ente"
-      "rRoomError_DontLogIn\020\007\022\035\n\031EnterRoomError"
-      "_RoomIsFull\020\010\022\037\n\033EnterRoomError_RoomDont"
-      "Exit\020\t\022\021\n\rInternalError\020\n\022\025\n\021BroadRoomLi"
-      "stInfo\020\013\022\021\n\rBroadRoomInfo\020\014\022\026\n\022JumpToBat"
-      "tleServer\020\r\022\013\n\007S2CSync\020\016\022\023\n\017ExitRoomSucc"
-      "ess\020\017\022\033\n\027ExitRoomError_DontLogIn\020\020\022\035\n\031Ex"
-      "itRoomError_RoomIsEmpty\020\021\022\025\n\021CreateRoomS"
-      "uccess\020\022*\224\001\n\017ClientEventCode\022\t\n\005LogIn\020\000\022"
-      "\n\n\006Regist\020\001\022\016\n\nCreateRoom\020\002\022\r\n\tEnterRoom"
-      "\020\003\022\014\n\010ExitRoom\020\004\022\013\n\007C2SSync\020\005\022\n\n\006Follow\020"
-      "\006\022\025\n\021ChangeStateInRoom\020\007\022\r\n\tStartGame\020\010b"
-      "\006proto3"
+      "n\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\207\001\n\nP"
+      "layerInfo\022\013\n\003uid\030\001 \001(\005\022\017\n\007account\030\002 \001(\t\022"
+      "\020\n\010password\030\003 \001(\t\022\020\n\010nickname\030\004 \001(\t\022\016\n\006r"
+      "oomid\030\005 \001(\005\022\025\n\rcharacterName\030\006 \001(\t\022\020\n\010pr"
+      "epared\030\007 \001(\010\"f\n\013PlayerState\022\013\n\003fid\030\001 \001(\005"
+      "\022\014\n\004name\030\002 \001(\t\022\013\n\003yaw\030\003 \001(\002\022 \n\003pos\030\004 \001(\013"
+      "2\023.GameProto.Position\022\r\n\005state\030\005 \001(\005\"\246\001\n"
+      "\013PlayerInput\022\013\n\003uid\030\001 \001(\005\022\024\n\014headTowards"
+      "X\030\002 \001(\003\022\024\n\014headTowardsY\030\003 \001(\003\022\024\n\014headTow"
+      "ardsZ\030\004 \001(\003\022\026\n\016moveDirectionX\030\005 \001(\003\022\026\n\016m"
+      "oveDirectionY\030\006 \001(\003\022\030\n\020usePropsInPackID\030"
+      "\007 \001(\005\"\330\001\n\010RoomInfo\022\n\n\002id\030\001 \001(\005\022\021\n\troundT"
+      "ime\030\002 \001(\005\022\023\n\013roundNumber\030\003 \001(\005\022\020\n\010roomNa"
+      "me\030\004 \001(\t\022\017\n\007mapName\030\005 \001(\t\022\020\n\010password\030\006 "
+      "\001(\t\022\022\n\nmaxPlayers\030\007 \001(\005\022\027\n\017curPlayerNumb"
+      "er\030\010 \001(\005\022&\n\007Players\030\t \003(\0132\025.GameProto.Pl"
+      "ayerInfo\022\016\n\006master\030\n \001(\005\"\256\001\n\tClientMsg\022("
+      "\n\004type\030\001 \001(\0162\032.GameProto.ClientEventCode"
+      "\022)\n\nplayerinfo\030\002 \001(\0132\025.GameProto.PlayerI"
+      "nfo\022%\n\005input\030\003 \001(\0132\026.GameProto.PlayerInp"
+      "ut\022%\n\010roominfo\030\004 \001(\0132\023.GameProto.RoomInf"
+      "o\"\234\002\n\tServerMsg\022(\n\004type\030\001 \001(\0162\032.GameProt"
+      "o.ServerEventCode\022\013\n\003fid\030\002 \001(\005\022\013\n\003str\030\003 "
+      "\001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port\030\005 \001(\005\022)\n\nplayerI"
+      "nfo\030\006 \001(\0132\025.GameProto.PlayerInfo\022\016\n\006fram"
+      "ID\030\007 \001(\005\022&\n\006inputs\030\010 \003(\0132\026.GameProto.Pla"
+      "yerInput\022&\n\006states\030\t \003(\0132\026.GameProto.Pla"
+      "yerState\022&\n\troominfos\030\n \003(\0132\023.GameProto."
+      "RoomInfo*\240\004\n\017ServerEventCode\022\020\n\014LogInSuc"
+      "cess\020\000\022\023\n\017RegisterSuccess\020\001\022\024\n\020EnterRoom"
+      "Success\020\002\022\037\n\033LogInError_AccountDontExist"
+      "\020\003\022\034\n\030LogInError_PasswordWrong\020\004\022\026\n\022LogI"
+      "nError_ReLogIn\020\005\022%\n!RegisterError_Accoun"
+      "tAlreadyExist\020\006\022\034\n\030EnterRoomError_DontLo"
+      "gIn\020\007\022\035\n\031EnterRoomError_RoomIsFull\020\010\022\037\n\033"
+      "EnterRoomError_RoomDontExit\020\t\022\021\n\rInterna"
+      "lError\020\n\022\025\n\021BroadRoomListInfo\020\013\022\021\n\rBroad"
+      "RoomInfo\020\014\022\026\n\022JumpToBattleServer\020\r\022\013\n\007S2"
+      "CSync\020\016\022\023\n\017ExitRoomSuccess\020\017\022\033\n\027ExitRoom"
+      "Error_DontLogIn\020\020\022\035\n\031ExitRoomError_RoomI"
+      "sEmpty\020\021\022\025\n\021CreateRoomSuccess\020\022\022\024\n\020Start"
+      "GameFailure\020\023\022\024\n\020StartGameSuccess\020\024*\224\001\n\017"
+      "ClientEventCode\022\t\n\005LogIn\020\000\022\n\n\006Regist\020\001\022\016"
+      "\n\nCreateRoom\020\002\022\r\n\tEnterRoom\020\003\022\014\n\010ExitRoo"
+      "m\020\004\022\013\n\007C2SSync\020\005\022\n\n\006Follow\020\006\022\025\n\021ChangeSt"
+      "ateInRoom\020\007\022\r\n\tStartGame\020\010b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1807);
+      descriptor, 1874);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_proto.proto", &protobuf_RegisterTypes);
 }
@@ -427,6 +432,8 @@ bool ServerEventCode_IsValid(int value) {
     case 16:
     case 17:
     case 18:
+    case 19:
+    case 20:
       return true;
     default:
       return false;
@@ -775,6 +782,8 @@ const int PlayerInfo::kAccountFieldNumber;
 const int PlayerInfo::kPasswordFieldNumber;
 const int PlayerInfo::kNicknameFieldNumber;
 const int PlayerInfo::kRoomidFieldNumber;
+const int PlayerInfo::kCharacterNameFieldNumber;
+const int PlayerInfo::kPreparedFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PlayerInfo::PlayerInfo()
@@ -802,9 +811,13 @@ PlayerInfo::PlayerInfo(const PlayerInfo& from)
   if (from.nickname().size() > 0) {
     nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
   }
+  charactername_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.charactername().size() > 0) {
+    charactername_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.charactername_);
+  }
   ::memcpy(&uid_, &from.uid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&roomid_) -
-    reinterpret_cast<char*>(&uid_)) + sizeof(roomid_));
+    static_cast<size_t>(reinterpret_cast<char*>(&prepared_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(prepared_));
   // @@protoc_insertion_point(copy_constructor:GameProto.PlayerInfo)
 }
 
@@ -812,9 +825,10 @@ void PlayerInfo::SharedCtor() {
   account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   password_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  charactername_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&uid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&roomid_) -
-      reinterpret_cast<char*>(&uid_)) + sizeof(roomid_));
+      reinterpret_cast<char*>(&prepared_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(prepared_));
   _cached_size_ = 0;
 }
 
@@ -827,6 +841,7 @@ void PlayerInfo::SharedDtor() {
   account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   password_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   nickname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  charactername_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PlayerInfo::SetCachedSize(int size) const {
@@ -861,9 +876,10 @@ void PlayerInfo::Clear() {
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  charactername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&uid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&roomid_) -
-      reinterpret_cast<char*>(&uid_)) + sizeof(roomid_));
+      reinterpret_cast<char*>(&prepared_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(prepared_));
   _internal_metadata_.Clear();
 }
 
@@ -953,6 +969,36 @@ bool PlayerInfo::MergePartialFromCodedStream(
         break;
       }
 
+      // string characterName = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_charactername()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->charactername().data(), static_cast<int>(this->charactername().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "GameProto.PlayerInfo.characterName"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool prepared = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &prepared_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1019,6 +1065,21 @@ void PlayerInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->roomid(), output);
   }
 
+  // string characterName = 6;
+  if (this->charactername().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->charactername().data(), static_cast<int>(this->charactername().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "GameProto.PlayerInfo.characterName");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->charactername(), output);
+  }
+
+  // bool prepared = 7;
+  if (this->prepared() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->prepared(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -1076,6 +1137,22 @@ void PlayerInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->roomid(), target);
   }
 
+  // string characterName = 6;
+  if (this->charactername().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->charactername().data(), static_cast<int>(this->charactername().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "GameProto.PlayerInfo.characterName");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->charactername(), target);
+  }
+
+  // bool prepared = 7;
+  if (this->prepared() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->prepared(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -1114,6 +1191,13 @@ size_t PlayerInfo::ByteSizeLong() const {
         this->nickname());
   }
 
+  // string characterName = 6;
+  if (this->charactername().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->charactername());
+  }
+
   // int32 uid = 1;
   if (this->uid() != 0) {
     total_size += 1 +
@@ -1126,6 +1210,11 @@ size_t PlayerInfo::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->roomid());
+  }
+
+  // bool prepared = 7;
+  if (this->prepared() != 0) {
+    total_size += 1 + 1;
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1169,11 +1258,18 @@ void PlayerInfo::MergeFrom(const PlayerInfo& from) {
 
     nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
   }
+  if (from.charactername().size() > 0) {
+
+    charactername_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.charactername_);
+  }
   if (from.uid() != 0) {
     set_uid(from.uid());
   }
   if (from.roomid() != 0) {
     set_roomid(from.roomid());
+  }
+  if (from.prepared() != 0) {
+    set_prepared(from.prepared());
   }
 }
 
@@ -1204,8 +1300,10 @@ void PlayerInfo::InternalSwap(PlayerInfo* other) {
   account_.Swap(&other->account_);
   password_.Swap(&other->password_);
   nickname_.Swap(&other->nickname_);
+  charactername_.Swap(&other->charactername_);
   swap(uid_, other->uid_);
   swap(roomid_, other->roomid_);
+  swap(prepared_, other->prepared_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
@@ -1641,6 +1739,7 @@ void PlayerState::InternalSwap(PlayerState* other) {
 void PlayerInput::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PlayerInput::kUidFieldNumber;
 const int PlayerInput::kHeadTowardsXFieldNumber;
 const int PlayerInput::kHeadTowardsYFieldNumber;
 const int PlayerInput::kHeadTowardsZFieldNumber;
@@ -1663,15 +1762,15 @@ PlayerInput::PlayerInput(const PlayerInput& from)
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&headtowardsx_, &from.headtowardsx_,
-    static_cast<size_t>(reinterpret_cast<char*>(&usepropsinpackid_) -
-    reinterpret_cast<char*>(&headtowardsx_)) + sizeof(usepropsinpackid_));
+    static_cast<size_t>(reinterpret_cast<char*>(&movedirectiony_) -
+    reinterpret_cast<char*>(&headtowardsx_)) + sizeof(movedirectiony_));
   // @@protoc_insertion_point(copy_constructor:GameProto.PlayerInput)
 }
 
 void PlayerInput::SharedCtor() {
   ::memset(&headtowardsx_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&usepropsinpackid_) -
-      reinterpret_cast<char*>(&headtowardsx_)) + sizeof(usepropsinpackid_));
+      reinterpret_cast<char*>(&movedirectiony_) -
+      reinterpret_cast<char*>(&headtowardsx_)) + sizeof(movedirectiony_));
   _cached_size_ = 0;
 }
 
@@ -1713,8 +1812,8 @@ void PlayerInput::Clear() {
   (void) cached_has_bits;
 
   ::memset(&headtowardsx_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&usepropsinpackid_) -
-      reinterpret_cast<char*>(&headtowardsx_)) + sizeof(usepropsinpackid_));
+      reinterpret_cast<char*>(&movedirectiony_) -
+      reinterpret_cast<char*>(&headtowardsx_)) + sizeof(movedirectiony_));
   _internal_metadata_.Clear();
 }
 
@@ -1728,10 +1827,24 @@ bool PlayerInput::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int64 headTowardsX = 1;
+      // int32 uid = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &uid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // int64 headTowardsX = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -1742,10 +1855,10 @@ bool PlayerInput::MergePartialFromCodedStream(
         break;
       }
 
-      // int64 headTowardsY = 2;
-      case 2: {
+      // int64 headTowardsY = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -1756,10 +1869,10 @@ bool PlayerInput::MergePartialFromCodedStream(
         break;
       }
 
-      // int64 headTowardsZ = 3;
-      case 3: {
+      // int64 headTowardsZ = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -1770,10 +1883,10 @@ bool PlayerInput::MergePartialFromCodedStream(
         break;
       }
 
-      // int64 moveDirectionX = 4;
-      case 4: {
+      // int64 moveDirectionX = 5;
+      case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -1784,10 +1897,10 @@ bool PlayerInput::MergePartialFromCodedStream(
         break;
       }
 
-      // int64 moveDirectionY = 5;
-      case 5: {
+      // int64 moveDirectionY = 6;
+      case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -1798,10 +1911,10 @@ bool PlayerInput::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 usePropsInPackID = 6;
-      case 6: {
+      // int32 usePropsInPackID = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -1838,34 +1951,39 @@ void PlayerInput::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 headTowardsX = 1;
+  // int32 uid = 1;
+  if (this->uid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->uid(), output);
+  }
+
+  // int64 headTowardsX = 2;
   if (this->headtowardsx() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->headtowardsx(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->headtowardsx(), output);
   }
 
-  // int64 headTowardsY = 2;
+  // int64 headTowardsY = 3;
   if (this->headtowardsy() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->headtowardsy(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->headtowardsy(), output);
   }
 
-  // int64 headTowardsZ = 3;
+  // int64 headTowardsZ = 4;
   if (this->headtowardsz() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->headtowardsz(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->headtowardsz(), output);
   }
 
-  // int64 moveDirectionX = 4;
+  // int64 moveDirectionX = 5;
   if (this->movedirectionx() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->movedirectionx(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->movedirectionx(), output);
   }
 
-  // int64 moveDirectionY = 5;
+  // int64 moveDirectionY = 6;
   if (this->movedirectiony() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->movedirectiony(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->movedirectiony(), output);
   }
 
-  // int32 usePropsInPackID = 6;
+  // int32 usePropsInPackID = 7;
   if (this->usepropsinpackid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->usepropsinpackid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->usepropsinpackid(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1882,34 +2000,39 @@ void PlayerInput::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 headTowardsX = 1;
+  // int32 uid = 1;
+  if (this->uid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->uid(), target);
+  }
+
+  // int64 headTowardsX = 2;
   if (this->headtowardsx() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->headtowardsx(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->headtowardsx(), target);
   }
 
-  // int64 headTowardsY = 2;
+  // int64 headTowardsY = 3;
   if (this->headtowardsy() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->headtowardsy(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->headtowardsy(), target);
   }
 
-  // int64 headTowardsZ = 3;
+  // int64 headTowardsZ = 4;
   if (this->headtowardsz() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->headtowardsz(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->headtowardsz(), target);
   }
 
-  // int64 moveDirectionX = 4;
+  // int64 moveDirectionX = 5;
   if (this->movedirectionx() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->movedirectionx(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(5, this->movedirectionx(), target);
   }
 
-  // int64 moveDirectionY = 5;
+  // int64 moveDirectionY = 6;
   if (this->movedirectiony() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(5, this->movedirectiony(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(6, this->movedirectiony(), target);
   }
 
-  // int32 usePropsInPackID = 6;
+  // int32 usePropsInPackID = 7;
   if (this->usepropsinpackid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->usepropsinpackid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->usepropsinpackid(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1929,46 +2052,53 @@ size_t PlayerInput::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // int64 headTowardsX = 1;
+  // int64 headTowardsX = 2;
   if (this->headtowardsx() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->headtowardsx());
   }
 
-  // int64 headTowardsY = 2;
+  // int64 headTowardsY = 3;
   if (this->headtowardsy() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->headtowardsy());
   }
 
-  // int64 headTowardsZ = 3;
+  // int64 headTowardsZ = 4;
   if (this->headtowardsz() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->headtowardsz());
   }
 
-  // int64 moveDirectionX = 4;
+  // int32 uid = 1;
+  if (this->uid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->uid());
+  }
+
+  // int32 usePropsInPackID = 7;
+  if (this->usepropsinpackid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->usepropsinpackid());
+  }
+
+  // int64 moveDirectionX = 5;
   if (this->movedirectionx() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->movedirectionx());
   }
 
-  // int64 moveDirectionY = 5;
+  // int64 moveDirectionY = 6;
   if (this->movedirectiony() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->movedirectiony());
-  }
-
-  // int32 usePropsInPackID = 6;
-  if (this->usepropsinpackid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->usepropsinpackid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2009,14 +2139,17 @@ void PlayerInput::MergeFrom(const PlayerInput& from) {
   if (from.headtowardsz() != 0) {
     set_headtowardsz(from.headtowardsz());
   }
+  if (from.uid() != 0) {
+    set_uid(from.uid());
+  }
+  if (from.usepropsinpackid() != 0) {
+    set_usepropsinpackid(from.usepropsinpackid());
+  }
   if (from.movedirectionx() != 0) {
     set_movedirectionx(from.movedirectionx());
   }
   if (from.movedirectiony() != 0) {
     set_movedirectiony(from.movedirectiony());
-  }
-  if (from.usepropsinpackid() != 0) {
-    set_usepropsinpackid(from.usepropsinpackid());
   }
 }
 
@@ -2047,9 +2180,10 @@ void PlayerInput::InternalSwap(PlayerInput* other) {
   swap(headtowardsx_, other->headtowardsx_);
   swap(headtowardsy_, other->headtowardsy_);
   swap(headtowardsz_, other->headtowardsz_);
+  swap(uid_, other->uid_);
+  swap(usepropsinpackid_, other->usepropsinpackid_);
   swap(movedirectionx_, other->movedirectionx_);
   swap(movedirectiony_, other->movedirectiony_);
-  swap(usepropsinpackid_, other->usepropsinpackid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
@@ -2073,8 +2207,7 @@ const int RoomInfo::kMapNameFieldNumber;
 const int RoomInfo::kPasswordFieldNumber;
 const int RoomInfo::kMaxPlayersFieldNumber;
 const int RoomInfo::kCurPlayerNumberFieldNumber;
-const int RoomInfo::kPreparedPlayersFieldNumber;
-const int RoomInfo::kUnPreparedPlayersFieldNumber;
+const int RoomInfo::kPlayersFieldNumber;
 const int RoomInfo::kMasterFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2089,8 +2222,7 @@ RoomInfo::RoomInfo()
 RoomInfo::RoomInfo(const RoomInfo& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      preparedplayers_(from.preparedplayers_),
-      unpreparedplayers_(from.unpreparedplayers_),
+      players_(from.players_),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   roomname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -2161,8 +2293,7 @@ void RoomInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  preparedplayers_.Clear();
-  unpreparedplayers_.Clear();
+  players_.Clear();
   roomname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   mapname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -2300,32 +2431,21 @@ bool RoomInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .GameProto.PlayerInfo preparedPlayers = 9;
+      // repeated .GameProto.PlayerInfo Players = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_preparedplayers()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_players()));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // repeated .GameProto.PlayerInfo unPreparedPlayers = 10;
+      // int32 master = 10;
       case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_unpreparedplayers()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 master = 11;
-      case 11: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2417,23 +2537,16 @@ void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->curplayernumber(), output);
   }
 
-  // repeated .GameProto.PlayerInfo preparedPlayers = 9;
+  // repeated .GameProto.PlayerInfo Players = 9;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->preparedplayers_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->players_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      9, this->preparedplayers(static_cast<int>(i)), output);
+      9, this->players(static_cast<int>(i)), output);
   }
 
-  // repeated .GameProto.PlayerInfo unPreparedPlayers = 10;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->unpreparedplayers_size()); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, this->unpreparedplayers(static_cast<int>(i)), output);
-  }
-
-  // int32 master = 11;
+  // int32 master = 10;
   if (this->master() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->master(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->master(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2508,25 +2621,17 @@ void RoomInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->curplayernumber(), target);
   }
 
-  // repeated .GameProto.PlayerInfo preparedPlayers = 9;
+  // repeated .GameProto.PlayerInfo Players = 9;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->preparedplayers_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->players_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        9, this->preparedplayers(static_cast<int>(i)), deterministic, target);
+        9, this->players(static_cast<int>(i)), deterministic, target);
   }
 
-  // repeated .GameProto.PlayerInfo unPreparedPlayers = 10;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->unpreparedplayers_size()); i < n; i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        10, this->unpreparedplayers(static_cast<int>(i)), deterministic, target);
-  }
-
-  // int32 master = 11;
+  // int32 master = 10;
   if (this->master() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->master(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->master(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2546,25 +2651,14 @@ size_t RoomInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // repeated .GameProto.PlayerInfo preparedPlayers = 9;
+  // repeated .GameProto.PlayerInfo Players = 9;
   {
-    unsigned int count = static_cast<unsigned int>(this->preparedplayers_size());
+    unsigned int count = static_cast<unsigned int>(this->players_size());
     total_size += 1UL * count;
     for (unsigned int i = 0; i < count; i++) {
       total_size +=
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          this->preparedplayers(static_cast<int>(i)));
-    }
-  }
-
-  // repeated .GameProto.PlayerInfo unPreparedPlayers = 10;
-  {
-    unsigned int count = static_cast<unsigned int>(this->unpreparedplayers_size());
-    total_size += 1UL * count;
-    for (unsigned int i = 0; i < count; i++) {
-      total_size +=
-        ::google::protobuf::internal::WireFormatLite::MessageSize(
-          this->unpreparedplayers(static_cast<int>(i)));
+          this->players(static_cast<int>(i)));
     }
   }
 
@@ -2624,7 +2718,7 @@ size_t RoomInfo::ByteSizeLong() const {
         this->curplayernumber());
   }
 
-  // int32 master = 11;
+  // int32 master = 10;
   if (this->master() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2660,8 +2754,7 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  preparedplayers_.MergeFrom(from.preparedplayers_);
-  unpreparedplayers_.MergeFrom(from.unpreparedplayers_);
+  players_.MergeFrom(from.players_);
   if (from.roomname().size() > 0) {
 
     roomname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.roomname_);
@@ -2718,8 +2811,7 @@ void RoomInfo::Swap(RoomInfo* other) {
 }
 void RoomInfo::InternalSwap(RoomInfo* other) {
   using std::swap;
-  preparedplayers_.InternalSwap(&other->preparedplayers_);
-  unpreparedplayers_.InternalSwap(&other->unpreparedplayers_);
+  players_.InternalSwap(&other->players_);
   roomname_.Swap(&other->roomname_);
   mapname_.Swap(&other->mapname_);
   password_.Swap(&other->password_);
@@ -3138,6 +3230,8 @@ void ServerMsg::InitAsDefaultInstance() {
 const int ServerMsg::kTypeFieldNumber;
 const int ServerMsg::kFidFieldNumber;
 const int ServerMsg::kStrFieldNumber;
+const int ServerMsg::kIpFieldNumber;
+const int ServerMsg::kPortFieldNumber;
 const int ServerMsg::kPlayerInfoFieldNumber;
 const int ServerMsg::kFramIDFieldNumber;
 const int ServerMsg::kInputsFieldNumber;
@@ -3165,6 +3259,10 @@ ServerMsg::ServerMsg(const ServerMsg& from)
   if (from.str().size() > 0) {
     str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.str_);
   }
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.ip().size() > 0) {
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   if (from.has_playerinfo()) {
     playerinfo_ = new ::GameProto::PlayerInfo(*from.playerinfo_);
   } else {
@@ -3178,6 +3276,7 @@ ServerMsg::ServerMsg(const ServerMsg& from)
 
 void ServerMsg::SharedCtor() {
   str_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&playerinfo_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&framid_) -
       reinterpret_cast<char*>(&playerinfo_)) + sizeof(framid_));
@@ -3191,6 +3290,7 @@ ServerMsg::~ServerMsg() {
 
 void ServerMsg::SharedDtor() {
   str_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete playerinfo_;
 }
 
@@ -3227,6 +3327,7 @@ void ServerMsg::Clear() {
   states_.Clear();
   roominfos_.Clear();
   str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && playerinfo_ != NULL) {
     delete playerinfo_;
   }
@@ -3292,10 +3393,40 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // .GameProto.PlayerInfo playerInfo = 4;
+      // string ip = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ip()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->ip().data(), static_cast<int>(this->ip().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "GameProto.ServerMsg.ip"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // int32 port = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &port_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .GameProto.PlayerInfo playerInfo = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
                input, mutable_playerinfo()));
         } else {
@@ -3304,10 +3435,10 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 framID = 5;
-      case 5: {
+      // int32 framID = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -3318,10 +3449,10 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .GameProto.PlayerInput inputs = 6;
-      case 6: {
+      // repeated .GameProto.PlayerInput inputs = 8;
+      case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_inputs()));
         } else {
           goto handle_unusual;
@@ -3329,10 +3460,10 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .GameProto.PlayerState states = 7;
-      case 7: {
+      // repeated .GameProto.PlayerState states = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_states()));
         } else {
           goto handle_unusual;
@@ -3340,10 +3471,10 @@ bool ServerMsg::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .GameProto.RoomInfo roominfos = 8;
-      case 8: {
+      // repeated .GameProto.RoomInfo roominfos = 10;
+      case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_roominfos()));
         } else {
           goto handle_unusual;
@@ -3398,36 +3529,51 @@ void ServerMsg::SerializeWithCachedSizes(
       3, this->str(), output);
   }
 
-  // .GameProto.PlayerInfo playerInfo = 4;
+  // string ip = 4;
+  if (this->ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ip().data(), static_cast<int>(this->ip().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "GameProto.ServerMsg.ip");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->ip(), output);
+  }
+
+  // int32 port = 5;
+  if (this->port() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->port(), output);
+  }
+
+  // .GameProto.PlayerInfo playerInfo = 6;
   if (this->has_playerinfo()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, *this->playerinfo_, output);
+      6, *this->playerinfo_, output);
   }
 
-  // int32 framID = 5;
+  // int32 framID = 7;
   if (this->framid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->framid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->framid(), output);
   }
 
-  // repeated .GameProto.PlayerInput inputs = 6;
+  // repeated .GameProto.PlayerInput inputs = 8;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->inputs_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->inputs(static_cast<int>(i)), output);
+      8, this->inputs(static_cast<int>(i)), output);
   }
 
-  // repeated .GameProto.PlayerState states = 7;
+  // repeated .GameProto.PlayerState states = 9;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->states_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->states(static_cast<int>(i)), output);
+      9, this->states(static_cast<int>(i)), output);
   }
 
-  // repeated .GameProto.RoomInfo roominfos = 8;
+  // repeated .GameProto.RoomInfo roominfos = 10;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->roominfos_size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, this->roominfos(static_cast<int>(i)), output);
+      10, this->roominfos(static_cast<int>(i)), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -3466,40 +3612,56 @@ void ServerMsg::SerializeWithCachedSizes(
         3, this->str(), target);
   }
 
-  // .GameProto.PlayerInfo playerInfo = 4;
+  // string ip = 4;
+  if (this->ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ip().data(), static_cast<int>(this->ip().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "GameProto.ServerMsg.ip");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->ip(), target);
+  }
+
+  // int32 port = 5;
+  if (this->port() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->port(), target);
+  }
+
+  // .GameProto.PlayerInfo playerInfo = 6;
   if (this->has_playerinfo()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        4, *this->playerinfo_, deterministic, target);
+        6, *this->playerinfo_, deterministic, target);
   }
 
-  // int32 framID = 5;
+  // int32 framID = 7;
   if (this->framid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->framid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->framid(), target);
   }
 
-  // repeated .GameProto.PlayerInput inputs = 6;
+  // repeated .GameProto.PlayerInput inputs = 8;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->inputs_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        6, this->inputs(static_cast<int>(i)), deterministic, target);
+        8, this->inputs(static_cast<int>(i)), deterministic, target);
   }
 
-  // repeated .GameProto.PlayerState states = 7;
+  // repeated .GameProto.PlayerState states = 9;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->states_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        7, this->states(static_cast<int>(i)), deterministic, target);
+        9, this->states(static_cast<int>(i)), deterministic, target);
   }
 
-  // repeated .GameProto.RoomInfo roominfos = 8;
+  // repeated .GameProto.RoomInfo roominfos = 10;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->roominfos_size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        8, this->roominfos(static_cast<int>(i)), deterministic, target);
+        10, this->roominfos(static_cast<int>(i)), deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -3519,7 +3681,7 @@ size_t ServerMsg::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // repeated .GameProto.PlayerInput inputs = 6;
+  // repeated .GameProto.PlayerInput inputs = 8;
   {
     unsigned int count = static_cast<unsigned int>(this->inputs_size());
     total_size += 1UL * count;
@@ -3530,7 +3692,7 @@ size_t ServerMsg::ByteSizeLong() const {
     }
   }
 
-  // repeated .GameProto.PlayerState states = 7;
+  // repeated .GameProto.PlayerState states = 9;
   {
     unsigned int count = static_cast<unsigned int>(this->states_size());
     total_size += 1UL * count;
@@ -3541,7 +3703,7 @@ size_t ServerMsg::ByteSizeLong() const {
     }
   }
 
-  // repeated .GameProto.RoomInfo roominfos = 8;
+  // repeated .GameProto.RoomInfo roominfos = 10;
   {
     unsigned int count = static_cast<unsigned int>(this->roominfos_size());
     total_size += 1UL * count;
@@ -3559,7 +3721,14 @@ size_t ServerMsg::ByteSizeLong() const {
         this->str());
   }
 
-  // .GameProto.PlayerInfo playerInfo = 4;
+  // string ip = 4;
+  if (this->ip().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->ip());
+  }
+
+  // .GameProto.PlayerInfo playerInfo = 6;
   if (this->has_playerinfo()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSize(
@@ -3579,7 +3748,14 @@ size_t ServerMsg::ByteSizeLong() const {
         this->fid());
   }
 
-  // int32 framID = 5;
+  // int32 port = 5;
+  if (this->port() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->port());
+  }
+
+  // int32 framID = 7;
   if (this->framid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3622,6 +3798,10 @@ void ServerMsg::MergeFrom(const ServerMsg& from) {
 
     str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.str_);
   }
+  if (from.ip().size() > 0) {
+
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   if (from.has_playerinfo()) {
     mutable_playerinfo()->::GameProto::PlayerInfo::MergeFrom(from.playerinfo());
   }
@@ -3630,6 +3810,9 @@ void ServerMsg::MergeFrom(const ServerMsg& from) {
   }
   if (from.fid() != 0) {
     set_fid(from.fid());
+  }
+  if (from.port() != 0) {
+    set_port(from.port());
   }
   if (from.framid() != 0) {
     set_framid(from.framid());
@@ -3664,9 +3847,11 @@ void ServerMsg::InternalSwap(ServerMsg* other) {
   states_.InternalSwap(&other->states_);
   roominfos_.InternalSwap(&other->roominfos_);
   str_.Swap(&other->str_);
+  ip_.Swap(&other->ip_);
   swap(playerinfo_, other->playerinfo_);
   swap(type_, other->type_);
   swap(fid_, other->fid_);
+  swap(port_, other->port_);
   swap(framid_, other->framid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

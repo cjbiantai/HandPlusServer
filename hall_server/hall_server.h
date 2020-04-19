@@ -10,6 +10,7 @@
 #include "room_info.h"
 #include "config.h"
 #include "player_info.h"
+#include "../common/xid.cc"
 
 struct ResPlayerInfo {
     std::string account;
@@ -76,6 +77,13 @@ public:
      */
     void HandleChangeStateInRoom(GameProto::ClientMsg clientMsg, int clientFd);
     /**
+     * @brief 处理选择角色事件
+     * @param clientMsg  反序列化的客户端发送的数据
+     * @param clientFd 客户端fd
+     */
+    void HandleSelectCharacter(GameProto::ClientMsg clientMsg, int clientFd);
+
+    /**
      * @brief 处理开始游戏事件
      * @param clientMsg  反序列化的客户端发送的数据
      * @param clientFd 客户端fd
@@ -89,8 +97,14 @@ public:
     void HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd);
     /**
      * @brief 广播房间信息, 仅当房间信息改变了才会调用
+     * @param roomid 
      */
-    void BroadRoomInfo();
+    void BroadRoomInfo(int roomId);
+
+    /**
+     * @brief 广播房间列表信息
+     */
+    void BroadRoomListInfo();
     void Work();    
 
 private:
@@ -102,11 +116,11 @@ private:
     std::map<int, roomInfo> roomMap;                            //房间rid到房间信息的映射
     std::map<int, int> userRoomMap;                             //用户uid到房间rid的映射
     std::map<int, std::string> uidAccountMap;                   //用户uid到账号的映射
-    std::map<int, playerInfo> userInfoMap;                      //用户uid到用户信息的映射
+    std::map<int, GameProto::PlayerInfo> userInfoMap;                      //用户uid到用户信息的映射
     std::set<int> onlineUsers;                                  //在线用户uid集合
     std::set<int> inHallUsers;                                  //未进入房间的用户uid集合
     std::set<std::string> loginAccount;                         //所有已登录的账号集合
-    std::vector<service_mgr> serviceList;                       //存放战斗服务器信息
+    std::set<service_mgr> serviceList;                          //存放战斗服务器信息
     std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
 };
 
