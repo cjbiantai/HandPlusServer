@@ -26,10 +26,10 @@ void Room::Reconnect(string name,Player *player){
 void Room::SendToAll(ServerMsg smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
-	sendbuf[1]=(len>>24)&0xff;
-	sendbuf[2]=(len>>16)&0xff;
-	sendbuf[3]=(len>>8)&0xff;
-	sendbuf[4]=len&0xff;
+	sendbuf[1]=len&0xff;
+	sendbuf[2]=(len>>8)&0xff;
+	sendbuf[3]=(len>>16)&0xff;
+	sendbuf[4]=(len>>24)&0xff;
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
 	for(int i=0;i<players.size();i++){
