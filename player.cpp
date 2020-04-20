@@ -7,8 +7,8 @@ Player::Player(int sockfd){
 	this->sockfd=sockfd;
 }
 
-void Player::JoinRoom(string name,int room_id){
-	this->name=name;
+void Player::JoinRoom(int uid,int room_id){
+	this->uid=uid;
 	this->room_id=room_id;
 	online=true;
 }
@@ -41,7 +41,7 @@ bool Player::Parse(ClientMsg &cmsg){
 		return NULL;
 	int msg_len=(buffer[4]<<24)+(buffer[3]<<16)+(buffer[2]<<8)+buffer[1];
 	if(msg_len+HEADER_LEN>BUFFER_SIZE){
-		printf("size error\n");
+		printf("fd: %d, size error\n",sockfd);
 		memset(buffer,len=0,sizeof(buffer));
 		return false;
 	}
@@ -49,7 +49,7 @@ bool Player::Parse(ClientMsg &cmsg){
 		return false;
 	int ret=cmsg.ParseFromArray(buffer+HEADER_LEN,msg_len);
 	if(!ret){
-		printf("parse error\n");
+		printf("fd: %d, parse error\n",sockfd);
 		memset(buffer,len=0,sizeof(buffer));
 		return false;
 	}

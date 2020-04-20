@@ -13,9 +13,9 @@ class Room{
 		Room(){}
 		Room(int max);
 		void AddPlayer(Player *player);
-		void Reconnect(string name,Player *player);
+		void Reconnect(int uid,Player *player);
 		void SendToAll(ServerMsg smsg);
 		void Broadcast();
-		void Retransmission(int sockfd,int beg_fid);
+		void Reconnect(int sockfd);
 };
 

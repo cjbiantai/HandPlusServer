@@ -6,14 +6,15 @@ void GameSync::RecvAndHandle(int sockfd){
 	ClientMsg cmsg;
 	while(Parse(sockfd,cmsg)){
 		switch(cmsg.type()){
-			case 2:
-				JoinRoom(sockfd,cmsg.name(),cmsg.id());
+			case EnterRoom:
+				printf("uid: %d roomid: %d connect",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
+				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
 				break;
-			case 3:
+			case C2SSync:
 				Update(sockfd,cmsg.input());
 				break;
-			case 4:
-				Retransmission(sockfd,cmsg.id());
+			case Follow:
+				Reconnect(sockfd);
 				break;
 			default:
 				return;
@@ -63,20 +64,20 @@ void GameSync::Update(int sockfd,PlayerInput input){
 	return player[sockfd].Update(input);
 }
 
-void GameSync::Retransmission(int sockfd,int beg_fid){
-	room[GetRoomId(sockfd)].Retransmission(sockfd,beg_fid);
+void GameSync::Reconnect(int sockfd){
+	room[GetRoomId(sockfd)].Reconnect(sockfd);
 }
 
-void GameSync::JoinRoom(int sockfd,string name,int room_id){
-	if(name2room[name]){
-		player[sockfd].JoinRoom(name,room_id);
-		room[name2room[name]].Reconnect(name,&player[sockfd]);
+void GameSync::JoinRoom(int sockfd,int uid,int room_id){
+	if(uid2room[uid]){
+		player[sockfd].JoinRoom(uid,room_id);
+		room[uid2room[uid]].Reconnect(uid,&player[sockfd]);
 		return;
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);
-	player[sockfd].JoinRoom(name,room_id);
-	name2room[name]=room_id;
+	player[sockfd].JoinRoom(uid,room_id);
+	uid2room[uid]=room_id;
 	room[room_id].AddPlayer(&player[sockfd]);
 }
 

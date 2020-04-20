@@ -9,13 +9,13 @@ class Player{
 		char buffer[BUFFER_SIZE<<1];
 	public:
 		bool online;
-		int room_id,sockfd;
+		int uid,room_id,sockfd;
 		string name;
 		PlayerInput input;
 		
 		Player(){}
 		Player(int sockfd);
-		void JoinRoom(string name,int room_id);
+		void JoinRoom(int uid,int room_id);
 		int SendMsg(ServerMsg smsg);
 		void Update(PlayerInput input);
 		int Recv();

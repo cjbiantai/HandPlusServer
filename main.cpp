@@ -6,7 +6,9 @@
 
 #define GAMESERVER
 
-int main(){
+int main(int argc,char **argv){
+	if(argc<2)
+		return 0*printf("input port\n");
 #ifdef HALLSERVER
 	ServerSync *sync=new HallSync();
 #endif
@@ -15,7 +17,7 @@ int main(){
 #endif
     //SETTRACELEVEL(log_mask_all);
     SocketError::sync=sync;
-    Server server(12345,sync);
+    Server server(atoi(argv[1]),sync);
     while(true) {
         server.WorkOnce();
     }
