@@ -7,7 +7,7 @@ class Connection{
 	public:
         int sockfd;
 		char sendbuf[SIZE];
-		char buf[SIZE]={};
+		char buf[SIZE];
         Connection(){
             struct sockaddr_in saddr;
             saddr.sin_family = AF_INET;
@@ -22,7 +22,7 @@ class Connection{
         ~Connection(){
             close(sockfd);
         }
-		void SendMsg(ClientMsg cmsg){
+		bool SendMsg(ClientMsg cmsg){
 			int len=cmsg.ByteSize();
 			sendbuf[0]=1;
 			sendbuf[4]=(len>>24)&0xff;
@@ -30,7 +30,10 @@ class Connection{
 			sendbuf[2]=(len>>8)&0xff;
 			sendbuf[1]=len&0xff;
 			cmsg.SerializeToArray(sendbuf+HEADER_LEN,len);
-			send(sockfd,sendbuf,len+HEADER_LEN,0);
+			if(send(sockfd,sendbuf,len+HEADER_LEN,0)<0){
+				printf("fd: %d, send fail\n",sockfd);
+				return false;
+			}
 		}
 
 		void SendRand(){
@@ -79,19 +82,31 @@ void* f(void *id){
 	    cout<<account<<": ";
 	    if(conn->RecvMsg(smsg))
 	    	cout<<smsg.type()<<endl;
+        else
+            return NULL;
     }
     return NULL;
 }
 
 
 int main(){ 
-    pthread_t th[10];
+    /*pthread_t th[10];
     Connection conn[10];
     for(ll i=0;i<4;i++){
         params[i]=Params(2500*i,2500*(i+1),&conn[i]);
-        pthread_create(&th[0],NULL,f,(void*)i);
+        pthread_create(&th[i],NULL,f,(void*)i);
     }
     for(int i=0;i<4;i++)
-        pthread_join(th[i],0);
+        pthread_join(th[i],0);*/
+    Connection conn;
+    ClientMsg cmsg;
+    ServerMsg smsg;
+    cmsg.set_type(LogIn);
+	PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
+    playerinfo->set_password("toad");
+    playerinfo->set_account("toad_1");
+    conn.SendMsg(cmsg);
+    conn.RecvMsg(smsg);
+    cout<<smsg.type()<<endl;
     return 0;
 }
