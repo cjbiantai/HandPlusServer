@@ -1,13 +1,28 @@
 #include"../common/all.h"
+#include<pthread.h>
 
 #define SIZE 1024
 
 class Connection{
 	public:
+        int sockfd;
 		char sendbuf[SIZE];
 		char buf[SIZE]={};
-
-		void SendMsg(int sockfd,ClientMsg cmsg){
+        Connection(){
+            struct sockaddr_in saddr;
+            saddr.sin_family = AF_INET;
+            saddr.sin_addr.s_addr = inet_addr("117.78.9.170");
+            saddr.sin_port = htons(17000);
+            int sockfd=socket(AF_INET,SOCK_STREAM,0);
+            if(connect(sockfd,(struct sockaddr*)&saddr,sizeof(saddr))<0){
+    	        printf("connect fail\n");
+                exit(0);
+            }
+        }
+        ~Connection(){
+            close(sockfd);
+        }
+		void SendMsg(ClientMsg cmsg){
 			int len=cmsg.ByteSize();
 			sendbuf[0]=1;
 			sendbuf[4]=(len>>24)&0xff;
@@ -18,13 +33,13 @@ class Connection{
 			send(sockfd,sendbuf,len+HEADER_LEN,0);
 		}
 
-		void SendRand(int sockfd){
+		void SendRand(){
 			for(int i=0;i<SIZE;i++)
 				sendbuf[i]=rand();
 			send(sockfd,sendbuf,SIZE,0);
 		}
 
-		bool RecvMsg(int sockfd,ServerMsg &smsg){
+		bool RecvMsg(ServerMsg &smsg){
 			if(recv(sockfd,buf,SIZE,0)<=0){
 				printf("fd: %d, recv fail\n",sockfd);
 				return false;
@@ -40,15 +55,17 @@ class Connection{
 
 struct Params{
 	int l,r,sockfd;
-	Connection conn;
-	Params(int _l,int _r,int _sockfd,Connection _conn):l(_l),r(_r),sockfd(_sockfd),conn(_conn){}
-};
+	Connection *conn;
+    Params(){}
+	Params(int _l,int _r,Connection *_conn):l(_l),r(_r),conn(_conn){}
+}params[10];
 
 
-void f(void *params){
-	Connection conn=((Params*)params)->conn;
-	int sockfd=((Params*)params)->sockfd;
-    int l=((Params*)params)->l,r=((Params*)params)->r;
+void* f(void *id){
+    cout<<(ll)id<<endl;
+	Connection *conn=params[(ll)id].conn;
+	int sockfd=params[(ll)id].sockfd;
+    int l=params[(ll)id].l,r=params[(ll)id].r;
 	ClientMsg cmsg;
 	ServerMsg smsg;
 	cmsg.set_type(LogIn);
@@ -58,28 +75,23 @@ void f(void *params){
     for(int i=l;i<r;i++){
     	string account="toad_"+to_string(i);
 	    playerinfo->set_account(account);
-	    conn.SendMsg(sockfd,cmsg);
+	    conn->SendMsg(cmsg);
 	    cout<<account<<": ";
-	    if(conn.RecvMsg(sockfd,smsg))
+	    if(conn->RecvMsg(smsg))
 	    	cout<<smsg.type()<<endl;
     }
+    return NULL;
 }
 
 
-int main(){
-    struct sockaddr_in saddr;
-    saddr.sin_family = AF_INET;
-    saddr.sin_addr.s_addr = inet_addr("117.78.9.170");
-    saddr.sin_port = htons(17000);
-    int sockfd=socket(AF_INET,SOCK_STREAM,0);
-    if(connect(sockfd,(struct sockaddr*)&saddr,sizeof(saddr))<0)
-    	return 0*printf("connect fail\n");
-    
-
-    for(int i=0;i<=9999;i++){
-    	
+int main(){ 
+    pthread_t th[10];
+    Connection conn[10];
+    for(ll i=0;i<4;i++){
+        params[i]=Params(2500*i,2500*(i+1),&conn[i]);
+        pthread_create(&th[0],NULL,f,(void*)i);
     }
-    close(sockfd);
-    
-	return 0;
+    for(int i=0;i<4;i++)
+        pthread_join(th[i],0);
+    return 0;
 }
