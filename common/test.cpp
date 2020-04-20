@@ -14,6 +14,20 @@ void SendMsg(int sockfd,ClientMsg cmsg){
 	send(sockfd,sendbuf,len+HEADER_LEN,0);
 }
 
+bool RecvMsg(int sockfd,ServerMsg &smsg){
+	char buf[SIZE]={};
+	if(recv(sockfd,buf,SIZE,0)<=0){
+		printf("fd: %d, recv fail\n");
+		return false;
+	}
+	int len=(buf[4]<<24)+(buf[3]<<16)+(buf[2]<<8)+buf[1];
+	if(!smsg.ParseFromArray(buf+5,len)){
+		printf("fd: %d, parse fail\n");
+		return false;
+	}
+	return true;
+}
+
 int main(){
     struct sockaddr_in saddr;
     saddr.sin_family = AF_INET;
@@ -23,11 +37,18 @@ int main(){
     if(connect(sockfd,(struct sockaddr*)&saddr,sizeof(saddr))<0)
     	return 0*printf("connect fail\n");
     ClientMsg cmsg;
+    ServerMsg smsg;
+    cmsg.set_type(LogIn);
     PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
-    playerinfo->set_account("a");
-    playerinfo->set_password("a");
-    for(int i=1;i<=10000;i++)
+    playerinfo->set_password("toad");
+    playerinfo->set_nickname("toad");
+    for(int i=0;i<=9999;i++){
+    	string account="toad_"+to_string(i);
+    	playerinfo->set_account(account);
     	SendMsg(sockfd,cmsg);
+    	if(RecvMsg(sockfd,smsg))
+    		cout<<smsg.type()<<endl;
+    }
     close(sockfd);
     
 	return 0;
