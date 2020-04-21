@@ -4,7 +4,7 @@ void GameSync::RecvAndHandle(int sockfd){
 	if(Recv(sockfd)<=0)
 		return;
 	ClientMsg cmsg;
-	while(Parse(sockfd,cmsg)){
+	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
 				printf("uid: %d roomid: %d connect\n",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
@@ -50,10 +50,17 @@ int GameSync::Recv(int sockfd){
 	return player[sockfd].Recv();
 }
 
-bool GameSync::Parse(int sockfd,ClientMsg &cmsg){
-	if(!player.count(sockfd))
-		return false;
-	return player[sockfd].Parse(cmsg);
+int GameSync::Parse(int sockfd,ClientMsg &cmsg){
+	if(!player.count(sockfd)){
+		printf("player don't exist\n");
+		return -1;
+	}
+	int ret=player[sockfd].Parse(cmsg);
+	if(ret<0){
+		printf("uid: %d, kick off by server\n",player[sockfd].uid);
+		Exit(sockfd);
+	}
+	return ret;
 }
 
 void GameSync::Update(int sockfd,PlayerInput input){

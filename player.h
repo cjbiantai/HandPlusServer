@@ -19,6 +19,6 @@ class Player{
 		int SendMsg(ServerMsg smsg);
 		void Update(PlayerInput input);
 		int Recv();
-		bool Parse(ClientMsg &cmsg);
+		int Parse(ClientMsg &cmsg);
 };
 

@@ -4,6 +4,11 @@
 #define SIZE 1024
 #define N 1000
 
+//#define IP "117.78.9.170"
+//#define PORT 17000
+#define IP "211.149.255.36"
+#define PORT 12345
+
 class Connection{
 	public:
         int sockfd;
@@ -12,8 +17,8 @@ class Connection{
 		char buf[SIZE];
         Connection(){
             saddr.sin_family = AF_INET;
-            saddr.sin_addr.s_addr = inet_addr("117.78.9.170");
-            saddr.sin_port = htons(17000);
+            saddr.sin_addr.s_addr = inet_addr(IP);
+            saddr.sin_port = htons(PORT);
             sockfd=socket(AF_INET,SOCK_STREAM,0);
             if(connect(sockfd,(struct sockaddr*)&saddr,sizeof(saddr))<0){
     	        printf("connect fail\n");
@@ -68,6 +73,15 @@ class Connection{
             return SendMsg(cmsg);
         }
         
+        bool JoinRoom(int uid,int roomid){
+            ClientMsg cmsg;
+            PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
+            cmsg.set_type(EnterRoom);
+            playerinfo->set_uid(uid);
+            playerinfo->set_roomid(roomid);
+            return SendMsg(cmsg);
+        }
+
         bool Update(){
             ClientMsg cmsg;
             return SendMsg(cmsg);
@@ -89,8 +103,22 @@ void* f(void *id){
     for(int i=l;i<r;i++){
     	string account="toad_"+to_string(i);
 	    conn->Login(account,"toad");
+        cout<<account<<endl;
 	    if(!conn->RecvMsg(smsg))
             return NULL;
+    }
+    return NULL;
+}
+
+void* g(void *id){
+	Connection *conn=params[(ll)id].conn;
+	int sockfd=params[(ll)id].sockfd;
+    int l=params[(ll)id].l,r=params[(ll)id].r;
+	ServerMsg smsg;
+    for(int i=l;i<r;i++){
+    	string account="toad_"+to_string(i);
+	    conn->JoinRoom(i,i);
+        cout<<account<<endl;
     }
     return NULL;
 }
@@ -99,8 +127,8 @@ int main(){
     pthread_t th[N];
     Connection conn[N];
     for(ll i=0;i<N;i++){
-        params[i]=Params(10000/N*i,10000/N*(i+1),&conn[i]);
-        pthread_create(&th[i],NULL,f,(void*)i);
+        params[i]=Params(1000/N*i,1000/N*(i+1),&conn[i]);
+        pthread_create(&th[i],NULL,g,(void*)i);
     }
     for(int i=0;i<N;i++)
         pthread_join(th[i],0);

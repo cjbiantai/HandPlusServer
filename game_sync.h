@@ -21,7 +21,7 @@ class GameSync:public ServerSync{
 		int GetRoomId(int sockfd);
 
 		int Recv(int sockfd);
-		bool Parse(int sockfd,ClientMsg &cmsg);
+		int Parse(int sockfd,ClientMsg &cmsg);
 		void Update(int sockfd,PlayerInput input);
 		void Reconnect(int sockfd);
 		
