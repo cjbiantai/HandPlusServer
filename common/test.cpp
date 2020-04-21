@@ -2,6 +2,7 @@
 #include<pthread.h>
 
 #define SIZE 1024
+#define N 1000
 
 class Connection{
 	public:
@@ -64,7 +65,7 @@ struct Params{
 	Connection *conn;
     Params(){}
 	Params(int _l,int _r,Connection *_conn):l(_l),r(_r),conn(_conn){}
-}params[10];
+}params[N];
 
 
 void* f(void *id){
@@ -81,7 +82,7 @@ void* f(void *id){
     	string account="toad_"+to_string(i);
 	    playerinfo->set_account(account);
 	    conn->SendMsg(cmsg);
-	    cout<<account<<": ";
+	    cout<<account<<endl;
 	    if(!conn->RecvMsg(smsg))
             return NULL;
     }
@@ -89,13 +90,13 @@ void* f(void *id){
 }
 
 int main(){ 
-    pthread_t th[10];
-    Connection conn[10];
-    for(ll i=0;i<4;i++){
-        params[i]=Params(2500*i,2500*(i+1),&conn[i]);
+    pthread_t th[N];
+    Connection conn[N];
+    for(ll i=0;i<N;i++){
+        params[i]=Params(10000/N*i,10000/N*(i+1),&conn[i]);
         pthread_create(&th[i],NULL,f,(void*)i);
     }
-    for(int i=0;i<4;i++)
+    for(int i=0;i<N;i++)
         pthread_join(th[i],0);
     return 0;
 }
