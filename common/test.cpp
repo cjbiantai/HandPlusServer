@@ -91,7 +91,7 @@ class Connection{
 int main(){ 
     Connection conn[N];
     int tot=N;
-    for(ll i=0;i<N;i++){
+    for(ll i=1;i<N;i++){
         conn[i].JoinRoom(i,i);
     }
     return 0;

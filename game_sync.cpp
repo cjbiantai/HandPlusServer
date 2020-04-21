@@ -22,8 +22,10 @@ void GameSync::RecvAndHandle(int sockfd){
 
 void GameSync::Broadcast(){
 	map<int,Room>::iterator it;
-	for(it=room.begin();it!=room.end();it++)
+	for(it=room.begin();it!=room.end();it++){
+        //printf("room: %d, broadcast\n",it->first);
 		it->second.Broadcast();
+    }
 }
 
 void GameSync::Exit(int sockfd){
