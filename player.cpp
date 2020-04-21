@@ -31,7 +31,7 @@ void Player::Update(PlayerInput input){
 int Player::Recv(){
 	int ret=recv(sockfd,buffer+len,BUFFER_SIZE-len,MSG_DONTWAIT);
 	if(SocketError::Check(ret,sockfd)<=0){
-        printf("uid: %d, Player::Recv fail\n",uid);
+        printf("Player::Recv fail\n");
 		return ret;
     }
 	len+=ret;

@@ -27,6 +27,7 @@ void GameSync::Broadcast(){
 }
 
 void GameSync::Exit(int sockfd){
+    printf("uid: %d, exit\n",player[sockfd].uid);
 	int room_id=player[sockfd].room_id;
 	if(!room_id){
 		player.erase(sockfd);
@@ -70,13 +71,17 @@ void GameSync::Update(int sockfd,PlayerInput input){
 }
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
-	if(uid2room[uid]){
+	if(uid2room[uid]&&uid2room[uid]==room_id){
 		player[sockfd].JoinRoom(uid,room_id);
-		room[uid2room[uid]].Reconnect(uid,&player[sockfd]);
+		room[room_id].Reconnect(uid,&player[sockfd]);
 		return;
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);
+    else{
+        printf("uid: %d, room %d exist!\n",uid,room_id);
+        return;
+    }
 	player[sockfd].JoinRoom(uid,room_id);
 	uid2room[uid]=room_id;
 	room[room_id].AddPlayer(&player[sockfd]);
