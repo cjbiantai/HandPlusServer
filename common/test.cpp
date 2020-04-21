@@ -88,49 +88,11 @@ class Connection{
         }
 };
 
-struct Params{
-	int l,r,sockfd;
-	Connection *conn;
-    Params(){}
-	Params(int _l,int _r,Connection *_conn):l(_l),r(_r),conn(_conn){}
-}params[N];
-
-void* f(void *id){
-	Connection *conn=params[(ll)id].conn;
-	int sockfd=params[(ll)id].sockfd;
-    int l=params[(ll)id].l,r=params[(ll)id].r;
-	ServerMsg smsg;
-    for(int i=l;i<r;i++){
-    	string account="toad_"+to_string(i);
-	    conn->Login(account,"toad");
-        cout<<account<<endl;
-	    if(!conn->RecvMsg(smsg))
-            return NULL;
-    }
-    return NULL;
-}
-
-void* g(void *id){
-	Connection *conn=params[(ll)id].conn;
-	int sockfd=params[(ll)id].sockfd;
-    int l=params[(ll)id].l,r=params[(ll)id].r;
-	ServerMsg smsg;
-    for(int i=l;i<r;i++){
-    	string account="toad_"+to_string(i);
-	    conn->JoinRoom(i,i);
-        cout<<account<<endl;
-    }
-    return NULL;
-}
-
 int main(){ 
-    pthread_t th[N];
     Connection conn[N];
+    int tot=N;
     for(ll i=0;i<N;i++){
-        params[i]=Params(1000/N*i,1000/N*(i+1),&conn[i]);
-        pthread_create(&th[i],NULL,g,(void*)i);
+        conn[i].JoinRoom(i,i);
     }
-    for(int i=0;i<N;i++)
-        pthread_join(th[i],0);
     return 0;
 }

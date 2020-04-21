@@ -22,8 +22,10 @@ void Room::Reconnect(int uid,Player *player){
 			return;
 		}
 	for(int i=0;i<frames.size();i++)
-		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0)
+		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0){
+            printf("uid: %d, Room::Reconnect fail\n",player->uid);
 			return;
+        }
 }
 
 void Room::SendToAll(ServerMsg smsg){
@@ -38,6 +40,7 @@ void Room::SendToAll(ServerMsg smsg){
 	for(int i=0;i<players.size();i++){
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 		if(SocketError::Check(ret,players[i]->sockfd)<=0){
+            printf("uid: %d, Room::SendToAll fail\n",players[i]->uid);
 			state=0;
 			players[i]->online=false;
 		}
