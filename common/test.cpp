@@ -22,7 +22,7 @@ class Connection{
         ~Connection(){
             close(sockfd);
         }
-		bool SendMsg(ClientMsg cmsg){
+		bool SendMsg(ClientMsg &cmsg){
 			int len=cmsg.ByteSize();
 			sendbuf[0]=1;
 			sendbuf[4]=(len>>24)&0xff;
@@ -57,6 +57,20 @@ class Connection{
 			}
 			return true;
 		}
+
+        bool Login(string name,string password){
+            ClientMsg cmsg;
+            PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
+            cmsg.set_type(LogIn);
+            playerinfo_set_name(name);
+            playerinfo.set_password(password);
+            return SendMsg(cmsg);
+        }
+        
+        bool Update(){
+            ClientMsg cmsg;
+            return SendMsg(cmsg);
+        }
 };
 
 struct Params{
@@ -66,21 +80,14 @@ struct Params{
 	Params(int _l,int _r,Connection *_conn):l(_l),r(_r),conn(_conn){}
 }params[10];
 
-
 void* f(void *id){
 	Connection *conn=params[(ll)id].conn;
 	int sockfd=params[(ll)id].sockfd;
     int l=params[(ll)id].l,r=params[(ll)id].r;
-	ClientMsg cmsg;
 	ServerMsg smsg;
-	cmsg.set_type(LogIn);
-	PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
-    playerinfo->set_password("toad");
-    playerinfo->set_nickname("toad");
     for(int i=l;i<r;i++){
     	string account="toad_"+to_string(i);
-	    playerinfo->set_account(account);
-	    conn->SendMsg(cmsg);
+	    conn->Login(account,"toad");
 	    cout<<account<<": ";
 	    if(!conn->RecvMsg(smsg))
             return NULL;

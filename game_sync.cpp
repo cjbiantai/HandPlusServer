@@ -7,14 +7,12 @@ void GameSync::RecvAndHandle(int sockfd){
 	while(Parse(sockfd,cmsg)){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d roomid: %d connect",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
+				printf("uid: %d roomid: %d connect\n",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
 				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
 				break;
 			case C2SSync:
+                printf("uid: %d update\n",player[sockfd].uid);
 				Update(sockfd,cmsg.input());
-				break;
-			case Follow:
-				Reconnect(sockfd);
 				break;
 			default:
 				return;
@@ -72,6 +70,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	if(uid2room[uid]){
 		player[sockfd].JoinRoom(uid,room_id);
 		room[uid2room[uid]].Reconnect(uid,&player[sockfd]);
+        Reconnect(sockfd);
 		return;
 	}
 	if(!room.count(room_id))
