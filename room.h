@@ -16,6 +16,5 @@ class Room{
 		void Reconnect(int uid,Player *player);
 		void SendToAll(ServerMsg smsg);
 		void Broadcast();
-		void Reconnect(int sockfd);
 };
 

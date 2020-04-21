@@ -62,15 +62,10 @@ void GameSync::Update(int sockfd,PlayerInput input){
 	return player[sockfd].Update(input);
 }
 
-void GameSync::Reconnect(int sockfd){
-	room[GetRoomId(sockfd)].Reconnect(sockfd);
-}
-
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	if(uid2room[uid]){
 		player[sockfd].JoinRoom(uid,room_id);
 		room[uid2room[uid]].Reconnect(uid,&player[sockfd]);
-        Reconnect(sockfd);
 		return;
 	}
 	if(!room.count(room_id))

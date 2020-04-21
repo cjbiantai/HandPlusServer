@@ -59,12 +59,12 @@ class Connection{
 			return true;
 		}
 
-        bool Login(string name,string password){
+        bool Login(string account,string password){
             ClientMsg cmsg;
             PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
             cmsg.set_type(LogIn);
-            playerinfo_set_name(name);
-            playerinfo.set_password(password);
+            playerinfo->set_account(account);
+            playerinfo->set_password(password);
             return SendMsg(cmsg);
         }
         

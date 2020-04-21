@@ -21,6 +21,9 @@ void Room::Reconnect(int uid,Player *player){
 			players[i]=player;
 			return;
 		}
+	for(int i=0;i<frames.size();i++)
+		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0)
+			return;
 }
 
 void Room::SendToAll(ServerMsg smsg){
@@ -59,16 +62,3 @@ void Room::Broadcast(){
 	SendToAll(frame);
 }
 
-void Room::Reconnect(int sockfd){
-	Player *player=NULL;
-	for(int i=0;i<players.size();i++)
-		if(players[i]->sockfd==sockfd){
-			player=players[i];
-			break;
-		}
-	if(player==NULL)
-		return;
-	for(int i=0;i<frames.size();i++)
-		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0)
-			return;
-}
