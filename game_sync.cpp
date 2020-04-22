@@ -1,8 +1,10 @@
 #include"game_sync.h"
 
 void GameSync::RecvAndHandle(int sockfd){
-	if(Recv(sockfd)<=0)
+	if(Recv(sockfd)<=0){
+        Exit(sockfd);
 		return;
+    }
 	ClientMsg cmsg;
 	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
@@ -29,7 +31,7 @@ void GameSync::Broadcast(){
 }
 
 void GameSync::Exit(int sockfd){
-    printf("uid: %d,sockfd: %d, exit\n",player[sockfd].uid,sockfd);
+    printf("uid: %d,fd: %d, exit\n",player[sockfd].uid,sockfd);
     if(player[sockfd].uid<0)
         return;
 	int room_id=player[sockfd].room_id;
