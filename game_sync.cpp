@@ -29,7 +29,7 @@ void GameSync::Broadcast(){
 }
 
 void GameSync::Exit(int sockfd){
-    printf("uid: %d, exit\n",player[sockfd].uid);
+    printf("uid: %d,sockfd: %d, exit\n",player[sockfd].uid,sockfd);
 	int room_id=player[sockfd].room_id;
 	if(!room_id){
 		player.erase(sockfd);
@@ -73,6 +73,10 @@ void GameSync::Update(int sockfd,PlayerInput input){
 }
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
+    if(room_id<=0){
+        printf("uid: %d,room_id: %d,room_id must above zero!\n",uid,room_id);
+        return;
+    }
 	if(uid2room[uid]&&uid2room[uid]==room_id){
         Player *p=room[room_id].GetPlayer(uid);
         if(p->online)
@@ -83,8 +87,8 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);
-    if(room[room_id].max==room[room_id].players.size()){
-        printf("uid: %d, room %d full!\n",uid,room_id);
+    if(room[room_id].state>0||room[room_id].max==room[room_id].players.size()){
+        printf("uid: %d, cann't join room %d!\n",uid,room_id);
         return;
     }
 	player[sockfd].JoinRoom(uid,room_id);
