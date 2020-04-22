@@ -44,14 +44,15 @@ void Room::SendToAll(ServerMsg smsg){
 	sendbuf[4]=(len>>24)&0xff;
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
-	for(int i=0;i<players.size();i++){
-		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
-		if(SocketError::Check(ret,players[i]->sockfd)<=0){
-            printf("Room::SendToAll fail\n");
-			state=0;
-			players[i]->online=false;
-		}
-	}
+	for(int i=0;i<players.size();i++)
+        if(players[i]->online){
+		    ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
+	    	if(SocketError::Check(ret,players[i]->sockfd)<=0){
+                printf("Room::SendToAll fail\n");
+		    	state=0;
+		    	players[i]->online=false;
+		    }
+	    }
 }
 
 void Room::Broadcast(){
