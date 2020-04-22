@@ -13,7 +13,7 @@ class Player{
 		string name;
 		PlayerInput input;
 		
-		Player(){}
+		Player(){uid=-1;}
 		Player(int sockfd);
 		void JoinRoom(int uid,int room_id);
 		int SendMsg(ServerMsg smsg);
