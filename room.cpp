@@ -41,11 +41,16 @@ void Room::Reconnect(int uid,Player *player){
 	for(int i=0;i<players.size();i++)
 		if(players[i]->uid==uid){
 			players[i]=player;
-			return;
+			break;
 		}
+    if(state==2){
+        printf("Room Reconnect fail, beyond 1 min limit\n");
+        player->ReconnectFail();
+        return;
+    }
 	for(int i=0;i<frames.size();i++)
 		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0){
-            printf("Room::Reconnect fail\n");
+            printf("Room::Reconnect fail, send error\n");
 			return;
         }
 }
@@ -84,5 +89,9 @@ void Room::Broadcast(){
 	}
 	frames.push_back(frame);
 	SendToAll(frame);
+    if(frames.size()>=1200){
+        frames.clear();
+        state=2;
+    }
 }
 

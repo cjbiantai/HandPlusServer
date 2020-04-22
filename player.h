@@ -15,9 +15,10 @@ class Player{
 		Player(){uid=-1;}
 		Player(int sockfd);
 		void JoinRoom(int uid,int room_id);
-		int SendMsg(ServerMsg smsg);
+		int SendMsg(const ServerMsg &smsg);
 		void Update(PlayerInput input);
 		int Recv();
 		int Parse(ClientMsg &cmsg);
+        void ReconnectFail();
 };
 

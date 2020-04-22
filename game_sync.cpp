@@ -1,9 +1,8 @@
 #include"game_sync.h"
 
 void GameSync::RecvAndHandle(int sockfd){
-	if(Recv(sockfd)<=0){
+	if(Recv(sockfd)<=0)
 		return;
-    }
 	ClientMsg cmsg;
 	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
@@ -68,7 +67,7 @@ int GameSync::Parse(int sockfd,ClientMsg &cmsg){
 void GameSync::Update(int sockfd,PlayerInput input){
 	if(!player.count(sockfd))
 		return;
-	return player[sockfd].Update(input);
+	player[sockfd].Update(input);
 }
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){

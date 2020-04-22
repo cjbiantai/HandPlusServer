@@ -15,7 +15,7 @@ void Player::JoinRoom(int uid,int room_id){
 	this->room_id=room_id;
 }
 
-int Player::SendMsg(ServerMsg smsg){
+int Player::SendMsg(const ServerMsg &smsg){
 	int len=smsg.ByteSize();
 	sendbuf[0]=1;
 	sendbuf[1]=len&0xff;
@@ -59,3 +59,9 @@ int Player::Parse(ClientMsg &cmsg){
 	memcpy(buffer,buffer+HEADER_LEN+msg_len,len-=HEADER_LEN+msg_len);
 	return 1;
 }
+
+void Player::ReconnectFail(){
+    ServerMsg smsg;
+    //smsg.set_type(ReconnectFail);
+}
+
