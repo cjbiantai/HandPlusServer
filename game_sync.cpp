@@ -33,6 +33,7 @@ void GameSync::Exit(int sockfd){
     printf("uid: %d,fd: %d, exit\n",player[sockfd].uid,sockfd);
     if(player[sockfd].uid<0)
         return;
+    player[sockfd].online=false;
 	int room_id=player[sockfd].room_id;
 	if(!room_id){
 		player.erase(sockfd);
