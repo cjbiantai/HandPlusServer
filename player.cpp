@@ -8,6 +8,9 @@ Player::Player(int sockfd){
 }
 
 void Player::JoinRoom(int uid,int room_id){
+#ifdef DEBUG
+    cout<<"Player::JoinRoom"<<endl;
+#endif
 	this->uid=uid;
 	this->room_id=room_id;
 	online=true;

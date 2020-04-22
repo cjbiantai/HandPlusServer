@@ -8,6 +8,9 @@ Room::Room(int max){
 }
 
 void Room::AddPlayer(Player *player){
+#ifdef DEBUG
+    cout<<"Room::AddPlayer uid: "<<player->uid<<endl;
+#endif
 	players.push_back(player);
 	if(players.size()==max){
 		state=1;
@@ -23,6 +26,9 @@ Player* Room::GetPlayer(int uid){
 }
 
 void Room::Reconnect(int uid,Player *player){
+#ifdef DEBUG
+    cout<<"Room::Reconnect"<<endl;
+#endif
 	for(int i=0;i<players.size();i++)
 		if(players[i]->uid==uid){
 			players[i]=player;
@@ -44,10 +50,16 @@ void Room::SendToAll(ServerMsg smsg){
 	sendbuf[4]=(len>>24)&0xff;
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
+#ifdef DEBUG
+    for(int i=0;i<players.size();i++)
+        if(players[i]->online)
+            cout<<players[i]->sockfd<<" ";
+    cout<<endl;
+#endif
 	for(int i=0;i<players.size();i++)
         if(players[i]->online){
 		    ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
-            cout<<"broadcast "<<players[i]->sockfd<<endl;
+            printf("Broadcast uid: %d, fd: %d, room_id: %d\n",players[i]->uid,players[i]->sockfd,players[i]->room_id);
 	    	if(SocketError::Check(ret,players[i]->sockfd)<=0){
                 printf("Room::SendToAll fail\n");
 		    	players[i]->online=false;
