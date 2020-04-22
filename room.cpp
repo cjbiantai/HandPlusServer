@@ -15,6 +15,13 @@ void Room::AddPlayer(Player *player){
 	}
 }
 
+Player* Room::GetPlayer(int uid){
+    for(int i=0;i<players.size();i++)
+        if(players[i]->uid==uid)
+            return players[i];
+    return NULL;
+}
+
 void Room::Reconnect(int uid,Player *player){
 	for(int i=0;i<players.size();i++)
 		if(players[i]->uid==uid){

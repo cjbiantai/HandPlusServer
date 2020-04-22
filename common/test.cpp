@@ -89,10 +89,17 @@ class Connection{
 };
 
 int main(){ 
-    Connection conn[N];
+    Connection conn[2];
+    conn[0].JoinRoom(1,1);
+    conn[1].JoinRoom(1,1);
+    ServerMsg smsg;
+    while(conn[1].RecvMsg(smsg)){
+        cout<<smsg.type()<<endl;
+    }
+    /*Connection conn[N];
     int tot=N;
     for(ll i=1;i<N;i++){
         conn[i].JoinRoom(i,i);
-    }
+    }*/
     return 0;
 }

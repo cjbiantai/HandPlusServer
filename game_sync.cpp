@@ -74,19 +74,22 @@ void GameSync::Update(int sockfd,PlayerInput input){
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	if(uid2room[uid]&&uid2room[uid]==room_id){
+        Player *p=room[room_id].GetPlayer(uid);
+        if(p->online)
+            Exit(p->sockfd);
 		player[sockfd].JoinRoom(uid,room_id);
 		room[room_id].Reconnect(uid,&player[sockfd]);
 		return;
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);
-    else{
-        printf("uid: %d, room %d exist!\n",uid,room_id);
+    if(room[room_id].max==room[room_id].players.size()){
+        printf("uid: %d, room %d full!\n",uid,room_id);
         return;
     }
 	player[sockfd].JoinRoom(uid,room_id);
-	uid2room[uid]=room_id;
 	room[room_id].AddPlayer(&player[sockfd]);
+	uid2room[uid]=room_id;
 }
 
 
