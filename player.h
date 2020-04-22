@@ -8,7 +8,6 @@ class Player{
 		int len;
 		char buffer[BUFFER_SIZE<<1];
 	public:
-		bool online;
 		int uid,room_id,sockfd;
 		string name;
 		PlayerInput input;

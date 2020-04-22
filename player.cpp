@@ -13,7 +13,6 @@ void Player::JoinRoom(int uid,int room_id){
 #endif
 	this->uid=uid;
 	this->room_id=room_id;
-	online=true;
 }
 
 int Player::SendMsg(ServerMsg smsg){

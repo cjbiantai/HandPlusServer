@@ -32,19 +32,13 @@ void GameSync::Broadcast(){
 }
 
 void GameSync::Exit(int sockfd){
-    printf("uid: %d,fd: %d, exit\n",player[sockfd].uid,sockfd);
-    if(player[sockfd].uid<0)
+    Player *p_player=&player[sockfd];
+    printf("uid: %d,fd: %d, exit\n",p_player->uid,sockfd);
+    if(p_player->uid<0)
         return;
-    player[sockfd].online=false;
-	int room_id=player[sockfd].room_id;
-	if(!room_id){
-		player.erase(sockfd);
-		return;
-	}
-}
-
-bool GameSync::isOnline(int sockfd){
-	return player[sockfd].online;
+	if(p_player->room_id)
+		room[p_player->room_id].DeletePlayer(p_player->uid);
+	player.erase(sockfd);
 }
 
 int GameSync::GetRoomId(int sockfd){
@@ -94,9 +88,8 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 		    return;
         }
         Player *p=room[last_room].GetPlayer(uid);
-        if(p->online)
+        if(p!=NULL)
             Exit(p->sockfd);
-        room[last_room].DeletePlayer(uid);
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);

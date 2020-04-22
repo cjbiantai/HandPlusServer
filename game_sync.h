@@ -17,7 +17,6 @@ class GameSync:public ServerSync{
 		void Broadcast();
 		void Exit(int sockfd);
 		
-		bool isOnline(int sockfd);
 		int GetRoomId(int sockfd);
 
 		int Recv(int sockfd);
