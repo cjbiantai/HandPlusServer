@@ -74,7 +74,9 @@ void Server::WorkOnce() {
    	gettimeofday(&end,NULL);
    	tick+=(end.tv_sec-start.tv_sec)*1000LL+(end.tv_usec-start.tv_usec)/1000;
    	if(tick>=BROADCAST_RATE){
-        //cout<<tick<<endl;
+#ifdef DEBUG
+        cout<<tick<<endl;
+#endif
    		tick-=BROADCAST_RATE;
 	   	sync->Broadcast();
 	}

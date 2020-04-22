@@ -24,9 +24,8 @@ void GameSync::RecvAndHandle(int sockfd){
 void GameSync::Broadcast(){
 	map<int,Room>::iterator it;
 	for(it=room.begin();it!=room.end();it++){
-        //printf("room: %d, broadcast\n",it->first);
 #ifdef DEBUG
-        cout<<"room "<<it->first<<endl;
+        printf("room: %d, broadcast\n",it->first);
 #endif
 		it->second.Broadcast();
     }
@@ -87,15 +86,17 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
         SocketError::Check(-1,sockfd);
         return;
     }
-	if(uid2room[uid]){
-        Player *p=room[uid2room[uid]].GetPlayer(uid);
-        if(p->online)
-            Exit(p->sockfd);
-        if(uid2room[uid]==room_id){
+    int last_room=uid2room[uid];
+	if(last_room){
+        if(last_room==room_id){
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);
 		    return;
         }
+        Player *p=room[last_room].GetPlayer(uid);
+        if(p->online)
+            Exit(p->sockfd);
+        room[last_room].DeletePlayer(uid);
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);

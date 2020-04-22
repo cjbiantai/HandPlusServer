@@ -10,7 +10,7 @@ class GameSync:public ServerSync{
 		char buffer[BUFFER_SIZE];
 		char sendbuf[BUFFER_SIZE];
 		map<int,Player> player;	//fd2player
-		map<int,Room> room; //fd2room
+		map<int,Room> room;
 		map<int,int> uid2room;
 	public:
 		void RecvAndHandle(int sockfd);

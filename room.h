@@ -14,6 +14,7 @@ class Room{
 		Room(int max);
 		void AddPlayer(Player *player);
         Player* GetPlayer(int uid);
+        void DeletePlayer(int uid);
 		void Reconnect(int uid,Player *player);
 		void SendToAll(ServerMsg smsg);
 		void Broadcast();

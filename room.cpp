@@ -18,6 +18,15 @@ void Room::AddPlayer(Player *player){
 	}
 }
 
+void Room::DeletePlayer(int uid){
+    for(int i=0;i<players.size();i++)
+        if(players[i]->uid==uid){
+            swap(players[i],players[players.size()-1]);
+            players.pop_back();
+            return;
+        }
+}
+
 Player* Room::GetPlayer(int uid){
     for(int i=0;i<players.size();i++)
         if(players[i]->uid==uid)
@@ -50,12 +59,6 @@ void Room::SendToAll(ServerMsg smsg){
 	sendbuf[4]=(len>>24)&0xff;
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
-#ifdef DEBUG
-    for(int i=0;i<players.size();i++)
-        if(players[i]->online)
-            cout<<players[i]->sockfd<<" ";
-    cout<<endl;
-#endif
 	for(int i=0;i<players.size();i++)
         if(players[i]->online){
 		    ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
