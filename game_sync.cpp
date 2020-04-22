@@ -35,7 +35,6 @@ void GameSync::Exit(int sockfd){
 		player.erase(sockfd);
 		return;
 	}
-	room[room_id].state=0;
 }
 
 bool GameSync::isOnline(int sockfd){
@@ -87,7 +86,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	}
 	if(!room.count(room_id))
 		room[room_id]=Room(ROOM_MAX);
-    if(room[room_id].state>0||room[room_id].max==room[room_id].players.size()){
+    if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
         printf("uid: %d, cann't join room %d!\n",uid,room_id);
         return;
     }
