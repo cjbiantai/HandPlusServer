@@ -1,5 +1,5 @@
 GameServer.out: game_sync.o server.o main.o player.o room.o socket_error.o common/game_proto.pb.o
-	g++ -o GameServer.out game_sync.o server.o main.o player.o room.o socket_error.o -lprotobuf common/game_proto.pb.o
+	g++ -g -o GameServer.out game_sync.o server.o main.o player.o room.o socket_error.o -lprotobuf common/game_proto.pb.o
 main.o: main.cpp
 	g++ -c main.cpp
 player.o: player.cpp

@@ -78,6 +78,7 @@ void GameSync::Update(int sockfd,PlayerInput input){
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
     if(room_id<=0){
         printf("uid: %d,room_id: %d,room_id must above zero!\n",uid,room_id);
+        SocketError::Check(-1,sockfd);
         return;
     }
 	if(uid2room[uid]&&uid2room[uid]==room_id){
