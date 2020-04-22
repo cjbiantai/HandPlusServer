@@ -47,6 +47,7 @@ void Room::SendToAll(ServerMsg smsg){
 	for(int i=0;i<players.size();i++)
         if(players[i]->online){
 		    ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
+            cout<<"broadcast "<<players[i]->sockfd<<endl;
 	    	if(SocketError::Check(ret,players[i]->sockfd)<=0){
                 printf("Room::SendToAll fail\n");
 		    	players[i]->online=false;

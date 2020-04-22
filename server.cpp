@@ -49,6 +49,7 @@ void Server::WorkOnce() {
 	struct sockaddr caddr;
     socklen_t len;
     int sockfd;
+   	gettimeofday(&start,NULL);
 	int n=epoll_wait(epfd,events,MAX_EVENTS,1);
 	struct epoll_event event;
    	for(int i=0;i<n;i++){

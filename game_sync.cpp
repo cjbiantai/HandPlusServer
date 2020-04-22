@@ -12,7 +12,7 @@ void GameSync::RecvAndHandle(int sockfd){
 				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
 				break;
 			case C2SSync:
-                printf("uid: %d update\n",player[sockfd].uid);
+                //printf("uid: %d update\n",player[sockfd].uid);
 				Update(sockfd,cmsg.input());
 				break;
 			default:
