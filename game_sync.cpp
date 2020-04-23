@@ -8,7 +8,7 @@ void GameSync::RecvAndHandle(int sockfd){
 		switch(cmsg.type()){
 			case EnterRoom:
 				printf("uid: %d roomid: %d connect\n",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
-				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
+				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
 				break;
 			case C2SSync:
                 //printf("uid: %d update\n",player[sockfd].uid);
@@ -24,7 +24,7 @@ void GameSync::Broadcast(){
 	map<int,Room>::iterator it;
 	for(it=room.begin();it!=room.end();it++){
 #ifdef DEBUG
-        printf("room: %d, broadcast\n",it->first);
+        printf("room: %d, max: %d, broadcast\n",it->first,it->second.max);
 #endif
 		it->second.Broadcast();
     }
@@ -72,7 +72,7 @@ void GameSync::Update(int sockfd,PlayerInput input){
 	player[sockfd].Update(input);
 }
 
-void GameSync::JoinRoom(int sockfd,int uid,int room_id){
+void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
 #ifdef DEBUG
     cout<<"GameSync::JoinRoom"<<endl;
 #endif
@@ -82,7 +82,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
         return;
     }
     int last_room=uid2room[uid];
-	if(last_room){
+	if(last_room&&room.count(room_id)){
         if(last_room==room_id){
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);
@@ -93,7 +93,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
             Exit(p->sockfd);
 	}
 	if(!room.count(room_id))
-		room[room_id]=Room(ROOM_MAX);
+		room[room_id]=Room(room_max);
     if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
         printf("uid: %d, can't join room %d!\n",uid,room_id);
         return;
@@ -102,4 +102,5 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
 	room[room_id].AddPlayer(&player[sockfd]);
 	uid2room[uid]=room_id;
 }
+
 

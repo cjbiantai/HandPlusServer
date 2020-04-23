@@ -24,6 +24,6 @@ class GameSync:public ServerSync{
 		void Update(int sockfd,PlayerInput input);
 		void Reconnect(int sockfd);
 		
-		void JoinRoom(int sockfd,int uid,int room_id);
+		void JoinRoom(int sockfd,int uid,int room_id,int room_max);
 		void InitRoom(int roomId);
 };

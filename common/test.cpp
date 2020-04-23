@@ -1,4 +1,4 @@
-#include"../common/all.h"
+#include"all.h"
 #include<pthread.h>
 
 #define SIZE 1024
@@ -73,12 +73,14 @@ class Connection{
             return SendMsg(cmsg);
         }
         
-        bool JoinRoom(int uid,int roomid){
+        bool JoinRoom(int uid,int roomid,int room_max){
             ClientMsg cmsg;
             PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
             cmsg.set_type(EnterRoom);
             playerinfo->set_uid(uid);
             playerinfo->set_roomid(roomid);
+            RoomInfo *roominfo=cmsg.mutable_roominfo();
+            roominfo->set_maxplayers(room_max);
             return SendMsg(cmsg);
         }
 
@@ -92,7 +94,7 @@ int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
     Connection conn;
-    conn.JoinRoom(1,atoi(argv[1]));
+    conn.JoinRoom(1,atoi(argv[1]),1);
     ServerMsg smsg;
     while(conn.RecvMsg(smsg)){
         conn.SendRand();

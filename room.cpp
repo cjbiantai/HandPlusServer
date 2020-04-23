@@ -38,7 +38,7 @@ void Room::Reconnect(int uid,Player *player){
 #ifdef DEBUG
     cout<<"Room::Reconnect"<<endl;
 #endif
-    AddPlayer(player);
+    players.push_back(player);
     if(state==2){
         printf("Room Reconnect fail, beyond 1 min limit\n");
         player->ReconnectFail();
@@ -61,8 +61,10 @@ void Room::SendToAll(ServerMsg smsg){
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
 	for(int i=0;i<players.size();i++){
+#ifdef DEBUG
+        printf("uid: %d, fd: %d, room_id: %d\n",players[i]->uid,players[i]->sockfd,players[i]->room_id);
+#endif
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
-        printf("Broadcast uid: %d, fd: %d, room_id: %d\n",players[i]->uid,players[i]->sockfd,players[i]->room_id);
 	    if(SocketError::Check(ret,players[i]->sockfd)<=0){
             printf("Room::SendToAll fail\n");
 	    }
@@ -82,6 +84,7 @@ void Room::Broadcast(){
 		//players[i].updated=false;
 		input=frame.add_inputs();
 		*input=players[i]->input;
+        input->set_uid(players[i]->uid);
 	}
 	frames.push_back(frame);
 	SendToAll(frame);
