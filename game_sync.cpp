@@ -92,8 +92,11 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
         if(p!=NULL)
             Exit(p->sockfd);
 	}
-	if(!room.count(room_id))
+	if(!room.count(room_id)){
+        if(room_max<=0)
+            return;
 		room[room_id]=Room(room_max);
+    }
     if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
         printf("uid: %d, can't join room %d!\n",uid,room_id);
         return;

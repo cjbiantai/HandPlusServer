@@ -75,9 +75,12 @@ void Server::WorkOnce() {
    	tick+=(end.tv_sec-start.tv_sec)*1000LL+(end.tv_usec-start.tv_usec)/1000;
    	if(tick>=BROADCAST_RATE){
 #ifdef DEBUG
-        cout<<tick<<endl;
+        printf("tick: %dms\n",tick);
 #endif
    		tick-=BROADCAST_RATE;
 	   	sync->Broadcast();
+#ifdef DEBUG
+        cout<<endl;
+#endif
 	}
 }

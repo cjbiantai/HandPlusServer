@@ -44,7 +44,7 @@ int Player::Parse(ClientMsg &cmsg){
 	if(len<HEADER_LEN)
 		return 0;
 	int msg_len=(buffer[4]<<24)+(buffer[3]<<16)+(buffer[2]<<8)+buffer[1];
-	if(msg_len+HEADER_LEN>BUFFER_SIZE){
+	if(msg_len<0||msg_len+HEADER_LEN>BUFFER_SIZE){
 		printf("fd: %d, size error\n",sockfd);
 		memset(buffer,len=0,sizeof(buffer));
 		return 0;

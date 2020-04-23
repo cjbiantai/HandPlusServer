@@ -62,7 +62,7 @@ void Room::SendToAll(ServerMsg smsg){
 	int ret;
 	for(int i=0;i<players.size();i++){
 #ifdef DEBUG
-        printf("uid: %d, fd: %d, room_id: %d\n",players[i]->uid,players[i]->sockfd,players[i]->room_id);
+        printf("    uid: %d, fd: %d, room_id: %d\n",players[i]->uid,players[i]->sockfd,players[i]->room_id);
 #endif
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 	    if(SocketError::Check(ret,players[i]->sockfd)<=0){
