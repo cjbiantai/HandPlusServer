@@ -90,11 +90,12 @@ class Connection{
 
 int main(int argc,char **argv){
     if(argc<2)
-        return 0; 
+        return 0*printf("input port\n"); 
     Connection conn;
     conn.JoinRoom(1,atoi(argv[1]));
     ServerMsg smsg;
     while(conn.RecvMsg(smsg)){
+        conn.SendRand();
         cout<<smsg.type()<<endl;
     }
     /*Connection conn[N];

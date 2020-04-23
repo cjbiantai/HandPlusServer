@@ -37,6 +37,8 @@ void GameSync::Exit(int sockfd){
         return;
 	if(p_player->room_id)
 		room[p_player->room_id].DeletePlayer(p_player->uid);
+    if(room[p_player->room_id].players.size()==0)
+        room.erase(p_player->room_id);
 	player.erase(sockfd);
 }
 
