@@ -92,7 +92,7 @@ int main(int argc,char **argv){
     if(argc<2)
         return 0; 
     Connection conn;
-    //conn[0].JoinRoom(1,atoi(argv[1]));
+    conn.JoinRoom(1,atoi(argv[1]));
     ServerMsg smsg;
     while(conn.RecvMsg(smsg)){
         cout<<smsg.type()<<endl;
