@@ -5,6 +5,7 @@ char Player::sendbuf[BUFFER_SIZE]={};
 Player::Player(int sockfd){
 	len=0;
 	this->sockfd=sockfd;
+    uid=-1;
 }
 
 void Player::JoinRoom(int uid,int room_id){

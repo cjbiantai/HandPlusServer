@@ -22,7 +22,7 @@
 #define BUFFER_SIZE 2048
 #define MAX_EVENTS 10000
 #define ROOM_MAX 1
-#define DEBUG
+//#define DEBUG
 
 using namespace std;
 using namespace GameProto;
