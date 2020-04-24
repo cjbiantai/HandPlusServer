@@ -4,8 +4,7 @@ void GameSync::RecvAndHandle(int sockfd){
 	if(Recv(sockfd)<=0)
 		return;
 	ClientMsg cmsg;
-    int ret;
-	while((ret=Parse(sockfd,cmsg))>0){
+	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
 				printf("uid: %d, fd: %d, roomid: %d connect\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
@@ -20,8 +19,6 @@ void GameSync::RecvAndHandle(int sockfd){
 				return;
 		}
 	}
-    if(ret<0)
-        SocketError::Close(sockfd);
 }
 
 void GameSync::Broadcast(){

@@ -47,7 +47,6 @@ int Player::Parse(ClientMsg &cmsg){
 	int msg_len=(buffer[4]<<24)+(buffer[3]<<16)+(buffer[2]<<8)+buffer[1];
 	if(msg_len<0||msg_len+HEADER_LEN>BUFFER_SIZE){
 		printf("uid: %d, fd: %d, message length error\n",uid,sockfd);
-		memset(buffer,len=0,sizeof(buffer));
 		return -1;
 	}
 	if(len<msg_len+HEADER_LEN)
