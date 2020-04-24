@@ -7,4 +7,5 @@ class SocketError{
 		static int epfd;
 		static ServerSync *sync;
 		static int Check(int ret,int sockfd);
+        static void Close(int sockfd);
 };

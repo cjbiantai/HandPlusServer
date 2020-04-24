@@ -4,10 +4,11 @@ void GameSync::RecvAndHandle(int sockfd){
 	if(Recv(sockfd)<=0)
 		return;
 	ClientMsg cmsg;
-	while(Parse(sockfd,cmsg)>0){
+    int ret;
+	while((ret=Parse(sockfd,cmsg))>0){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d roomid: %d connect\n",cmsg.playerinfo().uid(),cmsg.playerinfo().roomid());
+				printf("uid: %d, fd: %d, roomid: %d connect\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
 				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
 				break;
 			case C2SSync:
@@ -15,9 +16,12 @@ void GameSync::RecvAndHandle(int sockfd){
 				Update(sockfd,cmsg.input());
 				break;
 			default:
+                printf("undefined message type, fd: %d\n",sockfd);
 				return;
 		}
 	}
+    if(ret<0)
+        SocketError::Close(sockfd);
 }
 
 void GameSync::Broadcast(){
@@ -76,9 +80,9 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
 #ifdef DEBUG
     cout<<"GameSync::JoinRoom"<<endl;
 #endif
-    if(room_id<=0){
-        printf("uid: %d,room_id: %d,room_id must above zero!\n",uid,room_id);
-        SocketError::Check(-1,sockfd);
+    if(room_id<=0||uid<=0){
+        printf("uid: %d, fd: %d, room_id: %d,room_id and uid must above zero!\n",uid,sockfd,room_id);
+        SocketError::Close(sockfd);
         return;
     }
     int last_room=uid2room[uid];
