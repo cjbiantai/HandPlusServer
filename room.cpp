@@ -35,9 +35,7 @@ Player* Room::GetPlayer(int uid){
 }
 
 void Room::Reconnect(int uid,Player *player){
-#ifdef DEBUG
-    cout<<"Room::Reconnect"<<endl;
-#endif
+    printf("uid: %d, Room::Reconnect\n",uid);
     players.push_back(player);
     if(state==2){
         printf("Room Reconnect fail, beyond 1 min limit\n");

@@ -99,13 +99,14 @@ int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
     Connection conn[4];
-    for(int i=1;i<100;i++){
+    int n=2;
+    for(int i=0;i<n;i++){
         conn[0].Connect();
         conn[0].SendRand();
         conn[3].Connect();
         conn[3].SendRand();
     }
-    for(int i=1;i<100;i++){
+    for(int i=0;i<n;i++){
         conn[1].Connect();
         conn[2].Connect();
         conn[1].JoinRoom(1,atoi(argv[1]),1);
