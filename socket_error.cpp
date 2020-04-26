@@ -28,6 +28,7 @@ int SocketError::Check(int ret,int sockfd){
 
 
 void SocketError::Close(int sockfd){
+    //cout<<"SocketError::Close"<<endl;
     if(epoll_ctl(epfd,EPOLL_CTL_DEL,sockfd,NULL)<0)
         printf("fd: %d, epoll delete socket error\n",sockfd);
     if(close(sockfd)==-1)
