@@ -62,7 +62,7 @@ int GameSync::Parse(int sockfd,ClientMsg &cmsg){
 	int ret=player[sockfd].Parse(cmsg);
 	if(ret<0){
 		printf("uid: %d, kick off by server\n",player[sockfd].uid);
-		Exit(sockfd);
+		SocketError::Close(sockfd);
 	}
 	return ret;
 }
@@ -91,7 +91,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
         }
         Player *p=room[last_room].GetPlayer(uid);
         if(p!=NULL)
-            Exit(p->sockfd);
+            SocketError::Close(p->sockfd);
 	}
 	if(!room.count(room_id)){
         if(room_max<=0)

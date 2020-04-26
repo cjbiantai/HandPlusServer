@@ -35,7 +35,7 @@ Player* Room::GetPlayer(int uid){
 }
 
 void Room::Reconnect(int uid,Player *player){
-    printf("uid: %d, Room::Reconnect\n",uid);
+    printf("uid: %d, fd: %d, roomid: %d, Room::Reconnect\n",uid,player->sockfd,player->room_id);
     players.push_back(player);
     if(state==2){
         printf("Room Reconnect fail, beyond 1 min limit\n");
