@@ -47,6 +47,7 @@ int Player::Parse(ClientMsg &cmsg){
 	int msg_len=(buffer[4]<<24)+(buffer[3]<<16)+(buffer[2]<<8)+buffer[1];
 	if(msg_len<0||msg_len+HEADER_LEN>BUFFER_SIZE){
 		printf("uid: %d, fd: %d, message length error\n",uid,sockfd);
+        SocketError::Close(sockfd);
 		return -1;
 	}
 	if(len<msg_len+HEADER_LEN)
@@ -54,6 +55,7 @@ int Player::Parse(ClientMsg &cmsg){
 	int ret=cmsg.ParseFromArray(buffer+HEADER_LEN,msg_len);
 	if(!ret){
 		printf("uid: %d, fd: %d, parse error\n",uid,sockfd);
+        SocketError::Close(sockfd);
 		return -1;
 	}
 	memcpy(buffer,buffer+HEADER_LEN+msg_len,len-=HEADER_LEN+msg_len);

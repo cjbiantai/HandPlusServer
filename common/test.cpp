@@ -19,13 +19,18 @@ class Connection{
             saddr.sin_family = AF_INET;
             saddr.sin_addr.s_addr = inet_addr(IP);
             saddr.sin_port = htons(PORT);
+        }
+        ~Connection(){
+            Close();
+        }
+        void Connect(){
             sockfd=socket(AF_INET,SOCK_STREAM,0);
             if(connect(sockfd,(struct sockaddr*)&saddr,sizeof(saddr))<0){
     	        printf("connect fail\n");
                 exit(0);
             }
         }
-        ~Connection(){
+        void Close(){
             close(sockfd);
         }
 		bool SendMsg(ClientMsg &cmsg){
@@ -93,16 +98,33 @@ class Connection{
 int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
-    Connection conn;
-    conn.JoinRoom(1,atoi(argv[1]),1);
-    ServerMsg smsg;
+    Connection conn[4];
+    for(int i=1;i<100;i++){
+        conn[0].Connect();
+        conn[0].SendRand();
+        conn[3].Connect();
+        conn[3].SendRand();
+    }
+    for(int i=1;i<100;i++){
+        conn[1].Connect();
+        conn[2].Connect();
+        conn[1].JoinRoom(1,atoi(argv[1]),1);
+        conn[2].JoinRoom(1,atoi(argv[1]),1);
+        conn[1].Close();
+        conn[2].Close();
+    }
+
+    /*ServerMsg smsg;
+    conn.Connect();
     while(conn.RecvMsg(smsg)){
         conn.SendRand();
         cout<<smsg.type()<<endl;
-    }
+    }*/
+
     /*Connection conn[N];
     int tot=N;
     for(ll i=1;i<N;i++){
+        conn[i].Connect();
         conn[i].JoinRoom(i,i);
     }*/
     return 0;
