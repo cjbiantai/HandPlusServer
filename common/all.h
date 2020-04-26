@@ -23,8 +23,10 @@
 #define MAX_EVENTS 10000
 #define ROOM_MAX 1
 //#define DEBUG
+#define DEBUG1
 
 using namespace std;
 using namespace GameProto;
 typedef long long ll;
+typedef pair<int,int> pii;
 

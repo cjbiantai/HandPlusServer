@@ -11,11 +11,12 @@ class GameSync:public ServerSync{
 		char sendbuf[BUFFER_SIZE];
 		map<int,Player> player;	//fd2player
 		map<int,Room> room;
-		map<int,int> uid2room;
+		map<int,pii> uid2room;
 	public:
 		void RecvAndHandle(int sockfd);
 		void Broadcast();
 		void Exit(int sockfd);
+        void Print();
 		
 		int GetRoomId(int sockfd);
 

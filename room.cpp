@@ -1,10 +1,12 @@
 #include"room.h"
 
 char Room::sendbuf[BUFFER_SIZE]={};
+int Room::serial_id=1;
 
 Room::Room(int max){
 	state=0;
 	this->max=max;
+    timestamp=serial_id++;
 }
 
 void Room::AddPlayer(Player *player){
@@ -14,6 +16,7 @@ void Room::AddPlayer(Player *player){
 	players.push_back(player);
 	if(players.size()==max){
 		state=1;
+        printf("room_id %d: game start\n",player->room_id);
 		//SendToAll(smsg); smsg game start state
 	}
 }
@@ -36,6 +39,7 @@ Player* Room::GetPlayer(int uid){
 
 void Room::Reconnect(int uid,Player *player){
     printf("uid: %d, fd: %d, roomid: %d, Room::Reconnect\n",uid,player->sockfd,player->room_id);
+    DeletePlayer(uid);
     players.push_back(player);
     if(state==2){
         printf("Room Reconnect fail, beyond 1 min limit\n");
@@ -65,6 +69,8 @@ void Room::SendToAll(ServerMsg smsg){
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 	    if(SocketError::Check(ret,players[i]->sockfd)<=0){
             printf("Room::SendToAll fail\n");
+            swap(players[i--],players[players.size()-1]);
+            players.pop_back();
 	    }
     }
 }
