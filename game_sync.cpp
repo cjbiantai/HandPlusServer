@@ -84,14 +84,14 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
     }
     int last_room=uid2room[uid];
 	if(last_room&&room.count(room_id)){
+        Player *p_last=room[last_room].GetPlayer(uid);
         if(last_room==room_id){
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);
 		    return;
         }
-        Player *p=room[last_room].GetPlayer(uid);
-        if(p!=NULL)
-            SocketError::Close(p->sockfd);
+        if(p_last!=NULL)
+            SocketError::Close(p_last->sockfd);
 	}
 	if(!room.count(room_id)){
         if(room_max<=0)
