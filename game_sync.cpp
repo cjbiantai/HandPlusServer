@@ -1,13 +1,15 @@
 #include"game_sync.h"
 
 void GameSync::RecvAndHandle(int sockfd){
-	if(Recv(sockfd)<=0)
+	if(Recv(sockfd)<=0){
+        SocketError::Close(sockfd);
 		return;
+    }
 	ClientMsg cmsg;
 	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d, fd: %d, roomid: %d connect\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
+				printf("uid: %d, fd: %d, roomid: %d JoinRoom\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
 				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
 				break;
 			case C2SSync:
@@ -86,10 +88,11 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
         SocketError::Close(sockfd);
         return;
     }
-    int last_room=uid2room[uid];
+    int last_room=uid2room[uid].first;
 	if(last_room&&room.count(last_room)){
         Player *p_last=room[last_room].GetPlayer(uid);
-        if(last_room==room_id){
+        if(last_room==room_id&&uid2room[uid].second==room[room_id].timestamp){
+            //cout<<uid2room[uid].second<<" "<<room[room_id].timestamp<<endl;
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);
 		    return;
@@ -98,8 +101,12 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
             SocketError::Close(p_last->sockfd);
 	}
 	if(!room.count(room_id)){
-        if(room_max<=0)
+        if(room_max<=0){
+            printf("room_max must above zero!\n");
+            SocketError::Close(sockfd);
             return;
+        }
+        printf("Room create, room_id: %d, room_max: %d\n",room_id,room_max);
 		room[room_id]=Room(room_max);
     }
     if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
@@ -108,7 +115,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
     }
 	player[sockfd].JoinRoom(uid,room_id);
 	room[room_id].AddPlayer(&player[sockfd]);
-	uid2room[uid]=room_id;
+	uid2room[uid]={room_id,room[room_id].timestamp};
 }
 
 
