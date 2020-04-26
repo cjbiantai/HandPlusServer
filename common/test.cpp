@@ -1,4 +1,5 @@
 #include"all.h"
+#include<unistd.h>
 
 #define SIZE 1024
 #define N 10
@@ -97,6 +98,7 @@ class Connection{
 int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
+
     Connection conn[N];
     for(int i=0;i<N;i++){
         conn[i].Connect();
@@ -104,10 +106,12 @@ int main(int argc,char **argv){
         conn[i].Connect();
         conn[i].SendRand();
     }
+    sleep(1);
     for(int i=0;i<N;i++){
         conn[i].Connect();
         conn[i].JoinRoom(1,atoi(argv[1]),1);
     }
+    sleep(1);
     for(int i=0;i<N;i++){
         conn[i].Connect();
         conn[i].JoinRoom(1,atoi(argv[1]),1);
