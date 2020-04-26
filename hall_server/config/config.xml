@@ -7,10 +7,6 @@
     <room room_number="10" room_max_user="2" />
     <!-- 战斗服务器配置 -->
     <service service_pressure_limit = "100" />
-    <service_array ip="117.78.9.170" port="17001"/>
-    <service_array ip="117.78.9.170" port="17002"/>
-    <service_array ip="117.78.9.170" port="17003"/>
-    <service_array ip="117.78.9.170" port="17004"/>
-    <service_array ip="117.78.9.170" port="17005"/>
+    <service_array ip="211.149.255.36" port="12345"/>
 </process>
 

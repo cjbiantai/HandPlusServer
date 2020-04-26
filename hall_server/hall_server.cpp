@@ -24,6 +24,10 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
         int packageLength = recvDataManager.GetPackageLength();
         if(packageLength == -1) {
             break;
+        }else if(packageLength < 0 || packageLength > BUFF_SIZE) {
+            HandleClose(clientFd);
+            close(clientFd);
+            break;
         }
         printf("========================== %d\n", packageLength);
         for(int i = 0; i < HEAD_LENGTH; ++i) {
@@ -33,6 +37,12 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
             bData.ChangeDataAt(recvDataManager.PopByte(), i);
         }
         int ret = clientMsg.ParseFromArray(bData.GetDataArray(), packageLength);
+        if(ret < 0) {
+            //to do ParseFromArray Error
+            HandleClose(clientFd); 
+            close(clientFd);
+            break;
+        }
         switch(clientMsg.type()) {
             case GameProto::LogIn :
                 HandleLogIn(clientMsg, clientFd);
@@ -110,14 +120,17 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             serverMsg.set_type(GameProto::LogInSuccess);
             GameProto::PlayerInfo *ptr = serverMsg.mutable_playerinfo();
             ptr -> CopyFrom(playerData);
+            /*
             if(accountRoomMap.find(playerData.account()) != accountRoomMap.end()) {
                 serverMsg.set_str(roomMap[accountRoomMap[playerData.account()]].serviceAddr);
                 userRoomMap[playerData.uid()] = accountRoomMap[playerData.account()]; 
                 inHallUsers.erase(playerData.uid());
             } else {
-                serverMsg.set_str("登录成功");
             }
+            */
+            printf("======>_<=========  uid = %d", serverMsg.playerinfo().uid());
             //登录成功
+            serverMsg.set_str("登录成功");
             break;
     }
     printf("%s\n", serverMsg.str().c_str());
@@ -154,9 +167,18 @@ void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
 void hallServer::HandleCreateRoom(GameProto::ClientMsg clientMsg, int clientFd) {
     roomInfo tempRoomInfo;
     GameProto::ServerMsg serverMsg;
+    if(fdUserMap.find(clientFd) == fdUserMap.end()) {
+        //to do DontLogIn
+        return ;
+    }
+    for(auto rid : roomMap) {
+        if(rid.second.Players.find(fdUserMap[clientFd]) != rid.second.Players.end()) {
+            return ;
+        }
+    }
+
     GameProto::PlayerInfo &tempPlayerInfo = userInfoMap[fdUserMap[clientFd]];
     userRoomMap[tempPlayerInfo.uid()] = tempRoomInfo.rid;
-    std::cout <<" ============ " << tempPlayerInfo.uid() << std::endl;
 
 ///==========================================
     tempPlayerInfo.set_roomid(tempRoomInfo.rid);
@@ -176,7 +198,6 @@ void hallServer::HandleCreateRoom(GameProto::ClientMsg clientMsg, int clientFd) 
     roominfo -> add_players() -> CopyFrom(tempPlayerInfo);
     roominfo -> set_id(tempRoomInfo.rid);
     serverMsg.set_type(GameProto::CreateRoomSuccess);
-    std::cout << " ======================== " << std::endl;
     HandleSendDataToClient(serverMsg, clientFd);
     BroadRoomListInfo();
 }
@@ -192,11 +213,16 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
             //to do roomDontExist
         }else {
             roomInfo& tempRoomInfo = roomMap[roomId];
-            printf(" ====================\n %s\n", tempRoomInfo.mapMame.c_str());
             if(tempRoomInfo.Players.size() == tempRoomInfo.maxPlayers) {
                 serverMsg.set_type(GameProto::EnterRoomError_RoomIsFull);
               //to do roomFull
             }else {
+                for(auto room : roomMap) {
+                    if(room.second.Players.find(uid) != room.second.Players.end()) {
+                        //to do InRoom;
+                        return ;
+                    }
+                }
                 tempRoomInfo.Players.insert(uid);
                 //to do EnterRoom
                 serverMsg.set_type(GameProto::EnterRoomSuccess);
@@ -210,10 +236,9 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
                 roominfos->set_roomname(tempRoomInfo.roomName);
                 roominfos->set_password(tempRoomInfo.password);
                 roominfos->set_mapname(tempRoomInfo.mapMame);
-                roominfos->set_maxplayers(tempRoomInfo.rid);
+                roominfos->set_maxplayers(tempRoomInfo.maxPlayers);
                 roominfos->set_master(tempRoomInfo.master);
                 roominfos->set_curplayernumber(tempRoomInfo.Players.size());
-                printf("==========================\n !!!!!!===== %s  %d, %d\n", roominfos -> mapname().c_str() , roominfos->master(), tempRoomInfo.master);
                 for(auto uid : tempRoomInfo.Players) {
                 // roominfos->add_preparedplayers(userInfoMap[uid]);
                     roominfos -> add_players() -> CopyFrom(userInfoMap[uid]);
@@ -221,7 +246,6 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
             }
         }
     }
-    printf(" =================!!===\n %s \n", serverMsg.roominfos(0).mapname().c_str());
     HandleSendDataToClient(serverMsg, clientFd);
     if(serverMsg.type() == GameProto::EnterRoomSuccess) {
         BroadRoomInfo(roomId);
@@ -269,7 +293,6 @@ void hallServer::HandleChangeStateInRoom(GameProto::ClientMsg clientMsg, int cli
     }else {
         int uid = fdUserMap[clientFd];
         if(userRoomMap.find(uid) == userRoomMap.end()) {
-            std::cout <<" =============->_<-=======!! " << uid  << std::endl;
             //to do DontInRoom
         }else {
             int roomId = userRoomMap[uid];
@@ -289,6 +312,11 @@ void hallServer::HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd) {
     }else {
         int roomId = userRoomMap[fdUserMap[clientFd]];
         GameProto::ServerMsg serverMsg;
+        if(roomMap[roomId].Players.size() != roomMap[roomId].maxPlayers) {
+            serverMsg.set_type(GameProto::StartGameFailure);
+            HandleSendDataToClient(serverMsg, clientFd);
+            return ;
+        }
         for(auto uid : roomMap[roomId].Players) {
             if(!userInfoMap[uid].prepared()) {
                 serverMsg.set_type(GameProto::StartGameFailure);
@@ -302,19 +330,26 @@ void hallServer::HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd) {
         tempService.servicePressure += roomMap[roomId].Players.size();
         for(auto uid : roomMap[roomId].Players) {
             serverMsg.clear_playerinfo();
-           // serverMsg.CopyFrom(userInfoMap[uid]);
+            //serverMsg.CopyFrom(userInfoMap[uid]);
             serverMsg.set_str(tempService.serviceIp + ":" + std::to_string(tempService.servicePort)); 
             serverMsg.set_ip(tempService.serviceIp);
             serverMsg.set_port(tempService.servicePort);
+            GameProto::RoomInfo roominfo;
+            roominfo.set_id(roomId);
+            roominfo.set_maxplayers(roomMap[roomId].maxPlayers);
+            serverMsg.add_roominfos()->CopyFrom(roominfo);
+            printf("!==================================! %d %d %d\n", serverMsg.roominfos(0).maxplayers(), roominfo.maxplayers(), roomMap[roomId].maxPlayers);
             HandleSendDataToClient(serverMsg, userFdMap[uid]);
+            onlineUsers.erase(uid); 
         }
+        roomMap.erase(roomId);
+        serviceList.insert(tempService);
     }
 }
 
 void hallServer::BroadRoomInfo(int roomId) {
     GameProto::ServerMsg serverMsg;
     roomInfo &tempRoomInfo = roomMap[roomId];
-    std::cout <<" ==========----------================= " << tempRoomInfo.Players.size() << "\n" << std::endl;
     serverMsg.set_type(GameProto::BroadRoomInfo);
     GameProto::RoomInfo* roominfos = serverMsg.add_roominfos();
     roominfos->set_id(tempRoomInfo.rid);
@@ -322,7 +357,7 @@ void hallServer::BroadRoomInfo(int roomId) {
     roominfos->set_roundnumber(tempRoomInfo.roundNumber);
     roominfos->set_roomname(tempRoomInfo.roomName);
     roominfos->set_password(tempRoomInfo.password);
-    roominfos->set_maxplayers(oneRoomMaxUsers);
+    roominfos->set_maxplayers(tempRoomInfo.maxPlayers);
     roominfos->set_master(tempRoomInfo.master);
     roominfos->set_curplayernumber(tempRoomInfo.Players.size());
     for(auto uid : tempRoomInfo.Players) {
@@ -357,16 +392,10 @@ void hallServer::BroadRoomListInfo() {
 }
 
 void hallServer::HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd) {
-    if(clientFd == 0) {
-        std::cout<< serverMsg.type() << std::endl;
-        return ;
-    }
-    if(!serverMsg.SerializeToArray(bData.GetBuffArray() + HEAD_LENGTH, BUFF_SIZE)) {
-        return ;
-    }
     for(int i = 1; i < HEAD_LENGTH; ++i) {
         bData.ChangeBuffAt(serverMsg.ByteSize() >> ((i -1) * 8), i);
     }
+    int ret = serverMsg.SerializeToArray(bData.GetBuffArray() + HEAD_LENGTH, BUFF_SIZE);
     SendDataToClient(clientFd, HEAD_LENGTH + serverMsg.ByteSize());
 }
 
@@ -385,6 +414,7 @@ void hallServer::HandleSelectCharacter(GameProto::ClientMsg clientMsg, int clien
         }
     }
 }
+
 void hallServer::HandleClose(int clientFd) {
     c2SDataMap.erase(clientFd);
     if(fdUserMap.find(clientFd) != fdUserMap.end()) {

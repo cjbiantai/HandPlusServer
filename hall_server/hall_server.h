@@ -3,7 +3,6 @@
 #include "../common/heads.h"
 #include "../common/consts.h"
 #include "../common/mysql/mysql.h"
-#include "process_log.h"
 #include "../common/game_proto.pb.h"
 #include "../common/recv_data_manager.h"
 #include "service_mgr.h"
