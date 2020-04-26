@@ -1,8 +1,7 @@
 #include"all.h"
-#include<pthread.h>
 
 #define SIZE 1024
-#define N 1000
+#define N 10
 
 //#define IP "117.78.9.170"
 //#define PORT 17000
@@ -98,21 +97,21 @@ class Connection{
 int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
-    Connection conn[4];
-    int n=2;
-    for(int i=0;i<n;i++){
-        conn[0].Connect();
-        conn[0].SendRand();
-        conn[3].Connect();
-        conn[3].SendRand();
+    Connection conn[N];
+    for(int i=0;i<N;i++){
+        conn[i].Connect();
+        conn[i].SendRand();
+        conn[i].Connect();
+        conn[i].SendRand();
     }
-    for(int i=0;i<n;i++){
-        conn[1].Connect();
-        conn[2].Connect();
-        conn[1].JoinRoom(1,atoi(argv[1]),1);
-        conn[2].JoinRoom(1,atoi(argv[1]),1);
-        conn[1].Close();
-        conn[2].Close();
+    for(int i=0;i<N;i++){
+        conn[i].Connect();
+        conn[i].JoinRoom(1,atoi(argv[1]),1);
+    }
+    for(int i=0;i<N;i++){
+        conn[i].Connect();
+        conn[i].JoinRoom(1,atoi(argv[1]),1);
+        conn[i].Close();
     }
 
     /*ServerMsg smsg;
@@ -128,5 +127,6 @@ int main(int argc,char **argv){
         conn[i].Connect();
         conn[i].JoinRoom(i,i);
     }*/
+    while(1);
     return 0;
 }
