@@ -48,6 +48,15 @@ void GameSync::Exit(int sockfd){
 	player.erase(sockfd);
 }
 
+void GameSync::Print(){
+    for(auto &r:room){
+        printf("room: %d\n",r.second.players[0]->room_id);
+        for(auto &p:r.second.players)
+            printf("    uid: %d, fd: %d, roomid: %d\n",p->uid,p->sockfd,p->room_id);
+        cout<<endl;
+    }
+}
+
 int GameSync::GetRoomId(int sockfd){
 	return player[sockfd].room_id;
 }

@@ -82,6 +82,7 @@ void Server::WorkOnce() {
 #ifdef DEBUG
         cout<<endl;
 #endif
+        sync->Print();
     }
 }
 
