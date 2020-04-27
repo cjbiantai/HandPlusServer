@@ -9,7 +9,7 @@ void GameSync::RecvAndHandle(int sockfd){
 	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d, fd: %d, roomid: %d JoinRoom\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
+				printf("uid: %d, fd: %d, room_id: %d JoinRoom\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
 				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
 				break;
 			case C2SSync:
@@ -49,7 +49,7 @@ void GameSync::Print(){
     for(auto &r:room){
         printf("room: %d\n",r.second.players[0]->room_id);
         for(auto &p:r.second.players)
-            printf("    uid: %d, fd: %d, roomid: %d\n",p->uid,p->sockfd,p->room_id);
+            printf("    uid: %d, fd: %d, room_id: %d\n",p->uid,p->sockfd,p->room_id);
     }
 }
 
@@ -122,5 +122,4 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
 	room[room_id].AddPlayer(&player[sockfd]);
 	uid2room[uid]={room_id,room[room_id].timestamp};
 }
-
 
