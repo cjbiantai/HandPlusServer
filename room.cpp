@@ -47,7 +47,7 @@ void Room::Reconnect(int uid,Player *player){
         return;
     }
 	for(int i=0;i<frames.size();i++)
-		if(SocketError::Check(player->SendMsg(frames[i]),player->sockfd)<=0){
+		if(SocketError::Check(player->SendMsg(&frames[i]),player->sockfd)<=0){
             printf("Room::Reconnect fail, send error\n");
 			return;
         }

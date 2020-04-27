@@ -1,12 +1,17 @@
 #include"game_sync.h"
 
+GameSync::~GameSync(){
+    if(s2ssync!=NULL)
+        delete s2ssync;
+}
+
 void GameSync::RecvAndHandle(int sockfd){
 	if(Recv(sockfd)<=0){
         SocketError::Close(sockfd);
 		return;
     }
 	ClientMsg cmsg;
-	while(Parse(sockfd,cmsg)>0){
+	while(Parse(sockfd,&cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
 				printf("uid: %d, fd: %d, room_id: %d JoinRoom\n",cmsg.playerinfo().userid(),sockfd,cmsg.playerinfo().roomid());
@@ -23,45 +28,26 @@ void GameSync::RecvAndHandle(int sockfd){
 	}
 }
 
-void GameSync::S2SSync(int sockfd){
-    S2SMsg msg;
-    while(S2SParse(sockfd,msg)){
-        switch(msg.type()){
-            case PrepareRoom:
+void GameSync::S2SRecvAndHandle(int sockfd){
+    if(s2ssync==NULL)
+        s2ssync=new S2SSync(sockfd);
+	if(s2ssync->Recv()<=0){
+        printf("hallfd recv error\n");
+		return;
+    }
+	S2SMsg msg;
+	while(s2ssync->Parse(&msg)>0){
+		switch(msg.type()){
+			case PrepareRoom:
                 room[msg.roominfo().roomid()]=Room(msg.roominfo().maxplayers());
-                if(send(sockfd,sendbuf.len,0)<=0){
-                    printf("S2S send error\n");
-                }
-                break;
-            default:
-                printf("S2SSync undefined message type, fd: %d\n",sockfd);
-                break;
-        }
-    }
-}
-
-bool GameSync::S2SParse(int sockfd,S2SMsg &msg){ 
-    int ret=recv(sockfd,buffer,BUFFER_SIZE-len,MSG_DONTWAIT);
-    if(SocketError::Check(ret,sockfd)<0){
-        printf("S2S recv error\n");
-        return false ;
-    }
-    len+=ret;
-    if(len<HEADER_LEN)
-        return false;
-    int msg_len=buffer[1]+(buffer[2]<<8)+(buffer[3]<<16)+(buffer[4]<<24);
-    if(msg_len<0||msg_len+HEADER_LEN>BUFFER_SIZE){
-        printf("S2S size error\n");
-        memset(buffer,len=0,sizeof(buffer));
-        return false;
-    }
-    if(msg.ParseFromArray(buffer+HEADER_LEN,msg_len)<0){
-        printf("S2S parse error\n");
-        memset(buffer,len=0,sizeof(buffer));
-        return false;
-    }
-    memcpy(buffer,buffer+HEADER_LEN+msg_len,len-=HEADER_LEN+msg_len);
-    return true;
+                s2ssync->SendMsg(new S2SMsg());
+				break;
+			default:
+                printf("S2S undefined message type, fd: %d\n",sockfd);
+				return;
+		}
+	}
+    
 }
 
 void GameSync::Broadcast(){
@@ -106,7 +92,7 @@ int GameSync::Recv(int sockfd){
 	return player[sockfd].Recv();
 }
 
-int GameSync::Parse(int sockfd,ClientMsg &cmsg){
+int GameSync::Parse(int sockfd,ClientMsg *cmsg){
 	if(!player.count(sockfd)){
 		printf("player don't exist\n");
 		return -1;

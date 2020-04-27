@@ -4,6 +4,7 @@
 #include"socket_error.h"
 #include"player.h"
 #include"room.h"
+#include"s2ssync.h"
 
 class GameSync:public ServerSync{
 	private:
@@ -13,9 +14,13 @@ class GameSync:public ServerSync{
 		map<int,Player> player;	//fd2player
 		map<int,Room> room;
 		map<int,pii> uid2room;
+        S2SSync *s2ssync;
 	public:
+        GameSync(){}
+        ~GameSync();
+
 		void RecvAndHandle(int sockfd);
-        void S2SSync(int sockfd);
+        void S2SRecvAndHandle(int sockfd);
 		void Broadcast();
 		void Exit(int sockfd);
         void Print();
@@ -23,11 +28,12 @@ class GameSync:public ServerSync{
 		int GetRoomId(int sockfd);
 
 		int Recv(int sockfd);
-        bool S2SParse(int sockfd,S2SMsg &msg);
-		int Parse(int sockfd,ClientMsg &cmsg);
+        bool S2SParse(int sockfd,S2SMsg *msg);
+		int Parse(int sockfd,ClientMsg *cmsg);
 		void Update(int sockfd,PlayerInput input);
 		void Reconnect(int sockfd);
 		
 		void JoinRoom(int sockfd,int uid,int room_id,int room_max);
 		void InitRoom(int roomId);
 };
+

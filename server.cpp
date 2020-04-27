@@ -85,8 +85,7 @@ void Server::WorkOnce() {
    				continue;
    			}
    		}else if(events[i].data.fd==hallfd){
-            sockfd=events[i].data.fd;
-            sync->S2SSync(sockfd);
+            sync->S2SRecvAndHandle(hallfd);
         }else{
 	        sockfd=events[i].data.fd;
 	        sync->RecvAndHandle(sockfd);

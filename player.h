@@ -1,6 +1,7 @@
 #pragma once
 #include"common/all.h"
 #include"socket_error.h"
+#include"socket_connect.h"
 
 class Player{
 	private:
@@ -8,17 +9,19 @@ class Player{
 		int len;
 		char buffer[BUFFER_SIZE<<1];
 	public:
+        SocketConnect *socketConn;
 		int uid,room_id,sockfd;
 		string name;
 		PlayerInput input;
 		
-		Player(){uid=-1;}
+        Player(){uid=-1;}
 		Player(int sockfd);
+        ~Player();
 		void JoinRoom(int uid,int room_id);
-		int SendMsg(const ServerMsg &smsg);
+		int SendMsg(ServerMsg *smsg);
 		void Update(PlayerInput input);
 		int Recv();
-		int Parse(ClientMsg &cmsg);
+		int Parse(ClientMsg *cmsg);
         void ReconnectFail();
 };
 
