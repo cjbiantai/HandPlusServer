@@ -26,9 +26,6 @@ void GameSync::RecvAndHandle(int sockfd){
 void GameSync::Broadcast(){
 	map<int,Room>::iterator it;
 	for(it=room.begin();it!=room.end();it++){
-#ifdef DEBUG
-        printf("room: %d, max: %d, broadcast\n",it->first,it->second.max);
-#endif
 		it->second.Broadcast();
     }
 }
@@ -53,7 +50,6 @@ void GameSync::Print(){
         printf("room: %d\n",r.second.players[0]->room_id);
         for(auto &p:r.second.players)
             printf("    uid: %d, fd: %d, roomid: %d\n",p->uid,p->sockfd,p->room_id);
-        cout<<endl;
     }
 }
 
