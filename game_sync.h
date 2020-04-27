@@ -7,13 +7,15 @@
 
 class GameSync:public ServerSync{
 	private:
-		char buffer[BUFFER_SIZE];
-		char sendbuf[BUFFER_SIZE];
+        int len;
+        char buffer[BUFFER_SIZE];
+        char sendbuf[BUFFER_SIZE];
 		map<int,Player> player;	//fd2player
 		map<int,Room> room;
 		map<int,pii> uid2room;
 	public:
 		void RecvAndHandle(int sockfd);
+        void S2SSync(int sockfd);
 		void Broadcast();
 		void Exit(int sockfd);
         void Print();
@@ -21,6 +23,7 @@ class GameSync:public ServerSync{
 		int GetRoomId(int sockfd);
 
 		int Recv(int sockfd);
+        bool S2SParse(int sockfd,S2SMsg &msg);
 		int Parse(int sockfd,ClientMsg &cmsg);
 		void Update(int sockfd,PlayerInput input);
 		void Reconnect(int sockfd);

@@ -9,18 +9,59 @@ void GameSync::RecvAndHandle(int sockfd){
 	while(Parse(sockfd,cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d, fd: %d, room_id: %d JoinRoom\n",cmsg.playerinfo().uid(),sockfd,cmsg.playerinfo().roomid());
-				JoinRoom(sockfd,cmsg.playerinfo().uid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
+				printf("uid: %d, fd: %d, room_id: %d JoinRoom\n",cmsg.playerinfo().userid(),sockfd,cmsg.playerinfo().roomid());
+				JoinRoom(sockfd,cmsg.playerinfo().userid(),cmsg.playerinfo().roomid(),cmsg.roominfo().maxplayers());
 				break;
 			case C2SSync:
                 //printf("uid: %d update\n",player[sockfd].uid);
 				Update(sockfd,cmsg.input());
 				break;
 			default:
-                printf("undefined message type, fd: %d\n",sockfd);
+                printf("RecvAndHandle undefined message type, fd: %d\n",sockfd);
 				return;
 		}
 	}
+}
+
+void GameSync::S2SSync(int sockfd){
+    S2SMsg msg;
+    while(S2SParse(sockfd,msg)){
+        switch(msg.type()){
+            case PrepareRoom:
+                room[msg.roominfo().roomid()]=Room(msg.roominfo().maxplayers());
+                if(send(sockfd,sendbuf.len,0)<=0){
+                    printf("S2S send error\n");
+                }
+                break;
+            default:
+                printf("S2SSync undefined message type, fd: %d\n",sockfd);
+                break;
+        }
+    }
+}
+
+bool GameSync::S2SParse(int sockfd,S2SMsg &msg){ 
+    int ret=recv(sockfd,buffer,BUFFER_SIZE-len,MSG_DONTWAIT);
+    if(SocketError::Check(ret,sockfd)<0){
+        printf("S2S recv error\n");
+        return false ;
+    }
+    len+=ret;
+    if(len<HEADER_LEN)
+        return false;
+    int msg_len=buffer[1]+(buffer[2]<<8)+(buffer[3]<<16)+(buffer[4]<<24);
+    if(msg_len<0||msg_len+HEADER_LEN>BUFFER_SIZE){
+        printf("S2S size error\n");
+        memset(buffer,len=0,sizeof(buffer));
+        return false;
+    }
+    if(msg.ParseFromArray(buffer+HEADER_LEN,msg_len)<0){
+        printf("S2S parse error\n");
+        memset(buffer,len=0,sizeof(buffer));
+        return false;
+    }
+    memcpy(buffer,buffer+HEADER_LEN+msg_len,len-=HEADER_LEN+msg_len);
+    return true;
 }
 
 void GameSync::Broadcast(){

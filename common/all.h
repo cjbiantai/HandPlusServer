@@ -24,6 +24,9 @@
 #define ROOM_MAX 1
 //#define DEBUG
 
+#define HALL_IP "117.78.9.170"
+#define HALL_PORT 17000
+
 using namespace std;
 using namespace GameProto;
 typedef long long ll;

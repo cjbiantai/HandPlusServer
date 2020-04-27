@@ -4,7 +4,7 @@
 
 class Server {
 	private:
-	    int port,listenfd,epfd;
+	    int port,listenfd,hallfd,epfd;
 	    ServerSync *sync;
 	    struct epoll_event* events;
 	    struct timeval start,end;

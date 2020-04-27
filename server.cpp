@@ -29,6 +29,18 @@ Server::Server(int port,ServerSync *sync) {
 		    printf("close socket error: %d\n",errno);
     	exit(0);
     }
+
+    saddr.sin_family = AF_INET;
+    saddr.sin_addr.s_addr = inet_addr(HALL_IP);
+    saddr.sin_port = htons(HALL_PORT);
+    hallfd=socket(AF_INET,SOCK_STREAM,0);
+    if(connect(hallfd,(struct sockaddr*)&saddr,sizeof(saddr))<0){
+    	printf("hall connect fail\n");
+    	if(close(hallfd)==-1)
+		    printf("close socket error: %d\n",errno);
+        exit(0);
+    }
+
 	SocketError::epfd=epfd=epoll_create(MAX_EVENTS);
 	struct epoll_event event;
 	event.data.fd=listenfd;
@@ -37,11 +49,17 @@ Server::Server(int port,ServerSync *sync) {
 		printf("epoll_ctl listenfd error\n");
 		exit(0);
 	}
-	events=(struct epoll_event*)malloc(sizeof(event)*MAX_EVENTS);
+    if(epoll_ctl(epfd,EPOLL_CTL_ADD,hallfd,&event)<0){
+        printf("epoll_ctl hallfd error\n");
+        exit(0);
+    }
+	events=(struct epoll_event*)malloc(sizeof(event)*MAX_EVENTS);    
 }
 
 Server::~Server() {
     free(events);
+    close(listenfd);
+    close(hallfd);
     close(epfd);
 }
 
@@ -66,7 +84,10 @@ void Server::WorkOnce() {
    				printf("epoll_ctl new sock error,address :%s\n",caddr.sa_data);
    				continue;
    			}
-   		}else{
+   		}else if(events[i].data.fd==hallfd){
+            sockfd=events[i].data.fd;
+            sync->S2SSync(sockfd);
+        }else{
 	        sockfd=events[i].data.fd;
 	        sync->RecvAndHandle(sockfd);
    		}

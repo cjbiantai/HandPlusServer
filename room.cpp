@@ -77,7 +77,6 @@ void Room::Broadcast(){
 		return;
 	ServerMsg frame;
 	frame.set_type(S2CSync);
-	frame.set_fid(frames.size());
 	PlayerInput *input;
 	for(int i=0;i<players.size();i++){
 		//if(!players[i].updated)
@@ -85,7 +84,7 @@ void Room::Broadcast(){
 		//players[i].updated=false;
 		input=frame.add_inputs();
 		*input=players[i]->input;
-        input->set_uid(players[i]->uid);
+        input->set_userid(players[i]->uid);
 	}
 	frames.push_back(frame);
 	SendToAll(frame);
