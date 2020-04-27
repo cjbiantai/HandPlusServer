@@ -79,8 +79,8 @@ void Server::WorkOnce() {
 #endif
    		tick-=BROADCAST_RATE;
 	   	sync->Broadcast();
-        sync->Print();
 #ifdef DEBUG
+        sync->Print();
         cout<<endl;
 #endif
     }
