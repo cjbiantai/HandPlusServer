@@ -2,6 +2,10 @@
 
 char Player::sendbuf[BUFFER_SIZE]={};
 
+Player::Player(){
+    uid=-1;
+}
+
 Player::Player(int sockfd){
     socketConn=new SocketConnect(sockfd);
     uid=-1;

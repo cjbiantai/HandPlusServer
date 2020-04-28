@@ -1,5 +1,9 @@
 #include"game_sync.h"
 
+GameSync::GameSync(){
+    hall=NULL;
+}
+
 GameSync::~GameSync(){
     if(hall!=NULL)
         delete hall;

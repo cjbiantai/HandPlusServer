@@ -16,7 +16,7 @@ class GameSync:public ServerSync{
 		map<int,pii> uid2room;
         HallSync *hall;
 	public:
-        GameSync(){}
+        GameSync();
         ~GameSync();
 
 		void RecvAndHandle(int sockfd);

@@ -14,7 +14,7 @@ class Player{
 		string name;
 		PlayerInput input;
 		
-        Player(){uid=-1;}
+        Player();
 		Player(int sockfd);
         ~Player();
 		void JoinRoom(int uid,int room_id);
