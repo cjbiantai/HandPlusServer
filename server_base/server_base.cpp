@@ -76,10 +76,13 @@ void serverBase::Work() {
             continue;
         }
         if(events[i].data.fd == server_fd) {
-            int clientFd = accept(server_fd, (struct sockaddr*)NULL, NULL);
+            memset(&server_addr, 0, sizeof(server_addr));
+            int lenth;
+            int clientFd = accept(server_fd, (struct sockaddr*)&server_addr, (socklen_t *)&lenth);
             if(clientFd == -1) {
                 printf("accpet socket error: errno = %d, (%s)\n", errno,strerror(errno));
             }
+            HandleNetIp(inet_ntoa(server_addr.sin_addr), ntohs(server_addr.sin_port), clientFd);
             ev.data.fd = clientFd;
             ev.events = EPOLLIN;
             int epoll_ret = epoll_ctl(epoll_fd, EPOLL_CTL_ADD, clientFd, &ev);

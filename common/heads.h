@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <mysql/mysql.h>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <sys/time.h>

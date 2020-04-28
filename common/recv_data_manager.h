@@ -8,6 +8,7 @@ public:
     recvDataManager();
     ~recvDataManager(){}
     int EmptySize();
+    int GetHeaderType();
     int GetPackageLength();
     int PushByte(byte);
     byte PopByte();

@@ -11,8 +11,15 @@ int recvDataManager::EmptySize() {
     return size - length;
 }
 
+int recvDataManager::GetHeaderType() {
+    if(length < HEAD_LENGTH) {
+        return -1;
+    }
+    if(buff[head] != C2SType && buff[head] != S2SType) return -2;
+    return buff[head];
+}
 int recvDataManager::GetPackageLength() {
-    if(EmptySize() < HEAD_LENGTH) {
+    if(length < HEAD_LENGTH) {
         return -1;
     }
     int ret = 0;

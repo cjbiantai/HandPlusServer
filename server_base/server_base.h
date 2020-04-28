@@ -22,6 +22,10 @@ protected:
      * @brief 处理具体逻辑，由子类实现
      */
     virtual void HandleEvent(int,int) {}
+    /**
+     * @brief 处理连接上的ip和端口信息,由子类实现
+     */
+    virtual void HandleNetIp(char* ,int, int) {}
     /*
      * @brief 处理关闭连接时的逻辑，由子类实现
      */

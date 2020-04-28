@@ -19,57 +19,106 @@ void hallServer::HandleEvent(int clientFd, int dataLength) {
     for(int i = 0; i < dataLength; ++i) {
         recvDataManager.PushByte(bData.GetBuffCharAt(i));
     }
-    GameProto::ClientMsg clientMsg;
     while(true) {
-        int packageLength = recvDataManager.GetPackageLength();
-        if(packageLength == -1) {
+        int headerType = recvDataManager.GetHeaderType();
+        if(headerType == -1) {
+            TRACE_DETAIL(LogFormat, __FILE__, __FUNCTION__, __LINE__, "包不完整");
             break;
-        }else if(packageLength < 0 || packageLength > BUFF_SIZE) {
+        }else if(headerType == -2) {
+            TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "错误包 强制关闭连接");
             HandleClose(clientFd);
             close(clientFd);
             break;
         }
-        printf("========================== %d\n", packageLength);
+        int packageLength = recvDataManager.GetPackageLength();
+        if(packageLength == -1) {
+            TRACE_DETAIL(LogFormat, __FILE__, __FUNCTION__, __LINE__, "包不完整");
+            break;
+        }else if(packageLength < 0 || packageLength > BUFF_SIZE) {
+            TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "错误包 强制关闭连接");
+            HandleClose(clientFd);
+            close(clientFd);
+            break;
+        }
         for(int i = 0; i < HEAD_LENGTH; ++i) {
             recvDataManager.PopByte();
         }
         for(int i = 0; i < packageLength; ++i) {
             bData.ChangeDataAt(recvDataManager.PopByte(), i);
         }
-        int ret = clientMsg.ParseFromArray(bData.GetDataArray(), packageLength);
-        if(ret < 0) {
-            //to do ParseFromArray Error
-            HandleClose(clientFd); 
-            close(clientFd);
-            break;
-        }
-        switch(clientMsg.type()) {
-            case GameProto::LogIn :
-                HandleLogIn(clientMsg, clientFd);
-                break;
-            case GameProto::Regist :
-                HandleRegist(clientMsg, clientFd);
-                break;
-            case GameProto::CreateRoom :
-                HandleCreateRoom(clientMsg, clientFd);
-                break;
-            case GameProto::EnterRoom :
-                HandleSelectRoom(clientMsg, clientFd);
-                break;
-            case GameProto::ExitRoom :
-                HandleExitRoom(clientMsg, clientFd);
-                break;
-            case GameProto::ChangeStateInRoom:
-                HandleChangeStateInRoom(clientMsg, clientFd);
-                break;
-            case GameProto::StartGame:
-                HandleStartGame(clientMsg, clientFd);
-                break;
+        if(headerType == C2SType) {
+            HandleClientEvent(packageLength, clientFd);
+        }else {
+            HandleServerEvent(packageLength, clientFd);
         }
         break;
     }
 }
 
+void hallServer::HandleNetIp(char* addr, int port, int fd) {
+    std::string ipPortAddr = "";
+    for(auto service : serviceList) {
+        if(service.serviceIp == std::string(addr) && service.servicePort == port) {
+            ipPortAddr = std::string(addr) + ":" + std::to_string(port);
+            addrFdMap[ipPortAddr] = fd;
+            fdAddMap[fd] = ipPortAddr;
+            break;
+        }
+    }
+}
+
+void hallServer::HandleClientEvent(int packageLength,int clientFd) {
+    GameProto::ClientMsg clientMsg;
+    int ret = clientMsg.ParseFromArray(bData.GetDataArray(), packageLength);
+    if(ret < 0) {
+        TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "解析协议包出错，强制关闭连接");
+        //to do ParseFromArray Error
+        HandleClose(clientFd); 
+        close(clientFd);
+        return ;
+    }
+    switch(clientMsg.type()) {
+        case GameProto::Login :
+            HandleLogIn(clientMsg, clientFd);
+            break;
+        case GameProto::Regist :
+            HandleRegist(clientMsg, clientFd);
+            break;
+        case GameProto::CreateRoom :
+            HandleCreateRoom(clientMsg, clientFd);
+            break;
+        case GameProto::EnterRoom :
+            HandleSelectRoom(clientMsg, clientFd);
+            break;
+        case GameProto::ExitRoom :
+            HandleExitRoom(clientMsg, clientFd);
+            break;
+        case GameProto::ChangeStateInRoom:
+            HandleChangeStateInRoom(clientMsg, clientFd);
+            break;
+        case GameProto::StartGameBtnOnClick:
+            HandleStartGame(clientMsg, clientFd);
+            break;
+    }
+}
+
+void hallServer::HandleServerEvent(int packageLength, int serverFd) {
+    GameProto::S2SMsg s2SMsg;
+    int ret = s2SMsg.ParseFromArray(bData.GetDataArray(), packageLength);
+    if(ret < 0) {
+        TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "解析协议包出错，强制关闭连接");
+        HandleClose(serverFd);
+        close(serverFd);
+        return ;
+    }
+    switch (s2SMsg.type()) {
+        case GameProto::PrepareRoom :
+            break;
+        case GameProto::ResultSync :
+            break;
+    }
+
+}
 
 void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
     GameProto::ServerMsg serverMsg;
@@ -81,43 +130,45 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
     printf("%s\n", sqlQuery.c_str());
     switch(ret) {
         case CONNECT_TO_SQL_ERROR:
-            serverMsg.set_type(GameProto::InternalError);
+            serverMsg.set_type(GameProto::LoginFailed_InternalError);
             serverMsg.set_str("服务器出错了");
+            TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "连接数据库出错");
              //连接数据库出错
             break;
         case QUERY_SQL_ERROR:
-            serverMsg.set_type(GameProto::InternalError);
+            serverMsg.set_type(GameProto::LoginFailed_InternalError);
+            TRACE_WARN(LogFormat, __FILE__, __FUNCTION__, __LINE__, "数据库语句出错");
             serverMsg.set_str("服务器出错了");
             //数据库语句出错
             break;
         case QUERY_EMPTY:
-            serverMsg.set_type(GameProto::LogInError_AccountDontExist);
+            serverMsg.set_type(GameProto::LoginFailed_AccountDontExist);
             serverMsg.set_str("账号不存在");
             //用户账号或密码错误
             break;
         case QUERY_OK:
             if(clientMsg.playerinfo().password() != playerData.password()) {
-                serverMsg.set_type(GameProto::LogInError_PasswordWrong);
+                serverMsg.set_type(GameProto::LoginFailed_PasswordWrong);
                 serverMsg.set_str("密码错误");
                 break;
             }
             if(loginAccount.find(clientMsg.playerinfo().account()) != loginAccount.end()) {
-                serverMsg.set_type(GameProto::LogInError_ReLogIn);
+                serverMsg.set_type(GameProto::LoginFailed_AlreadyLogin);
                 serverMsg.set_str("用户已登录");
                 break;
             }
             
 
-            playerData.set_uid(GetUid());
+            playerData.set_userid(GetUid());
             playerData.clear_password();
-            fdUserMap[clientFd] = playerData.uid(); //fd -> uid
-            userFdMap[playerData.uid()] = clientFd; //uid -> fd
-            uidAccountMap[playerData.uid()] = playerData.account(); //uid -> account
-            userInfoMap[playerData.uid()] = playerData; //uid -> playerinfo
-            onlineUsers.insert(playerData.uid()); //online uid
-            inHallUsers.insert(playerData.uid());// hall uid
+            fdUserMap[clientFd] = playerData.userid(); //fd -> uid
+            userFdMap[playerData.userid()] = clientFd; //uid -> fd
+            uidAccountMap[playerData.userid()] = playerData.account(); //uid -> account
+            userInfoMap[playerData.userid()] = playerData; //uid -> playerinfo
+            onlineUsers.insert(playerData.userid()); //online uid
+            inHallUsers.insert(playerData.userid());// hall uid
             loginAccount.insert(playerData.account()); //loginAccount
-            serverMsg.set_type(GameProto::LogInSuccess);
+            serverMsg.set_type(GameProto::LoginSucceed);
             GameProto::PlayerInfo *ptr = serverMsg.mutable_playerinfo();
             ptr -> CopyFrom(playerData);
             /*
@@ -128,7 +179,7 @@ void hallServer::HandleLogIn(GameProto::ClientMsg clientMsg, int clientFd) {
             } else {
             }
             */
-            printf("======>_<=========  uid = %d", serverMsg.playerinfo().uid());
+            printf("======>_<=========  uid = %d", serverMsg.playerinfo().userid());
             //登录成功
             serverMsg.set_str("登录成功");
             break;
@@ -146,17 +197,17 @@ void hallServer::HandleRegist(GameProto::ClientMsg clientMsg, int clientFd) {
     int ret = query_sql(sqlQuery.c_str(), playerData);   
     switch(ret) {
         case CONNECT_TO_SQL_ERROR :
-            serverMsg.set_type(GameProto::InternalError);
+            serverMsg.set_type(GameProto::RegisterFailed_InternalError);
             serverMsg.set_str("服务器出错了");
             //连接数据库出错
             break;
         case QUERY_SQL_ERROR:
-            serverMsg.set_type(GameProto::RegisterError_AccountAlreadyExist);
+            serverMsg.set_type(GameProto::RegisterFailed_AccountAlreadyExist);
             serverMsg.set_str("用户已存在");
             //用户已存在
             break;
         default:
-            serverMsg.set_type(GameProto::RegisterSuccess);
+            serverMsg.set_type(GameProto::RegisterSucceed);
             serverMsg.set_str("注册成功");
             //注册成功
     }
@@ -178,43 +229,41 @@ void hallServer::HandleCreateRoom(GameProto::ClientMsg clientMsg, int clientFd) 
     }
 
     GameProto::PlayerInfo &tempPlayerInfo = userInfoMap[fdUserMap[clientFd]];
-    userRoomMap[tempPlayerInfo.uid()] = tempRoomInfo.rid;
+    userRoomMap[tempPlayerInfo.userid()] = tempRoomInfo.rid;
 
-///==========================================
     tempPlayerInfo.set_roomid(tempRoomInfo.rid);
-///==========================================
     tempRoomInfo.roundTime = clientMsg.roominfo().roundtime();
     tempRoomInfo.roundNumber = clientMsg.roominfo().roundnumber();
     tempRoomInfo.roomName = clientMsg.roominfo().roomname();
     tempRoomInfo.mapMame = clientMsg.roominfo().mapname();
     tempRoomInfo.password = clientMsg.roominfo().password();
+    tempRoomInfo.mapIdx = clientMsg.roominfo().mapidx();
     tempRoomInfo.maxPlayers = clientMsg.roominfo().maxplayers();
-    tempRoomInfo.master = tempPlayerInfo.uid();
+    tempRoomInfo.master = tempPlayerInfo.userid();
     tempRoomInfo.Players.insert(fdUserMap[clientFd]); 
-    std::cout << tempRoomInfo.roundTime << " " << tempRoomInfo.roundNumber <<" " << tempRoomInfo.roomName <<" " << tempRoomInfo.mapMame <<" " << tempRoomInfo.password <<std::endl;
     roomMap[tempRoomInfo.rid] = tempRoomInfo;
     GameProto::RoomInfo *roominfo = serverMsg.add_roominfos();
     roominfo -> CopyFrom(clientMsg.roominfo());
     roominfo -> add_players() -> CopyFrom(tempPlayerInfo);
-    roominfo -> set_id(tempRoomInfo.rid);
-    serverMsg.set_type(GameProto::CreateRoomSuccess);
+    roominfo -> set_roomid(tempRoomInfo.rid);
+    serverMsg.set_type(GameProto::CreateRoomSucceed);
     HandleSendDataToClient(serverMsg, clientFd);
     BroadRoomListInfo();
 }
 void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) {
-    int roomId = clientMsg.roominfo().id(), uid;
+    int roomId = clientMsg.roominfo().roomid(), uid;
     GameProto::ServerMsg serverMsg;
     if(fdUserMap.find(clientFd) == fdUserMap.end()) {
-        serverMsg.set_type(GameProto::EnterRoomError_DontLogIn);
+        serverMsg.set_type(GameProto::EnterRoomFailed_DontLogin);
     }else {
         uid = fdUserMap[clientFd];
         if(roomMap.find(roomId) == roomMap.end()) {
-            serverMsg.set_type(GameProto::EnterRoomError_RoomDontExit);
+            serverMsg.set_type(GameProto::EnterRoomFailed_RoomDontExist);
             //to do roomDontExist
         }else {
             roomInfo& tempRoomInfo = roomMap[roomId];
             if(tempRoomInfo.Players.size() == tempRoomInfo.maxPlayers) {
-                serverMsg.set_type(GameProto::EnterRoomError_RoomIsFull);
+                serverMsg.set_type(GameProto::EnterRoomFailed_RoomIsFull);
               //to do roomFull
             }else {
                 for(auto room : roomMap) {
@@ -225,19 +274,20 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
                 }
                 tempRoomInfo.Players.insert(uid);
                 //to do EnterRoom
-                serverMsg.set_type(GameProto::EnterRoomSuccess);
+                serverMsg.set_type(GameProto::EnterRoomSucceed);
                 roomInfo &tempRoomInfo = roomMap[roomId];
                 userRoomMap[uid] = roomId;
       //  serverMsg.set_type(GameProto::BroadRoomListInfo);
                 GameProto::RoomInfo* roominfos = serverMsg.add_roominfos();
-                roominfos->set_id(tempRoomInfo.rid);
+                roominfos->set_roomid(tempRoomInfo.rid);
                 roominfos->set_roundtime(tempRoomInfo.roundTime);
                 roominfos->set_roundnumber(tempRoomInfo.roundNumber);
                 roominfos->set_roomname(tempRoomInfo.roomName);
                 roominfos->set_password(tempRoomInfo.password);
                 roominfos->set_mapname(tempRoomInfo.mapMame);
+                roominfos->set_mapidx(tempRoomInfo.mapIdx);
                 roominfos->set_maxplayers(tempRoomInfo.maxPlayers);
-                roominfos->set_master(tempRoomInfo.master);
+                roominfos->set_masteruid(tempRoomInfo.master);
                 roominfos->set_curplayernumber(tempRoomInfo.Players.size());
                 for(auto uid : tempRoomInfo.Players) {
                 // roominfos->add_preparedplayers(userInfoMap[uid]);
@@ -247,7 +297,7 @@ void hallServer::HandleSelectRoom(GameProto::ClientMsg clientMsg, int clientFd) 
         }
     }
     HandleSendDataToClient(serverMsg, clientFd);
-    if(serverMsg.type() == GameProto::EnterRoomSuccess) {
+    if(serverMsg.type() == GameProto::EnterRoomSucceed) {
         BroadRoomInfo(roomId);
     }
     BroadRoomListInfo();
@@ -298,7 +348,8 @@ void hallServer::HandleChangeStateInRoom(GameProto::ClientMsg clientMsg, int cli
             int roomId = userRoomMap[uid];
             GameProto::PlayerInfo &tempPlayerInfo = userInfoMap[uid];
             tempPlayerInfo.CopyFrom(clientMsg.playerinfo());
-            tempPlayerInfo.set_uid(uid);
+            printf("================= ChangeState %d %d\n", tempPlayerInfo.characterid(), tempPlayerInfo.prepared());
+            tempPlayerInfo.set_userid(uid);
             tempPlayerInfo.set_account(uidAccountMap[uid]);
             BroadRoomInfo(roomId);
         }
@@ -306,6 +357,7 @@ void hallServer::HandleChangeStateInRoom(GameProto::ClientMsg clientMsg, int cli
 }
 void hallServer::HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd) {
     if(fdUserMap.find(clientFd) == fdUserMap.end()) {
+        printf("================================ \n");
         //to do DontLogIn
     }else if(roomMap.find(userRoomMap[fdUserMap[clientFd]]) == roomMap.end()) {
         //to do RoomDontExist
@@ -313,21 +365,24 @@ void hallServer::HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd) {
         int roomId = userRoomMap[fdUserMap[clientFd]];
         GameProto::ServerMsg serverMsg;
         if(roomMap[roomId].Players.size() != roomMap[roomId].maxPlayers) {
-            serverMsg.set_type(GameProto::StartGameFailure);
+            serverMsg.set_type(GameProto::CannotStartGame);
             HandleSendDataToClient(serverMsg, clientFd);
             return ;
         }
         for(auto uid : roomMap[roomId].Players) {
             if(!userInfoMap[uid].prepared()) {
-                serverMsg.set_type(GameProto::StartGameFailure);
+                printf("==================   not prepared\n");
+                serverMsg.set_type(GameProto::CannotStartGame);
                 HandleSendDataToClient(serverMsg, clientFd);
                 return ;
             }
         }
-        serverMsg.set_type(GameProto::StartGameSuccess);
+        serverMsg.set_type(GameProto::CanStartGame);
         service_mgr tempService = *serviceList.begin();
         serviceList.erase(tempService);
         tempService.servicePressure += roomMap[roomId].Players.size();
+        GameProto::S2SMsg sendS2SMsg;
+        sendS2SMsg.set_type(GameProto::PrepareRoom);
         for(auto uid : roomMap[roomId].Players) {
             serverMsg.clear_playerinfo();
             //serverMsg.CopyFrom(userInfoMap[uid]);
@@ -335,12 +390,13 @@ void hallServer::HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd) {
             serverMsg.set_ip(tempService.serviceIp);
             serverMsg.set_port(tempService.servicePort);
             GameProto::RoomInfo roominfo;
-            roominfo.set_id(roomId);
+            roominfo.set_roomid(roomId);
             roominfo.set_maxplayers(roomMap[roomId].maxPlayers);
             serverMsg.add_roominfos()->CopyFrom(roominfo);
             printf("!==================================! %d %d %d\n", serverMsg.roominfos(0).maxplayers(), roominfo.maxplayers(), roomMap[roomId].maxPlayers);
             HandleSendDataToClient(serverMsg, userFdMap[uid]);
             onlineUsers.erase(uid); 
+            fdUserMap.erase(uid);
         }
         roomMap.erase(roomId);
         serviceList.insert(tempService);
@@ -352,13 +408,14 @@ void hallServer::BroadRoomInfo(int roomId) {
     roomInfo &tempRoomInfo = roomMap[roomId];
     serverMsg.set_type(GameProto::BroadRoomInfo);
     GameProto::RoomInfo* roominfos = serverMsg.add_roominfos();
-    roominfos->set_id(tempRoomInfo.rid);
+    roominfos->set_roomid(tempRoomInfo.rid);
     roominfos->set_roundtime(tempRoomInfo.roundTime);
     roominfos->set_roundnumber(tempRoomInfo.roundNumber);
     roominfos->set_roomname(tempRoomInfo.roomName);
+    roominfos->set_mapidx(tempRoomInfo.mapIdx);
     roominfos->set_password(tempRoomInfo.password);
     roominfos->set_maxplayers(tempRoomInfo.maxPlayers);
-    roominfos->set_master(tempRoomInfo.master);
+    roominfos->set_masteruid(tempRoomInfo.master);
     roominfos->set_curplayernumber(tempRoomInfo.Players.size());
     for(auto uid : tempRoomInfo.Players) {
         // roominfos->add_preparedplayers(userInfoMap[uid]);
@@ -370,20 +427,21 @@ void hallServer::BroadRoomInfo(int roomId) {
 }
 void hallServer::BroadRoomListInfo() {
     GameProto::ServerMsg serverMsg;
-    serverMsg.set_type(GameProto::BroadRoomListInfo);
+    serverMsg.set_type(GameProto::BroadRoomList);
     serverMsg.set_str("广播房间信息");
     GameProto::RoomInfo* roominfos;
     for(auto val : roomMap) {
         roominfos = serverMsg.add_roominfos();
         roomInfo tempRoomInfo = val.second;
-        roominfos->set_id(tempRoomInfo.rid);
+        roominfos->set_roomid(tempRoomInfo.rid);
         roominfos->set_roundtime(tempRoomInfo.roundTime);
         roominfos->set_roundnumber(tempRoomInfo.roundNumber);
         roominfos->set_roomname(tempRoomInfo.roomName);
         roominfos->set_password(tempRoomInfo.password);
         roominfos->set_mapname(tempRoomInfo.mapMame);
+        roominfos->set_mapidx(tempRoomInfo.mapIdx);
         roominfos->set_maxplayers(tempRoomInfo.maxPlayers);
-        roominfos->set_master(tempRoomInfo.master);
+        roominfos->set_masteruid(tempRoomInfo.master);
         roominfos->set_curplayernumber(tempRoomInfo.Players.size());
     }
     for(auto uid : onlineUsers) {
@@ -410,6 +468,7 @@ void hallServer::HandleSelectCharacter(GameProto::ClientMsg clientMsg, int clien
             int roomId = userRoomMap[uid];
             GameProto::PlayerInfo &tempPlayerInfo = userInfoMap[uid];
             tempPlayerInfo.set_charactername(clientMsg.playerinfo().charactername());
+            tempPlayerInfo.set_characterid(clientMsg.playerinfo().characterid());
             BroadRoomInfo(roomId);
         }
     }

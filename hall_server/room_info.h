@@ -14,6 +14,7 @@ public:
     int roundNumber;                            //局数
     std::string roomName;                       //房间名
     std::string mapMame;                        //地图名称
+    int mapIdx;
     std::string password;                       //房间密码
     int maxPlayers;                             //最大玩家数
     std::string serviceAddr;                    //房间的服务器地址

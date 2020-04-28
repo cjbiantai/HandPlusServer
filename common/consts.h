@@ -22,3 +22,8 @@ const int inf = 1e9+7;
 
 typedef unsigned char byte;
 typedef unsigned int uint;
+
+const int C2SType = 0;
+const int S2SType = 1;
+
+#define LogFormat "file=%s func=%s line = %05d Log:%s\n"

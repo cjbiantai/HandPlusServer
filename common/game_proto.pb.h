@@ -37,32 +37,29 @@ namespace protobuf_game_5fproto_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
 };
 void AddDescriptors();
-void InitDefaultsPositionImpl();
-void InitDefaultsPosition();
 void InitDefaultsPlayerInfoImpl();
 void InitDefaultsPlayerInfo();
-void InitDefaultsPlayerStateImpl();
-void InitDefaultsPlayerState();
 void InitDefaultsPlayerInputImpl();
 void InitDefaultsPlayerInput();
 void InitDefaultsRoomInfoImpl();
 void InitDefaultsRoomInfo();
+void InitDefaultsS2SMsgImpl();
+void InitDefaultsS2SMsg();
 void InitDefaultsClientMsgImpl();
 void InitDefaultsClientMsg();
 void InitDefaultsServerMsgImpl();
 void InitDefaultsServerMsg();
 inline void InitDefaults() {
-  InitDefaultsPosition();
   InitDefaultsPlayerInfo();
-  InitDefaultsPlayerState();
   InitDefaultsPlayerInput();
   InitDefaultsRoomInfo();
+  InitDefaultsS2SMsg();
   InitDefaultsClientMsg();
   InitDefaultsServerMsg();
 }
@@ -77,15 +74,12 @@ extern PlayerInfoDefaultTypeInternal _PlayerInfo_default_instance_;
 class PlayerInput;
 class PlayerInputDefaultTypeInternal;
 extern PlayerInputDefaultTypeInternal _PlayerInput_default_instance_;
-class PlayerState;
-class PlayerStateDefaultTypeInternal;
-extern PlayerStateDefaultTypeInternal _PlayerState_default_instance_;
-class Position;
-class PositionDefaultTypeInternal;
-extern PositionDefaultTypeInternal _Position_default_instance_;
 class RoomInfo;
 class RoomInfoDefaultTypeInternal;
 extern RoomInfoDefaultTypeInternal _RoomInfo_default_instance_;
+class S2SMsg;
+class S2SMsgDefaultTypeInternal;
+extern S2SMsgDefaultTypeInternal _S2SMsg_default_instance_;
 class ServerMsg;
 class ServerMsgDefaultTypeInternal;
 extern ServerMsgDefaultTypeInternal _ServerMsg_default_instance_;
@@ -93,33 +87,41 @@ extern ServerMsgDefaultTypeInternal _ServerMsg_default_instance_;
 namespace GameProto {
 
 enum ServerEventCode {
-  LogInSuccess = 0,
-  RegisterSuccess = 1,
-  EnterRoomSuccess = 2,
-  LogInError_AccountDontExist = 3,
-  LogInError_PasswordWrong = 4,
-  LogInError_ReLogIn = 5,
-  RegisterError_AccountAlreadyExist = 6,
-  EnterRoomError_DontLogIn = 7,
-  EnterRoomError_RoomIsFull = 8,
-  EnterRoomError_RoomDontExit = 9,
-  InternalError = 10,
-  BroadRoomListInfo = 11,
-  BroadRoomInfo = 12,
-  JumpToBattleServer = 13,
-  S2CSync = 14,
-  ExitRoomSuccess = 15,
-  ExitRoomError_DontLogIn = 16,
-  ExitRoomError_RoomIsEmpty = 17,
-  CreateRoomSuccess = 18,
-  StartGameFailure = 19,
-  StartGameSuccess = 20,
+  LoginSucceed = 0,
+  LoginFailed_InternalError = 1,
+  LoginFailed_AccountDontExist = 2,
+  LoginFailed_PasswordWrong = 3,
+  LoginFailed_AlreadyLogin = 4,
+  RegisterSucceed = 5,
+  RegisterFailed_InternalError = 6,
+  RegisterFailed_AccountAlreadyExist = 7,
+  CreateRoomSucceed = 8,
+  CreateRoomFailed_DontLogin = 9,
+  CreateRoomFailed_AlreadyInRoom = 10,
+  EnterRoomSucceed = 11,
+  EnterRoomFailed_DontLogin = 12,
+  EnterRoomFailed_RoomDontExist = 13,
+  EnterRoomFailed_RoomIsFull = 14,
+  EnterRoomFailed_AlreadyInRoom = 15,
+  ExitRoomSucceed = 16,
+  ExitRoomFailed_DontLogin = 17,
+  ExitRoomFailed_RoomDontExist = 18,
+  ExitRoomFailed_DontInRoom = 19,
+  ChangeStateInRoomSucceed = 20,
+  ChangeStateInRoomFailed_DontLogin = 21,
+  ChangeStateInRoomFailed_DontInRoom = 22,
+  CanStartGame = 23,
+  CannotStartGame = 24,
+  JumpToButtleServer = 25,
+  S2CSync = 26,
+  BroadRoomInfo = 27,
+  BroadRoomList = 28,
   ServerEventCode_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerEventCode_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerEventCode_IsValid(int value);
-const ServerEventCode ServerEventCode_MIN = LogInSuccess;
-const ServerEventCode ServerEventCode_MAX = StartGameSuccess;
+const ServerEventCode ServerEventCode_MIN = LoginSucceed;
+const ServerEventCode ServerEventCode_MAX = BroadRoomList;
 const int ServerEventCode_ARRAYSIZE = ServerEventCode_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerEventCode_descriptor();
@@ -133,21 +135,20 @@ inline bool ServerEventCode_Parse(
     ServerEventCode_descriptor(), name, value);
 }
 enum ClientEventCode {
-  LogIn = 0,
+  Login = 0,
   Regist = 1,
   CreateRoom = 2,
   EnterRoom = 3,
   ExitRoom = 4,
   C2SSync = 5,
-  Follow = 6,
-  ChangeStateInRoom = 7,
-  StartGame = 8,
+  ChangeStateInRoom = 6,
+  StartGameBtnOnClick = 7,
   ClientEventCode_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ClientEventCode_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ClientEventCode_IsValid(int value);
-const ClientEventCode ClientEventCode_MIN = LogIn;
-const ClientEventCode ClientEventCode_MAX = StartGame;
+const ClientEventCode ClientEventCode_MIN = Login;
+const ClientEventCode ClientEventCode_MAX = StartGameBtnOnClick;
 const int ClientEventCode_ARRAYSIZE = ClientEventCode_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ClientEventCode_descriptor();
@@ -160,120 +161,28 @@ inline bool ClientEventCode_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<ClientEventCode>(
     ClientEventCode_descriptor(), name, value);
 }
-// ===================================================================
-
-class Position : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameProto.Position) */ {
- public:
-  Position();
-  virtual ~Position();
-
-  Position(const Position& from);
-
-  inline Position& operator=(const Position& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  Position(Position&& from) noexcept
-    : Position() {
-    *this = ::std::move(from);
-  }
-
-  inline Position& operator=(Position&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const Position& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Position* internal_default_instance() {
-    return reinterpret_cast<const Position*>(
-               &_Position_default_instance_);
-  }
-  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    0;
-
-  void Swap(Position* other);
-  friend void swap(Position& a, Position& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline Position* New() const PROTOBUF_FINAL { return New(NULL); }
-
-  Position* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
-  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const Position& from);
-  void MergeFrom(const Position& from);
-  void Clear() PROTOBUF_FINAL;
-  bool IsInitialized() const PROTOBUF_FINAL;
-
-  size_t ByteSizeLong() const PROTOBUF_FINAL;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
-  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(Position* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // float x = 1;
-  void clear_x();
-  static const int kXFieldNumber = 1;
-  float x() const;
-  void set_x(float value);
-
-  // float y = 2;
-  void clear_y();
-  static const int kYFieldNumber = 2;
-  float y() const;
-  void set_y(float value);
-
-  // float z = 3;
-  void clear_z();
-  static const int kZFieldNumber = 3;
-  float z() const;
-  void set_z(float value);
-
-  // @@protoc_insertion_point(class_scope:GameProto.Position)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  float x_;
-  float y_;
-  float z_;
-  mutable int _cached_size_;
-  friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
-  friend void ::protobuf_game_5fproto_2eproto::InitDefaultsPositionImpl();
+enum S2SEventCode {
+  PrepareRoom = 0,
+  ResultSync = 1,
+  S2SEventCode_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  S2SEventCode_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
-// -------------------------------------------------------------------
+bool S2SEventCode_IsValid(int value);
+const S2SEventCode S2SEventCode_MIN = PrepareRoom;
+const S2SEventCode S2SEventCode_MAX = ResultSync;
+const int S2SEventCode_ARRAYSIZE = S2SEventCode_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* S2SEventCode_descriptor();
+inline const ::std::string& S2SEventCode_Name(S2SEventCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    S2SEventCode_descriptor(), value);
+}
+inline bool S2SEventCode_Parse(
+    const ::std::string& name, S2SEventCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<S2SEventCode>(
+    S2SEventCode_descriptor(), name, value);
+}
+// ===================================================================
 
 class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameProto.PlayerInfo) */ {
  public:
@@ -310,7 +219,7 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
                &_PlayerInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    1;
+    0;
 
   void Swap(PlayerInfo* other);
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
@@ -413,21 +322,27 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_charactername();
   void set_allocated_charactername(::std::string* charactername);
 
-  // int32 uid = 1;
-  void clear_uid();
-  static const int kUidFieldNumber = 1;
-  ::google::protobuf::int32 uid() const;
-  void set_uid(::google::protobuf::int32 value);
+  // int32 userId = 1;
+  void clear_userid();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
 
-  // int32 roomid = 5;
+  // int32 roomId = 5;
   void clear_roomid();
-  static const int kRoomidFieldNumber = 5;
+  static const int kRoomIdFieldNumber = 5;
   ::google::protobuf::int32 roomid() const;
   void set_roomid(::google::protobuf::int32 value);
 
-  // bool prepared = 7;
+  // int32 characterId = 7;
+  void clear_characterid();
+  static const int kCharacterIdFieldNumber = 7;
+  ::google::protobuf::int32 characterid() const;
+  void set_characterid(::google::protobuf::int32 value);
+
+  // bool prepared = 8;
   void clear_prepared();
-  static const int kPreparedFieldNumber = 7;
+  static const int kPreparedFieldNumber = 8;
   bool prepared() const;
   void set_prepared(bool value);
 
@@ -439,150 +354,13 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr password_;
   ::google::protobuf::internal::ArenaStringPtr nickname_;
   ::google::protobuf::internal::ArenaStringPtr charactername_;
-  ::google::protobuf::int32 uid_;
+  ::google::protobuf::int32 userid_;
   ::google::protobuf::int32 roomid_;
+  ::google::protobuf::int32 characterid_;
   bool prepared_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
   friend void ::protobuf_game_5fproto_2eproto::InitDefaultsPlayerInfoImpl();
-};
-// -------------------------------------------------------------------
-
-class PlayerState : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameProto.PlayerState) */ {
- public:
-  PlayerState();
-  virtual ~PlayerState();
-
-  PlayerState(const PlayerState& from);
-
-  inline PlayerState& operator=(const PlayerState& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  PlayerState(PlayerState&& from) noexcept
-    : PlayerState() {
-    *this = ::std::move(from);
-  }
-
-  inline PlayerState& operator=(PlayerState&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PlayerState& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PlayerState* internal_default_instance() {
-    return reinterpret_cast<const PlayerState*>(
-               &_PlayerState_default_instance_);
-  }
-  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
-
-  void Swap(PlayerState* other);
-  friend void swap(PlayerState& a, PlayerState& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline PlayerState* New() const PROTOBUF_FINAL { return New(NULL); }
-
-  PlayerState* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
-  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const PlayerState& from);
-  void MergeFrom(const PlayerState& from);
-  void Clear() PROTOBUF_FINAL;
-  bool IsInitialized() const PROTOBUF_FINAL;
-
-  size_t ByteSizeLong() const PROTOBUF_FINAL;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
-  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(PlayerState* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // string name = 2;
-  void clear_name();
-  static const int kNameFieldNumber = 2;
-  const ::std::string& name() const;
-  void set_name(const ::std::string& value);
-  #if LANG_CXX11
-  void set_name(::std::string&& value);
-  #endif
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  ::std::string* mutable_name();
-  ::std::string* release_name();
-  void set_allocated_name(::std::string* name);
-
-  // .GameProto.Position pos = 4;
-  bool has_pos() const;
-  void clear_pos();
-  static const int kPosFieldNumber = 4;
-  const ::GameProto::Position& pos() const;
-  ::GameProto::Position* release_pos();
-  ::GameProto::Position* mutable_pos();
-  void set_allocated_pos(::GameProto::Position* pos);
-
-  // int32 fid = 1;
-  void clear_fid();
-  static const int kFidFieldNumber = 1;
-  ::google::protobuf::int32 fid() const;
-  void set_fid(::google::protobuf::int32 value);
-
-  // float yaw = 3;
-  void clear_yaw();
-  static const int kYawFieldNumber = 3;
-  float yaw() const;
-  void set_yaw(float value);
-
-  // int32 state = 5;
-  void clear_state();
-  static const int kStateFieldNumber = 5;
-  ::google::protobuf::int32 state() const;
-  void set_state(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:GameProto.PlayerState)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr name_;
-  ::GameProto::Position* pos_;
-  ::google::protobuf::int32 fid_;
-  float yaw_;
-  ::google::protobuf::int32 state_;
-  mutable int _cached_size_;
-  friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
-  friend void ::protobuf_game_5fproto_2eproto::InitDefaultsPlayerStateImpl();
 };
 // -------------------------------------------------------------------
 
@@ -621,7 +399,7 @@ class PlayerInput : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_PlayerInput_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    1;
 
   void Swap(PlayerInput* other);
   friend void swap(PlayerInput& a, PlayerInput& b) {
@@ -686,11 +464,11 @@ class PlayerInput : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int64 headtowardsz() const;
   void set_headtowardsz(::google::protobuf::int64 value);
 
-  // int32 uid = 1;
-  void clear_uid();
-  static const int kUidFieldNumber = 1;
-  ::google::protobuf::int32 uid() const;
-  void set_uid(::google::protobuf::int32 value);
+  // int32 userId = 1;
+  void clear_userid();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
 
   // int32 usePropsInPackID = 7;
   void clear_usepropsinpackid();
@@ -717,7 +495,7 @@ class PlayerInput : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int64 headtowardsx_;
   ::google::protobuf::int64 headtowardsy_;
   ::google::protobuf::int64 headtowardsz_;
-  ::google::protobuf::int32 uid_;
+  ::google::protobuf::int32 userid_;
   ::google::protobuf::int32 usepropsinpackid_;
   ::google::protobuf::int64 movedirectionx_;
   ::google::protobuf::int64 movedirectiony_;
@@ -762,7 +540,7 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
                &_RoomInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    2;
 
   void Swap(RoomInfo* other);
   friend void swap(RoomInfo& a, RoomInfo& b) {
@@ -809,10 +587,10 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // repeated .GameProto.PlayerInfo Players = 9;
+  // repeated .GameProto.PlayerInfo Players = 10;
   int players_size() const;
   void clear_players();
-  static const int kPlayersFieldNumber = 9;
+  static const int kPlayersFieldNumber = 10;
   const ::GameProto::PlayerInfo& players(int index) const;
   ::GameProto::PlayerInfo* mutable_players(int index);
   ::GameProto::PlayerInfo* add_players();
@@ -849,9 +627,9 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_mapname();
   void set_allocated_mapname(::std::string* mapname);
 
-  // string password = 6;
+  // string password = 7;
   void clear_password();
-  static const int kPasswordFieldNumber = 6;
+  static const int kPasswordFieldNumber = 7;
   const ::std::string& password() const;
   void set_password(const ::std::string& value);
   #if LANG_CXX11
@@ -863,11 +641,11 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_password();
   void set_allocated_password(::std::string* password);
 
-  // int32 id = 1;
-  void clear_id();
-  static const int kIdFieldNumber = 1;
-  ::google::protobuf::int32 id() const;
-  void set_id(::google::protobuf::int32 value);
+  // int32 roomId = 1;
+  void clear_roomid();
+  static const int kRoomIdFieldNumber = 1;
+  ::google::protobuf::int32 roomid() const;
+  void set_roomid(::google::protobuf::int32 value);
 
   // int32 roundTime = 2;
   void clear_roundtime();
@@ -881,23 +659,29 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 roundnumber() const;
   void set_roundnumber(::google::protobuf::int32 value);
 
-  // int32 maxPlayers = 7;
+  // int32 mapIdx = 6;
+  void clear_mapidx();
+  static const int kMapIdxFieldNumber = 6;
+  ::google::protobuf::int32 mapidx() const;
+  void set_mapidx(::google::protobuf::int32 value);
+
+  // int32 maxPlayers = 8;
   void clear_maxplayers();
-  static const int kMaxPlayersFieldNumber = 7;
+  static const int kMaxPlayersFieldNumber = 8;
   ::google::protobuf::int32 maxplayers() const;
   void set_maxplayers(::google::protobuf::int32 value);
 
-  // int32 curPlayerNumber = 8;
+  // int32 curPlayerNumber = 9;
   void clear_curplayernumber();
-  static const int kCurPlayerNumberFieldNumber = 8;
+  static const int kCurPlayerNumberFieldNumber = 9;
   ::google::protobuf::int32 curplayernumber() const;
   void set_curplayernumber(::google::protobuf::int32 value);
 
-  // int32 master = 10;
-  void clear_master();
-  static const int kMasterFieldNumber = 10;
-  ::google::protobuf::int32 master() const;
-  void set_master(::google::protobuf::int32 value);
+  // int32 masterUid = 11;
+  void clear_masteruid();
+  static const int kMasterUidFieldNumber = 11;
+  ::google::protobuf::int32 masteruid() const;
+  void set_masteruid(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:GameProto.RoomInfo)
  private:
@@ -907,15 +691,125 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::internal::ArenaStringPtr roomname_;
   ::google::protobuf::internal::ArenaStringPtr mapname_;
   ::google::protobuf::internal::ArenaStringPtr password_;
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 roomid_;
   ::google::protobuf::int32 roundtime_;
   ::google::protobuf::int32 roundnumber_;
+  ::google::protobuf::int32 mapidx_;
   ::google::protobuf::int32 maxplayers_;
   ::google::protobuf::int32 curplayernumber_;
-  ::google::protobuf::int32 master_;
+  ::google::protobuf::int32 masteruid_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
   friend void ::protobuf_game_5fproto_2eproto::InitDefaultsRoomInfoImpl();
+};
+// -------------------------------------------------------------------
+
+class S2SMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameProto.S2SMsg) */ {
+ public:
+  S2SMsg();
+  virtual ~S2SMsg();
+
+  S2SMsg(const S2SMsg& from);
+
+  inline S2SMsg& operator=(const S2SMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SMsg(S2SMsg&& from) noexcept
+    : S2SMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SMsg& operator=(S2SMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SMsg* internal_default_instance() {
+    return reinterpret_cast<const S2SMsg*>(
+               &_S2SMsg_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(S2SMsg* other);
+  friend void swap(S2SMsg& a, S2SMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SMsg* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  S2SMsg* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const S2SMsg& from);
+  void MergeFrom(const S2SMsg& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(S2SMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .GameProto.RoomInfo roomInfo = 2;
+  bool has_roominfo() const;
+  void clear_roominfo();
+  static const int kRoomInfoFieldNumber = 2;
+  const ::GameProto::RoomInfo& roominfo() const;
+  ::GameProto::RoomInfo* release_roominfo();
+  ::GameProto::RoomInfo* mutable_roominfo();
+  void set_allocated_roominfo(::GameProto::RoomInfo* roominfo);
+
+  // .GameProto.S2SEventCode type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::GameProto::S2SEventCode type() const;
+  void set_type(::GameProto::S2SEventCode value);
+
+  // @@protoc_insertion_point(class_scope:GameProto.S2SMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::GameProto::RoomInfo* roominfo_;
+  int type_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
+  friend void ::protobuf_game_5fproto_2eproto::InitDefaultsS2SMsgImpl();
 };
 // -------------------------------------------------------------------
 
@@ -954,7 +848,7 @@ class ClientMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_ClientMsg_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    5;
+    4;
 
   void Swap(ClientMsg* other);
   friend void swap(ClientMsg& a, ClientMsg& b) {
@@ -1083,7 +977,7 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_ServerMsg_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    6;
+    5;
 
   void Swap(ServerMsg* other);
   friend void swap(ServerMsg& a, ServerMsg& b) {
@@ -1142,22 +1036,10 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   const ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerInput >&
       inputs() const;
 
-  // repeated .GameProto.PlayerState states = 9;
-  int states_size() const;
-  void clear_states();
-  static const int kStatesFieldNumber = 9;
-  const ::GameProto::PlayerState& states(int index) const;
-  ::GameProto::PlayerState* mutable_states(int index);
-  ::GameProto::PlayerState* add_states();
-  ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState >*
-      mutable_states();
-  const ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState >&
-      states() const;
-
-  // repeated .GameProto.RoomInfo roominfos = 10;
+  // repeated .GameProto.RoomInfo roominfos = 9;
   int roominfos_size() const;
   void clear_roominfos();
-  static const int kRoominfosFieldNumber = 10;
+  static const int kRoominfosFieldNumber = 9;
   const ::GameProto::RoomInfo& roominfos(int index) const;
   ::GameProto::RoomInfo* mutable_roominfos(int index);
   ::GameProto::RoomInfo* add_roominfos();
@@ -1194,10 +1076,10 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::std::string* release_ip();
   void set_allocated_ip(::std::string* ip);
 
-  // .GameProto.PlayerInfo playerInfo = 6;
+  // .GameProto.PlayerInfo playerInfo = 7;
   bool has_playerinfo() const;
   void clear_playerinfo();
-  static const int kPlayerInfoFieldNumber = 6;
+  static const int kPlayerInfoFieldNumber = 7;
   const ::GameProto::PlayerInfo& playerinfo() const;
   ::GameProto::PlayerInfo* release_playerinfo();
   ::GameProto::PlayerInfo* mutable_playerinfo();
@@ -1209,38 +1091,30 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::GameProto::ServerEventCode type() const;
   void set_type(::GameProto::ServerEventCode value);
 
-  // int32 fid = 2;
-  void clear_fid();
-  static const int kFidFieldNumber = 2;
-  ::google::protobuf::int32 fid() const;
-  void set_fid(::google::protobuf::int32 value);
-
   // int32 port = 5;
   void clear_port();
   static const int kPortFieldNumber = 5;
   ::google::protobuf::int32 port() const;
   void set_port(::google::protobuf::int32 value);
 
-  // int32 framID = 7;
-  void clear_framid();
-  static const int kFramIDFieldNumber = 7;
-  ::google::protobuf::int32 framid() const;
-  void set_framid(::google::protobuf::int32 value);
+  // int32 nonce = 6;
+  void clear_nonce();
+  static const int kNonceFieldNumber = 6;
+  ::google::protobuf::int32 nonce() const;
+  void set_nonce(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:GameProto.ServerMsg)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerInput > inputs_;
-  ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState > states_;
   ::google::protobuf::RepeatedPtrField< ::GameProto::RoomInfo > roominfos_;
   ::google::protobuf::internal::ArenaStringPtr str_;
   ::google::protobuf::internal::ArenaStringPtr ip_;
   ::GameProto::PlayerInfo* playerinfo_;
   int type_;
-  ::google::protobuf::int32 fid_;
   ::google::protobuf::int32 port_;
-  ::google::protobuf::int32 framid_;
+  ::google::protobuf::int32 nonce_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
   friend void ::protobuf_game_5fproto_2eproto::InitDefaultsServerMsgImpl();
@@ -1254,66 +1128,20 @@ class ServerMsg : public ::google::protobuf::Message /* @@protoc_insertion_point
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Position
-
-// float x = 1;
-inline void Position::clear_x() {
-  x_ = 0;
-}
-inline float Position::x() const {
-  // @@protoc_insertion_point(field_get:GameProto.Position.x)
-  return x_;
-}
-inline void Position::set_x(float value) {
-  
-  x_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.Position.x)
-}
-
-// float y = 2;
-inline void Position::clear_y() {
-  y_ = 0;
-}
-inline float Position::y() const {
-  // @@protoc_insertion_point(field_get:GameProto.Position.y)
-  return y_;
-}
-inline void Position::set_y(float value) {
-  
-  y_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.Position.y)
-}
-
-// float z = 3;
-inline void Position::clear_z() {
-  z_ = 0;
-}
-inline float Position::z() const {
-  // @@protoc_insertion_point(field_get:GameProto.Position.z)
-  return z_;
-}
-inline void Position::set_z(float value) {
-  
-  z_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.Position.z)
-}
-
-// -------------------------------------------------------------------
-
 // PlayerInfo
 
-// int32 uid = 1;
-inline void PlayerInfo::clear_uid() {
-  uid_ = 0;
+// int32 userId = 1;
+inline void PlayerInfo::clear_userid() {
+  userid_ = 0;
 }
-inline ::google::protobuf::int32 PlayerInfo::uid() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.uid)
-  return uid_;
+inline ::google::protobuf::int32 PlayerInfo::userid() const {
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.userId)
+  return userid_;
 }
-inline void PlayerInfo::set_uid(::google::protobuf::int32 value) {
+inline void PlayerInfo::set_userid(::google::protobuf::int32 value) {
   
-  uid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.uid)
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.userId)
 }
 
 // string account = 2;
@@ -1475,18 +1303,18 @@ inline void PlayerInfo::set_allocated_nickname(::std::string* nickname) {
   // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerInfo.nickname)
 }
 
-// int32 roomid = 5;
+// int32 roomId = 5;
 inline void PlayerInfo::clear_roomid() {
   roomid_ = 0;
 }
 inline ::google::protobuf::int32 PlayerInfo::roomid() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.roomid)
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.roomId)
   return roomid_;
 }
 inline void PlayerInfo::set_roomid(::google::protobuf::int32 value) {
   
   roomid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.roomid)
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.roomId)
 }
 
 // string characterName = 6;
@@ -1542,7 +1370,21 @@ inline void PlayerInfo::set_allocated_charactername(::std::string* charactername
   // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerInfo.characterName)
 }
 
-// bool prepared = 7;
+// int32 characterId = 7;
+inline void PlayerInfo::clear_characterid() {
+  characterid_ = 0;
+}
+inline ::google::protobuf::int32 PlayerInfo::characterid() const {
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.characterId)
+  return characterid_;
+}
+inline void PlayerInfo::set_characterid(::google::protobuf::int32 value) {
+  
+  characterid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.characterId)
+}
+
+// bool prepared = 8;
 inline void PlayerInfo::clear_prepared() {
   prepared_ = false;
 }
@@ -1558,169 +1400,20 @@ inline void PlayerInfo::set_prepared(bool value) {
 
 // -------------------------------------------------------------------
 
-// PlayerState
-
-// int32 fid = 1;
-inline void PlayerState::clear_fid() {
-  fid_ = 0;
-}
-inline ::google::protobuf::int32 PlayerState::fid() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerState.fid)
-  return fid_;
-}
-inline void PlayerState::set_fid(::google::protobuf::int32 value) {
-  
-  fid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerState.fid)
-}
-
-// string name = 2;
-inline void PlayerState::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& PlayerState::name() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerState.name)
-  return name_.GetNoArena();
-}
-inline void PlayerState::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:GameProto.PlayerState.name)
-}
-#if LANG_CXX11
-inline void PlayerState::set_name(::std::string&& value) {
-  
-  name_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:GameProto.PlayerState.name)
-}
-#endif
-inline void PlayerState::set_name(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:GameProto.PlayerState.name)
-}
-inline void PlayerState::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:GameProto.PlayerState.name)
-}
-inline ::std::string* PlayerState::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:GameProto.PlayerState.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* PlayerState::release_name() {
-  // @@protoc_insertion_point(field_release:GameProto.PlayerState.name)
-  
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void PlayerState::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerState.name)
-}
-
-// float yaw = 3;
-inline void PlayerState::clear_yaw() {
-  yaw_ = 0;
-}
-inline float PlayerState::yaw() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerState.yaw)
-  return yaw_;
-}
-inline void PlayerState::set_yaw(float value) {
-  
-  yaw_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerState.yaw)
-}
-
-// .GameProto.Position pos = 4;
-inline bool PlayerState::has_pos() const {
-  return this != internal_default_instance() && pos_ != NULL;
-}
-inline void PlayerState::clear_pos() {
-  if (GetArenaNoVirtual() == NULL && pos_ != NULL) {
-    delete pos_;
-  }
-  pos_ = NULL;
-}
-inline const ::GameProto::Position& PlayerState::pos() const {
-  const ::GameProto::Position* p = pos_;
-  // @@protoc_insertion_point(field_get:GameProto.PlayerState.pos)
-  return p != NULL ? *p : *reinterpret_cast<const ::GameProto::Position*>(
-      &::GameProto::_Position_default_instance_);
-}
-inline ::GameProto::Position* PlayerState::release_pos() {
-  // @@protoc_insertion_point(field_release:GameProto.PlayerState.pos)
-  
-  ::GameProto::Position* temp = pos_;
-  pos_ = NULL;
-  return temp;
-}
-inline ::GameProto::Position* PlayerState::mutable_pos() {
-  
-  if (pos_ == NULL) {
-    pos_ = new ::GameProto::Position;
-  }
-  // @@protoc_insertion_point(field_mutable:GameProto.PlayerState.pos)
-  return pos_;
-}
-inline void PlayerState::set_allocated_pos(::GameProto::Position* pos) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete pos_;
-  }
-  if (pos) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      pos = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, pos, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  pos_ = pos;
-  // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerState.pos)
-}
-
-// int32 state = 5;
-inline void PlayerState::clear_state() {
-  state_ = 0;
-}
-inline ::google::protobuf::int32 PlayerState::state() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerState.state)
-  return state_;
-}
-inline void PlayerState::set_state(::google::protobuf::int32 value) {
-  
-  state_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerState.state)
-}
-
-// -------------------------------------------------------------------
-
 // PlayerInput
 
-// int32 uid = 1;
-inline void PlayerInput::clear_uid() {
-  uid_ = 0;
+// int32 userId = 1;
+inline void PlayerInput::clear_userid() {
+  userid_ = 0;
 }
-inline ::google::protobuf::int32 PlayerInput::uid() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerInput.uid)
-  return uid_;
+inline ::google::protobuf::int32 PlayerInput::userid() const {
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInput.userId)
+  return userid_;
 }
-inline void PlayerInput::set_uid(::google::protobuf::int32 value) {
+inline void PlayerInput::set_userid(::google::protobuf::int32 value) {
   
-  uid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerInput.uid)
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInput.userId)
 }
 
 // int64 headTowardsX = 2;
@@ -1811,18 +1504,18 @@ inline void PlayerInput::set_usepropsinpackid(::google::protobuf::int32 value) {
 
 // RoomInfo
 
-// int32 id = 1;
-inline void RoomInfo::clear_id() {
-  id_ = 0;
+// int32 roomId = 1;
+inline void RoomInfo::clear_roomid() {
+  roomid_ = 0;
 }
-inline ::google::protobuf::int32 RoomInfo::id() const {
-  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.id)
-  return id_;
+inline ::google::protobuf::int32 RoomInfo::roomid() const {
+  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.roomId)
+  return roomid_;
 }
-inline void RoomInfo::set_id(::google::protobuf::int32 value) {
+inline void RoomInfo::set_roomid(::google::protobuf::int32 value) {
   
-  id_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.id)
+  roomid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.roomId)
 }
 
 // int32 roundTime = 2;
@@ -1959,7 +1652,21 @@ inline void RoomInfo::set_allocated_mapname(::std::string* mapname) {
   // @@protoc_insertion_point(field_set_allocated:GameProto.RoomInfo.mapName)
 }
 
-// string password = 6;
+// int32 mapIdx = 6;
+inline void RoomInfo::clear_mapidx() {
+  mapidx_ = 0;
+}
+inline ::google::protobuf::int32 RoomInfo::mapidx() const {
+  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.mapIdx)
+  return mapidx_;
+}
+inline void RoomInfo::set_mapidx(::google::protobuf::int32 value) {
+  
+  mapidx_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.mapIdx)
+}
+
+// string password = 7;
 inline void RoomInfo::clear_password() {
   password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -2012,7 +1719,7 @@ inline void RoomInfo::set_allocated_password(::std::string* password) {
   // @@protoc_insertion_point(field_set_allocated:GameProto.RoomInfo.password)
 }
 
-// int32 maxPlayers = 7;
+// int32 maxPlayers = 8;
 inline void RoomInfo::clear_maxplayers() {
   maxplayers_ = 0;
 }
@@ -2026,7 +1733,7 @@ inline void RoomInfo::set_maxplayers(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:GameProto.RoomInfo.maxPlayers)
 }
 
-// int32 curPlayerNumber = 8;
+// int32 curPlayerNumber = 9;
 inline void RoomInfo::clear_curplayernumber() {
   curplayernumber_ = 0;
 }
@@ -2040,7 +1747,7 @@ inline void RoomInfo::set_curplayernumber(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:GameProto.RoomInfo.curPlayerNumber)
 }
 
-// repeated .GameProto.PlayerInfo Players = 9;
+// repeated .GameProto.PlayerInfo Players = 10;
 inline int RoomInfo::players_size() const {
   return players_.size();
 }
@@ -2070,18 +1777,86 @@ RoomInfo::players() const {
   return players_;
 }
 
-// int32 master = 10;
-inline void RoomInfo::clear_master() {
-  master_ = 0;
+// int32 masterUid = 11;
+inline void RoomInfo::clear_masteruid() {
+  masteruid_ = 0;
 }
-inline ::google::protobuf::int32 RoomInfo::master() const {
-  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.master)
-  return master_;
+inline ::google::protobuf::int32 RoomInfo::masteruid() const {
+  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.masterUid)
+  return masteruid_;
 }
-inline void RoomInfo::set_master(::google::protobuf::int32 value) {
+inline void RoomInfo::set_masteruid(::google::protobuf::int32 value) {
   
-  master_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.master)
+  masteruid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.masterUid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SMsg
+
+// .GameProto.S2SEventCode type = 1;
+inline void S2SMsg::clear_type() {
+  type_ = 0;
+}
+inline ::GameProto::S2SEventCode S2SMsg::type() const {
+  // @@protoc_insertion_point(field_get:GameProto.S2SMsg.type)
+  return static_cast< ::GameProto::S2SEventCode >(type_);
+}
+inline void S2SMsg::set_type(::GameProto::S2SEventCode value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.S2SMsg.type)
+}
+
+// .GameProto.RoomInfo roomInfo = 2;
+inline bool S2SMsg::has_roominfo() const {
+  return this != internal_default_instance() && roominfo_ != NULL;
+}
+inline void S2SMsg::clear_roominfo() {
+  if (GetArenaNoVirtual() == NULL && roominfo_ != NULL) {
+    delete roominfo_;
+  }
+  roominfo_ = NULL;
+}
+inline const ::GameProto::RoomInfo& S2SMsg::roominfo() const {
+  const ::GameProto::RoomInfo* p = roominfo_;
+  // @@protoc_insertion_point(field_get:GameProto.S2SMsg.roomInfo)
+  return p != NULL ? *p : *reinterpret_cast<const ::GameProto::RoomInfo*>(
+      &::GameProto::_RoomInfo_default_instance_);
+}
+inline ::GameProto::RoomInfo* S2SMsg::release_roominfo() {
+  // @@protoc_insertion_point(field_release:GameProto.S2SMsg.roomInfo)
+  
+  ::GameProto::RoomInfo* temp = roominfo_;
+  roominfo_ = NULL;
+  return temp;
+}
+inline ::GameProto::RoomInfo* S2SMsg::mutable_roominfo() {
+  
+  if (roominfo_ == NULL) {
+    roominfo_ = new ::GameProto::RoomInfo;
+  }
+  // @@protoc_insertion_point(field_mutable:GameProto.S2SMsg.roomInfo)
+  return roominfo_;
+}
+inline void S2SMsg::set_allocated_roominfo(::GameProto::RoomInfo* roominfo) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete roominfo_;
+  }
+  if (roominfo) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      roominfo = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, roominfo, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  roominfo_ = roominfo;
+  // @@protoc_insertion_point(field_set_allocated:GameProto.S2SMsg.roomInfo)
 }
 
 // -------------------------------------------------------------------
@@ -2270,20 +2045,6 @@ inline void ServerMsg::set_type(::GameProto::ServerEventCode value) {
   // @@protoc_insertion_point(field_set:GameProto.ServerMsg.type)
 }
 
-// int32 fid = 2;
-inline void ServerMsg::clear_fid() {
-  fid_ = 0;
-}
-inline ::google::protobuf::int32 ServerMsg::fid() const {
-  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.fid)
-  return fid_;
-}
-inline void ServerMsg::set_fid(::google::protobuf::int32 value) {
-  
-  fid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.ServerMsg.fid)
-}
-
 // string str = 3;
 inline void ServerMsg::clear_str() {
   str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -2404,7 +2165,21 @@ inline void ServerMsg::set_port(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:GameProto.ServerMsg.port)
 }
 
-// .GameProto.PlayerInfo playerInfo = 6;
+// int32 nonce = 6;
+inline void ServerMsg::clear_nonce() {
+  nonce_ = 0;
+}
+inline ::google::protobuf::int32 ServerMsg::nonce() const {
+  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.nonce)
+  return nonce_;
+}
+inline void ServerMsg::set_nonce(::google::protobuf::int32 value) {
+  
+  nonce_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.ServerMsg.nonce)
+}
+
+// .GameProto.PlayerInfo playerInfo = 7;
 inline bool ServerMsg::has_playerinfo() const {
   return this != internal_default_instance() && playerinfo_ != NULL;
 }
@@ -2454,20 +2229,6 @@ inline void ServerMsg::set_allocated_playerinfo(::GameProto::PlayerInfo* playeri
   // @@protoc_insertion_point(field_set_allocated:GameProto.ServerMsg.playerInfo)
 }
 
-// int32 framID = 7;
-inline void ServerMsg::clear_framid() {
-  framid_ = 0;
-}
-inline ::google::protobuf::int32 ServerMsg::framid() const {
-  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.framID)
-  return framid_;
-}
-inline void ServerMsg::set_framid(::google::protobuf::int32 value) {
-  
-  framid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.ServerMsg.framID)
-}
-
 // repeated .GameProto.PlayerInput inputs = 8;
 inline int ServerMsg::inputs_size() const {
   return inputs_.size();
@@ -2498,37 +2259,7 @@ ServerMsg::inputs() const {
   return inputs_;
 }
 
-// repeated .GameProto.PlayerState states = 9;
-inline int ServerMsg::states_size() const {
-  return states_.size();
-}
-inline void ServerMsg::clear_states() {
-  states_.Clear();
-}
-inline const ::GameProto::PlayerState& ServerMsg::states(int index) const {
-  // @@protoc_insertion_point(field_get:GameProto.ServerMsg.states)
-  return states_.Get(index);
-}
-inline ::GameProto::PlayerState* ServerMsg::mutable_states(int index) {
-  // @@protoc_insertion_point(field_mutable:GameProto.ServerMsg.states)
-  return states_.Mutable(index);
-}
-inline ::GameProto::PlayerState* ServerMsg::add_states() {
-  // @@protoc_insertion_point(field_add:GameProto.ServerMsg.states)
-  return states_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState >*
-ServerMsg::mutable_states() {
-  // @@protoc_insertion_point(field_mutable_list:GameProto.ServerMsg.states)
-  return &states_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::GameProto::PlayerState >&
-ServerMsg::states() const {
-  // @@protoc_insertion_point(field_list:GameProto.ServerMsg.states)
-  return states_;
-}
-
-// repeated .GameProto.RoomInfo roominfos = 10;
+// repeated .GameProto.RoomInfo roominfos = 9;
 inline int ServerMsg::roominfos_size() const {
   return roominfos_.size();
 }
@@ -2571,8 +2302,6 @@ ServerMsg::roominfos() const {
 
 // -------------------------------------------------------------------
 
-// -------------------------------------------------------------------
-
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -2590,6 +2319,11 @@ template <> struct is_proto_enum< ::GameProto::ClientEventCode> : ::google::prot
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::GameProto::ClientEventCode>() {
   return ::GameProto::ClientEventCode_descriptor();
+}
+template <> struct is_proto_enum< ::GameProto::S2SEventCode> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::GameProto::S2SEventCode>() {
+  return ::GameProto::S2SEventCode_descriptor();
 }
 
 }  // namespace protobuf

@@ -10,6 +10,7 @@
 #include "config.h"
 #include "player_info.h"
 #include "../common/xid.cc"
+#include "process_log.h"
 
 struct ResPlayerInfo {
     std::string account;
@@ -33,6 +34,18 @@ public:
      * @param dataLength 服务器recv到的数据的长度
      */
     void HandleEvent(int clientFd, int dataLength); 
+    /**
+     * @brief 处理客户端发送的消息
+     * @param packageLength 包长
+     * @param clientFd 客户端fd
+     */
+    void HandleClientEvent(int packageLength, int clientFd);
+    /**
+     * @brief 处理服务端发送的消息
+     * @param packageLength 包长
+     * @param serverFd 服务端fd
+     */
+    void HandleServerEvent(int packageLength, int serverFd);
     /**
      * @brief 处理连接关闭时的事件
      * @param clientFd 客户端fd
@@ -104,6 +117,14 @@ public:
      * @brief 广播房间列表信息
      */
     void BroadRoomListInfo();
+
+    /**
+     *@brief 处理连接时的ip端口
+     *@param addr 连接的ip
+     *@param port 端口
+     *@param fd 
+     */
+    void HandleNetIp(char* addr, int port, int fd);
     void Work();    
 
 private:
@@ -121,5 +142,7 @@ private:
     std::set<std::string> loginAccount;                         //所有已登录的账号集合
     std::set<service_mgr> serviceList;                          //存放战斗服务器信息
     std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
+    std::map<std::string, int> addrFdMap;                       //地址到Fd的映射
+    std::map<int, std::string> fdAddMap;                        //Fd到地址的映射
 };
 
