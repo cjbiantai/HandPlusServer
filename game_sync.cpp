@@ -147,13 +147,6 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
         printf("Room don't exist, uid: %d, sockfd: %d, room_id: %d\n",uid,sockfd,room_id);
         SocketError::Close(sockfd,"GameSync::JoinRoom");
         return;
-        /*if(room_max<=0){
-            printf("room_max must above zero!\n");
-            SocketError::Close(sockfd,"GameSync::JoinRoom");
-            return;
-        }
-        printf("Room create, room_id: %d, room_max: %d\n",room_id,room_max);
-		room[room_id]=Room(room_max);*/
     }
     if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
         printf("uid: %d, can't join room %d!\n",uid,room_id);
