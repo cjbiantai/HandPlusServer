@@ -8,7 +8,8 @@ Player::Player(int sockfd){
 }
 
 Player::~Player(){
-    delete socketConn;
+    if(socketConn!=NULL)
+        delete socketConn;
 }
 
 void Player::JoinRoom(int uid,int room_id){
@@ -20,7 +21,10 @@ void Player::JoinRoom(int uid,int room_id){
 }
 
 int Player::SendMsg(ServerMsg *smsg){
-    return socketConn->SendMsg(smsg,0);
+#ifdef DEBUG
+    cout<<"Player::SendMsg"<<endl;
+#endif
+    return socketConn->SendMsg(smsg);
 }
 
 void Player::Update(PlayerInput input){
@@ -28,6 +32,9 @@ void Player::Update(PlayerInput input){
 }
 
 int Player::Recv(){
+#ifdef DEBUG
+    cout<<"Player::Recv"<<endl;
+#endif
     return socketConn->Recv();
 }
 

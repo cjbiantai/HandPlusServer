@@ -2,9 +2,9 @@
 #include"common/all.h"
 #include"server_sync.h"
 #include"socket_error.h"
+#include"hall_sync.h"
 #include"player.h"
 #include"room.h"
-#include"s2ssync.h"
 
 class GameSync:public ServerSync{
 	private:
@@ -14,7 +14,7 @@ class GameSync:public ServerSync{
 		map<int,Player> player;	//fd2player
 		map<int,Room> room;
 		map<int,pii> uid2room;
-        S2SSync *s2ssync;
+        HallSync *hall;
 	public:
         GameSync(){}
         ~GameSync();

@@ -1,8 +1,8 @@
 #include"game_sync.h"
 
 GameSync::~GameSync(){
-    if(s2ssync!=NULL)
-        delete s2ssync;
+    if(hall!=NULL)
+        delete hall;
 }
 
 void GameSync::RecvAndHandle(int sockfd){
@@ -29,18 +29,18 @@ void GameSync::RecvAndHandle(int sockfd){
 }
 
 void GameSync::S2SRecvAndHandle(int sockfd){
-    if(s2ssync==NULL)
-        s2ssync=new S2SSync(sockfd);
-	if(s2ssync->Recv()<=0){
+    if(hall==NULL)
+        hall=new HallSync(sockfd);
+	if(hall->Recv()<=0){
         printf("hallfd recv error\n");
 		return;
     }
 	S2SMsg msg;
-	while(s2ssync->Parse(&msg)>0){
+	while(hall->Parse(&msg)>0){
 		switch(msg.type()){
 			case PrepareRoom:
                 room[msg.roominfo().roomid()]=Room(msg.roominfo().maxplayers());
-                s2ssync->SendMsg(new S2SMsg());
+                hall->SendMsg(new S2SMsg());
 				break;
 			default:
                 printf("S2S undefined message type, fd: %d\n",sockfd);
