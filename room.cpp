@@ -10,7 +10,7 @@ Room::Room(int max){
 }
 
 void Room::AddPlayer(Player *player){
-#ifdef DEBUG
+#if DEBUG>1
     cout<<"Room::AddPlayer uid: "<<player->uid<<endl;
 #endif
 	players.push_back(player);
@@ -47,7 +47,7 @@ void Room::Reconnect(int uid,Player *player){
         return;
     }
 	for(int i=0;i<frames.size();i++)
-		if(SocketError::Check(player->SendMsg(&frames[i]),player->sockfd)<=0){
+		if(SocketError::Check(player->SendMsg(&frames[i]),player->sockfd,"Room::Reconnect")<=0){
             printf("Room::Reconnect fail, send error\n");
 			return;
         }
@@ -64,7 +64,7 @@ void Room::SendToAll(ServerMsg smsg){
 	int ret;
 	for(int i=0;i<players.size();i++){
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
-	    if(SocketError::Check(ret,players[i]->sockfd)<=0){
+	    if(SocketError::Check(ret,players[i]->sockfd,"Room::SendToAll")<=0){
             printf("Room::SendToAll fail\n");
             swap(players[i--],players[players.size()-1]);
             players.pop_back();

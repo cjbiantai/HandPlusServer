@@ -201,6 +201,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, nickname_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, roomid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, charactername_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, characterid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInfo, prepared_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::PlayerInput, _internal_metadata_),
@@ -224,7 +225,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, roundnumber_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, roomname_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, mapname_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, roomidx_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, mapidx_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, password_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, maxplayers_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::GameProto::RoomInfo, curplayernumber_),
@@ -262,11 +263,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::GameProto::PlayerInfo)},
-  { 12, -1, sizeof(::GameProto::PlayerInput)},
-  { 24, -1, sizeof(::GameProto::RoomInfo)},
-  { 40, -1, sizeof(::GameProto::S2SMsg)},
-  { 47, -1, sizeof(::GameProto::ClientMsg)},
-  { 56, -1, sizeof(::GameProto::ServerMsg)},
+  { 13, -1, sizeof(::GameProto::PlayerInput)},
+  { 25, -1, sizeof(::GameProto::RoomInfo)},
+  { 41, -1, sizeof(::GameProto::S2SMsg)},
+  { 48, -1, sizeof(::GameProto::ClientMsg)},
+  { 57, -1, sizeof(::GameProto::ServerMsg)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -300,63 +301,63 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020game_proto.proto\022\tGameProto\"\212\001\n\nPlayer"
+      "\n\020game_proto.proto\022\tGameProto\"\237\001\n\nPlayer"
       "Info\022\016\n\006userId\030\001 \001(\005\022\017\n\007account\030\002 \001(\t\022\020\n"
       "\010password\030\003 \001(\t\022\020\n\010nickname\030\004 \001(\t\022\016\n\006roo"
-      "mid\030\005 \001(\005\022\025\n\rcharacterName\030\006 \001(\t\022\020\n\010prep"
-      "ared\030\007 \001(\010\"\251\001\n\013PlayerInput\022\016\n\006userId\030\001 \001"
-      "(\005\022\024\n\014headTowardsX\030\002 \001(\003\022\024\n\014headTowardsY"
-      "\030\003 \001(\003\022\024\n\014headTowardsZ\030\004 \001(\003\022\026\n\016moveDire"
-      "ctionX\030\005 \001(\003\022\026\n\016moveDirectionY\030\006 \001(\003\022\030\n\020"
-      "usePropsInPackID\030\007 \001(\005\"\360\001\n\010RoomInfo\022\016\n\006r"
-      "oomId\030\001 \001(\005\022\021\n\troundTime\030\002 \001(\005\022\023\n\013roundN"
-      "umber\030\003 \001(\005\022\020\n\010roomName\030\004 \001(\t\022\017\n\007mapName"
-      "\030\005 \001(\t\022\017\n\007roomIdx\030\006 \001(\005\022\020\n\010password\030\007 \001("
-      "\t\022\022\n\nmaxPlayers\030\010 \001(\005\022\027\n\017curPlayerNumber"
-      "\030\t \001(\005\022&\n\007Players\030\n \003(\0132\025.GameProto.Play"
-      "erInfo\022\021\n\tmasterUid\030\013 \001(\005\"V\n\006S2SMsg\022%\n\004t"
-      "ype\030\001 \001(\0162\027.GameProto.S2SEventCode\022%\n\010ro"
-      "omInfo\030\002 \001(\0132\023.GameProto.RoomInfo\"\256\001\n\tCl"
-      "ientMsg\022(\n\004type\030\001 \001(\0162\032.GameProto.Client"
-      "EventCode\022)\n\nplayerinfo\030\002 \001(\0132\025.GameProt"
-      "o.PlayerInfo\022%\n\005input\030\003 \001(\0132\026.GameProto."
-      "PlayerInput\022%\n\010roominfo\030\004 \001(\0132\023.GameProt"
-      "o.RoomInfo\"\346\001\n\tServerMsg\022(\n\004type\030\001 \001(\0162\032"
-      ".GameProto.ServerEventCode\022\013\n\003str\030\003 \001(\t\022"
-      "\n\n\002ip\030\004 \001(\t\022\014\n\004port\030\005 \001(\005\022\r\n\005nonce\030\006 \001(\005"
-      "\022)\n\nplayerInfo\030\007 \001(\0132\025.GameProto.PlayerI"
-      "nfo\022&\n\006inputs\030\010 \003(\0132\026.GameProto.PlayerIn"
-      "put\022&\n\troominfos\030\t \003(\0132\023.GameProto.RoomI"
-      "nfo*\311\006\n\017ServerEventCode\022\020\n\014LoginSucceed\020"
-      "\000\022\035\n\031LoginFailed_InternalError\020\001\022 \n\034Logi"
-      "nFailed_AccountDontExist\020\002\022\035\n\031LoginFaile"
-      "d_PasswordWrong\020\003\022\034\n\030LoginFailed_Already"
-      "Login\020\004\022\023\n\017RegisterSucceed\020\005\022 \n\034Register"
-      "Failed_InternalError\020\006\022&\n\"RegisterFailed"
-      "_AccountAlreadyExist\020\007\022\025\n\021CreateRoomSucc"
-      "eed\020\010\022\036\n\032CreateRoomFailed_DontLogin\020\t\022\"\n"
-      "\036CreateRoomFailed_AlreadyInRoom\020\n\022\024\n\020Ent"
-      "erRoomSucceed\020\013\022\035\n\031EnterRoomFailed_DontL"
-      "ogin\020\014\022!\n\035EnterRoomFailed_RoomDontExist\020"
-      "\r\022\036\n\032EnterRoomFailed_RoomIsFull\020\016\022!\n\035Ent"
-      "erRoomFailed_AlreadyInRoom\020\017\022\023\n\017ExitRoom"
-      "Succeed\020\020\022\034\n\030ExitRoomFailed_DontLogin\020\021\022"
-      " \n\034ExitRoomFailed_RoomDontExist\020\022\022\035\n\031Exi"
-      "tRoomFailed_DontInRoom\020\023\022\034\n\030ChangeStateI"
-      "nRoomSucceed\020\024\022%\n!ChangeStateInRoomFaile"
-      "d_DontLogin\020\025\022&\n\"ChangeStateInRoomFailed"
-      "_DontInRoom\020\026\022\020\n\014CanStartGame\020\027\022\023\n\017Canno"
-      "tStartGame\020\030\022\026\n\022JumpToButtleServer\020\031\022\013\n\007"
-      "S2CSync\020\032\022\021\n\rBroadRoomInfo\020\033\022\021\n\rBroadRoo"
-      "mList\020\034*\222\001\n\017ClientEventCode\022\t\n\005Login\020\000\022\n"
-      "\n\006Regist\020\001\022\016\n\nCreateRoom\020\002\022\r\n\tEnterRoom\020"
-      "\003\022\014\n\010ExitRoom\020\004\022\013\n\007C2SSync\020\005\022\025\n\021ChangeSt"
-      "ateInRoom\020\006\022\027\n\023StartGameBtnOnClick\020\007*/\n\014"
-      "S2SEventCode\022\017\n\013PrepareRoom\020\000\022\016\n\nResultS"
-      "ync\020\001b\006proto3"
+      "mId\030\005 \001(\005\022\025\n\rcharacterName\030\006 \001(\t\022\023\n\013char"
+      "acterId\030\007 \001(\005\022\020\n\010prepared\030\010 \001(\010\"\251\001\n\013Play"
+      "erInput\022\016\n\006userId\030\001 \001(\005\022\024\n\014headTowardsX\030"
+      "\002 \001(\003\022\024\n\014headTowardsY\030\003 \001(\003\022\024\n\014headTowar"
+      "dsZ\030\004 \001(\003\022\026\n\016moveDirectionX\030\005 \001(\003\022\026\n\016mov"
+      "eDirectionY\030\006 \001(\003\022\030\n\020usePropsInPackID\030\007 "
+      "\001(\005\"\357\001\n\010RoomInfo\022\016\n\006roomId\030\001 \001(\005\022\021\n\troun"
+      "dTime\030\002 \001(\005\022\023\n\013roundNumber\030\003 \001(\005\022\020\n\010room"
+      "Name\030\004 \001(\t\022\017\n\007mapName\030\005 \001(\t\022\016\n\006mapIdx\030\006 "
+      "\001(\005\022\020\n\010password\030\007 \001(\t\022\022\n\nmaxPlayers\030\010 \001("
+      "\005\022\027\n\017curPlayerNumber\030\t \001(\005\022&\n\007Players\030\n "
+      "\003(\0132\025.GameProto.PlayerInfo\022\021\n\tmasterUid\030"
+      "\013 \001(\005\"V\n\006S2SMsg\022%\n\004type\030\001 \001(\0162\027.GameProt"
+      "o.S2SEventCode\022%\n\010roomInfo\030\002 \001(\0132\023.GameP"
+      "roto.RoomInfo\"\256\001\n\tClientMsg\022(\n\004type\030\001 \001("
+      "\0162\032.GameProto.ClientEventCode\022)\n\nplayeri"
+      "nfo\030\002 \001(\0132\025.GameProto.PlayerInfo\022%\n\005inpu"
+      "t\030\003 \001(\0132\026.GameProto.PlayerInput\022%\n\010roomi"
+      "nfo\030\004 \001(\0132\023.GameProto.RoomInfo\"\346\001\n\tServe"
+      "rMsg\022(\n\004type\030\001 \001(\0162\032.GameProto.ServerEve"
+      "ntCode\022\013\n\003str\030\003 \001(\t\022\n\n\002ip\030\004 \001(\t\022\014\n\004port\030"
+      "\005 \001(\005\022\r\n\005nonce\030\006 \001(\005\022)\n\nplayerInfo\030\007 \001(\013"
+      "2\025.GameProto.PlayerInfo\022&\n\006inputs\030\010 \003(\0132"
+      "\026.GameProto.PlayerInput\022&\n\troominfos\030\t \003"
+      "(\0132\023.GameProto.RoomInfo*\311\006\n\017ServerEventC"
+      "ode\022\020\n\014LoginSucceed\020\000\022\035\n\031LoginFailed_Int"
+      "ernalError\020\001\022 \n\034LoginFailed_AccountDontE"
+      "xist\020\002\022\035\n\031LoginFailed_PasswordWrong\020\003\022\034\n"
+      "\030LoginFailed_AlreadyLogin\020\004\022\023\n\017RegisterS"
+      "ucceed\020\005\022 \n\034RegisterFailed_InternalError"
+      "\020\006\022&\n\"RegisterFailed_AccountAlreadyExist"
+      "\020\007\022\025\n\021CreateRoomSucceed\020\010\022\036\n\032CreateRoomF"
+      "ailed_DontLogin\020\t\022\"\n\036CreateRoomFailed_Al"
+      "readyInRoom\020\n\022\024\n\020EnterRoomSucceed\020\013\022\035\n\031E"
+      "nterRoomFailed_DontLogin\020\014\022!\n\035EnterRoomF"
+      "ailed_RoomDontExist\020\r\022\036\n\032EnterRoomFailed"
+      "_RoomIsFull\020\016\022!\n\035EnterRoomFailed_Already"
+      "InRoom\020\017\022\023\n\017ExitRoomSucceed\020\020\022\034\n\030ExitRoo"
+      "mFailed_DontLogin\020\021\022 \n\034ExitRoomFailed_Ro"
+      "omDontExist\020\022\022\035\n\031ExitRoomFailed_DontInRo"
+      "om\020\023\022\034\n\030ChangeStateInRoomSucceed\020\024\022%\n!Ch"
+      "angeStateInRoomFailed_DontLogin\020\025\022&\n\"Cha"
+      "ngeStateInRoomFailed_DontInRoom\020\026\022\020\n\014Can"
+      "StartGame\020\027\022\023\n\017CannotStartGame\020\030\022\026\n\022Jump"
+      "ToButtleServer\020\031\022\013\n\007S2CSync\020\032\022\021\n\rBroadRo"
+      "omInfo\020\033\022\021\n\rBroadRoomList\020\034*\222\001\n\017ClientEv"
+      "entCode\022\t\n\005Login\020\000\022\n\n\006Regist\020\001\022\016\n\nCreate"
+      "Room\020\002\022\r\n\tEnterRoom\020\003\022\014\n\010ExitRoom\020\004\022\013\n\007C"
+      "2SSync\020\005\022\025\n\021ChangeStateInRoom\020\006\022\027\n\023Start"
+      "GameBtnOnClick\020\007*/\n\014S2SEventCode\022\017\n\013Prep"
+      "areRoom\020\000\022\016\n\nResultSync\020\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2133);
+      descriptor, 2153);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_proto.proto", &protobuf_RegisterTypes);
 }
@@ -458,8 +459,9 @@ const int PlayerInfo::kUserIdFieldNumber;
 const int PlayerInfo::kAccountFieldNumber;
 const int PlayerInfo::kPasswordFieldNumber;
 const int PlayerInfo::kNicknameFieldNumber;
-const int PlayerInfo::kRoomidFieldNumber;
+const int PlayerInfo::kRoomIdFieldNumber;
 const int PlayerInfo::kCharacterNameFieldNumber;
+const int PlayerInfo::kCharacterIdFieldNumber;
 const int PlayerInfo::kPreparedFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -632,7 +634,7 @@ bool PlayerInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 roomid = 5;
+      // int32 roomId = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
@@ -662,10 +664,24 @@ bool PlayerInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // bool prepared = 7;
+      // int32 characterId = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &characterid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool prepared = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
@@ -737,7 +753,7 @@ void PlayerInfo::SerializeWithCachedSizes(
       4, this->nickname(), output);
   }
 
-  // int32 roomid = 5;
+  // int32 roomId = 5;
   if (this->roomid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->roomid(), output);
   }
@@ -752,9 +768,14 @@ void PlayerInfo::SerializeWithCachedSizes(
       6, this->charactername(), output);
   }
 
-  // bool prepared = 7;
+  // int32 characterId = 7;
+  if (this->characterid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->characterid(), output);
+  }
+
+  // bool prepared = 8;
   if (this->prepared() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->prepared(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->prepared(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -809,7 +830,7 @@ void PlayerInfo::SerializeWithCachedSizes(
         4, this->nickname(), target);
   }
 
-  // int32 roomid = 5;
+  // int32 roomId = 5;
   if (this->roomid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->roomid(), target);
   }
@@ -825,9 +846,14 @@ void PlayerInfo::SerializeWithCachedSizes(
         6, this->charactername(), target);
   }
 
-  // bool prepared = 7;
+  // int32 characterId = 7;
+  if (this->characterid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->characterid(), target);
+  }
+
+  // bool prepared = 8;
   if (this->prepared() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->prepared(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->prepared(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -882,14 +908,21 @@ size_t PlayerInfo::ByteSizeLong() const {
         this->userid());
   }
 
-  // int32 roomid = 5;
+  // int32 roomId = 5;
   if (this->roomid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->roomid());
   }
 
-  // bool prepared = 7;
+  // int32 characterId = 7;
+  if (this->characterid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->characterid());
+  }
+
+  // bool prepared = 8;
   if (this->prepared() != 0) {
     total_size += 1 + 1;
   }
@@ -945,6 +978,9 @@ void PlayerInfo::MergeFrom(const PlayerInfo& from) {
   if (from.roomid() != 0) {
     set_roomid(from.roomid());
   }
+  if (from.characterid() != 0) {
+    set_characterid(from.characterid());
+  }
   if (from.prepared() != 0) {
     set_prepared(from.prepared());
   }
@@ -980,6 +1016,7 @@ void PlayerInfo::InternalSwap(PlayerInfo* other) {
   charactername_.Swap(&other->charactername_);
   swap(userid_, other->userid_);
   swap(roomid_, other->roomid_);
+  swap(characterid_, other->characterid_);
   swap(prepared_, other->prepared_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
@@ -1461,7 +1498,7 @@ const int RoomInfo::kRoundTimeFieldNumber;
 const int RoomInfo::kRoundNumberFieldNumber;
 const int RoomInfo::kRoomNameFieldNumber;
 const int RoomInfo::kMapNameFieldNumber;
-const int RoomInfo::kRoomIdxFieldNumber;
+const int RoomInfo::kMapIdxFieldNumber;
 const int RoomInfo::kPasswordFieldNumber;
 const int RoomInfo::kMaxPlayersFieldNumber;
 const int RoomInfo::kCurPlayerNumberFieldNumber;
@@ -1645,14 +1682,14 @@ bool RoomInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 roomIdx = 6;
+      // int32 mapIdx = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &roomidx_)));
+                 input, &mapidx_)));
         } else {
           goto handle_unusual;
         }
@@ -1789,9 +1826,9 @@ void RoomInfo::SerializeWithCachedSizes(
       5, this->mapname(), output);
   }
 
-  // int32 roomIdx = 6;
-  if (this->roomidx() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->roomidx(), output);
+  // int32 mapIdx = 6;
+  if (this->mapidx() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->mapidx(), output);
   }
 
   // string password = 7;
@@ -1877,9 +1914,9 @@ void RoomInfo::SerializeWithCachedSizes(
         5, this->mapname(), target);
   }
 
-  // int32 roomIdx = 6;
-  if (this->roomidx() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->roomidx(), target);
+  // int32 mapIdx = 6;
+  if (this->mapidx() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->mapidx(), target);
   }
 
   // string password = 7;
@@ -1986,11 +2023,11 @@ size_t RoomInfo::ByteSizeLong() const {
         this->roundnumber());
   }
 
-  // int32 roomIdx = 6;
-  if (this->roomidx() != 0) {
+  // int32 mapIdx = 6;
+  if (this->mapidx() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->roomidx());
+        this->mapidx());
   }
 
   // int32 maxPlayers = 8;
@@ -2065,8 +2102,8 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
   if (from.roundnumber() != 0) {
     set_roundnumber(from.roundnumber());
   }
-  if (from.roomidx() != 0) {
-    set_roomidx(from.roomidx());
+  if (from.mapidx() != 0) {
+    set_mapidx(from.mapidx());
   }
   if (from.maxplayers() != 0) {
     set_maxplayers(from.maxplayers());
@@ -2110,7 +2147,7 @@ void RoomInfo::InternalSwap(RoomInfo* other) {
   swap(roomid_, other->roomid_);
   swap(roundtime_, other->roundtime_);
   swap(roundnumber_, other->roundnumber_);
-  swap(roomidx_, other->roomidx_);
+  swap(mapidx_, other->mapidx_);
   swap(maxplayers_, other->maxplayers_);
   swap(curplayernumber_, other->curplayernumber_);
   swap(masteruid_, other->masteruid_);

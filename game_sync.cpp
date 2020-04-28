@@ -11,7 +11,7 @@ GameSync::~GameSync(){
 
 void GameSync::RecvAndHandle(int sockfd){
 	if(Recv(sockfd)<=0){
-        SocketError::Close(sockfd);
+        SocketError::Close(sockfd,"GameSync::RecvAndHandle");
 		return;
     }
 	ClientMsg cmsg;
@@ -104,7 +104,7 @@ int GameSync::Parse(int sockfd,ClientMsg *cmsg){
 	int ret=player[sockfd].Parse(cmsg);
 	if(ret<0){
 		printf("uid: %d, kick off by server\n",player[sockfd].uid);
-		SocketError::Close(sockfd);
+		SocketError::Close(sockfd,"GameSync::Parse");
 	}
 	return ret;
 }
@@ -116,12 +116,12 @@ void GameSync::Update(int sockfd,PlayerInput input){
 }
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
-#ifdef DEBUG
+#if DEBUG>1
     cout<<"GameSync::JoinRoom"<<endl;
 #endif
     if(room_id<=0||uid<=0){
         printf("uid: %d, fd: %d, room_id: %d,room_id and uid must above zero!\n",uid,sockfd,room_id);
-        SocketError::Close(sockfd);
+        SocketError::Close(sockfd,"GameSync::JoinRoom");
         return;
     }
     int last_room=uid2room[uid].first;
@@ -134,12 +134,12 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id,int room_max){
 		    return;
         }
         if(p_last!=NULL)
-            SocketError::Close(p_last->sockfd);
+            SocketError::Close(p_last->sockfd,"GameSync::JoinRoom");
 	}
 	if(!room.count(room_id)){
         if(room_max<=0){
             printf("room_max must above zero!\n");
-            SocketError::Close(sockfd);
+            SocketError::Close(sockfd,"GameSync::JoinRoom");
             return;
         }
         printf("Room create, room_id: %d, room_max: %d\n",room_id,room_max);

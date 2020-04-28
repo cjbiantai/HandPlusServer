@@ -49,10 +49,10 @@ Server::Server(int port,ServerSync *sync) {
 		printf("epoll_ctl listenfd error\n");
 		exit(0);
 	}
-    if(epoll_ctl(epfd,EPOLL_CTL_ADD,hallfd,&event)<0){
+    /*if(epoll_ctl(epfd,EPOLL_CTL_ADD,hallfd,&event)<0){
         printf("epoll_ctl hallfd error\n");
         exit(0);
-    }
+    }*/
 	events=(struct epoll_event*)malloc(sizeof(event)*MAX_EVENTS);    
 }
 
@@ -94,12 +94,12 @@ void Server::WorkOnce() {
    	gettimeofday(&end,NULL);
    	tick+=(end.tv_sec-start.tv_sec)*1000LL+(end.tv_usec-start.tv_usec)/1000;
    	if(tick>=BROADCAST_RATE){
-#ifdef DEBUG
+#if DEBUG==1
         printf("tick: %dms\n",tick);
 #endif
    		tick-=BROADCAST_RATE;
 	   	sync->Broadcast();
-#ifdef DEBUG
+#if DEBUG==1
         sync->Print();
         cout<<endl;
 #endif

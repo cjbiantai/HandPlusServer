@@ -2,6 +2,12 @@ syntax="proto3";
 package GameProto;
 
 
+
+
+
+
+
+
 //S2C事件码
 enum ServerEventCode {
     //登录响应码
@@ -17,6 +23,12 @@ enum ServerEventCode {
     LoginFailed_AlreadyLogin = 4;
 
 
+
+
+
+
+
+
     //注册响应码
     //不需要额外字段
     RegisterSucceed = 5;
@@ -26,6 +38,12 @@ enum ServerEventCode {
     RegisterFailed_AccountAlreadyExist = 7;
 
 
+
+
+
+
+
+
     //创建房间相关
     //需要RoomInfo[0]
     CreateRoomSucceed = 8;
@@ -33,6 +51,18 @@ enum ServerEventCode {
     CreateRoomFailed_DontLogin = 9;
     //不需要额外字段
     CreateRoomFailed_AlreadyInRoom = 10;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -50,6 +80,12 @@ enum ServerEventCode {
     EnterRoomFailed_AlreadyInRoom = 15;
 
 
+
+
+
+
+
+
     //退出房间相关响应码
     //不需要额外字段
     ExitRoomSucceed = 16; 
@@ -61,6 +97,12 @@ enum ServerEventCode {
     ExitRoomFailed_DontInRoom = 19;
 
 
+
+
+
+
+
+
     //改变在房间中的状态响应码
     
     ChangeStateInRoomSucceed = 20;
@@ -68,9 +110,21 @@ enum ServerEventCode {
     ChangeStateInRoomFailed_DontInRoom = 22;
 
 
+
+
+
+
+
+
     //开始游戏相关响应码
     CanStartGame = 23;
     CannotStartGame = 24;
+
+
+
+
+
+
 
 
     //跳转到战斗服务器
@@ -82,6 +136,18 @@ enum ServerEventCode {
     BroadRoomInfo = 27;
     BroadRoomList = 28;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -108,12 +174,15 @@ enum ClientEventCode {
 
 
 
+
 enum S2SEventCode {
     //hall->game，房间创建
     PrepareRoom = 0;
     //game->hall，游戏结果
     ResultSync = 1;
 }
+
+
 
 
 //玩家信息 
@@ -127,29 +196,43 @@ message PlayerInfo{
     //昵称
     string nickname = 4;
   
-    //所在房间号
-    int32 roomid = 5;
+    //所在房间号  
+    int32 roomId = 5;
     //玩家选择角色名
     string characterName = 6;
+    //玩家选择的角色id
+    int32 characterId = 7;
     //玩家是否准备
-    bool prepared = 7;
+    bool prepared = 8;
 }
 //玩家一次操作
 message PlayerInput{
     int32 userId = 1;
+
+
+
 
     //玩家头(视角)朝向
     int64 headTowardsX = 2;
     int64 headTowardsY = 3;
     int64 headTowardsZ = 4;
 
+
+
+
     //玩家移动速度
     int64 moveDirectionX = 5;
     int64 moveDirectionY = 6;
 
+
+
+
     //使用的道具在背包中的ID   技能也是道具
     int32 usePropsInPackID = 7;
 }
+
+
+
 
 message RoomInfo {
     //房间Id
@@ -163,7 +246,7 @@ message RoomInfo {
     //地图名
     string mapName = 5;
     //地图Id
-    int32 roomIdx = 6;
+    int32 mapIdx = 6;
     //房间密码
     string password = 7;
     //最大玩家数量
@@ -177,6 +260,8 @@ message RoomInfo {
 }
 
 
+
+
 message S2SMsg{
     //S2S同步事件码
     S2SEventCode type = 1;
@@ -187,14 +272,13 @@ message S2SMsg{
 }
 
 
+
+
+
+
+
+
 //客户端数据包
-//登录：type=LogIn,playerinfo(account, password)
-//注册：type=Regist,playerinfo(account, password, nickname)
-//进房间：type=EnterRoom, playerInfo(uid),id=room_id
-//选择角色: type=ChangeStateInRoom, playerInfo(uid, characterId)
-//准备，取消准备：type=ChangeStateInRoom,playerInfo(uid, isprepared)
-//同步：type=Sync,input
-//追帧：type=Follow, playerinfo(uid),id=fid
 message ClientMsg{
     //客户端事件码
     ClientEventCode type = 1;
@@ -208,13 +292,19 @@ message ClientMsg{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 //服务器数据包
-//登录成功：type = LogInSuccess playerinfo(), roominfos
-//注册成功：type = RegistSuccess 
-//进房间成功：type = EnterRoomSuccess, roominfos
-//登录，注册，进房间失败：type=Failure,str
-//跳转服务器: type=JumpToBattleServer,ip,port
-//同步：type = S2CSync,inputs
 message ServerMsg{
     //服务器事件码
     ServerEventCode type = 1;
@@ -234,4 +324,5 @@ message ServerMsg{
     //在type为BroadRoomList时，roominfos代表房间列表信息
     repeated RoomInfo roominfos = 9;
 }
+
 

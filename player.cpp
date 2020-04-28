@@ -7,17 +7,13 @@ Player::Player(){
 }
 
 Player::Player(int sockfd){
-    socketConn=new SocketConnect(sockfd);
+    this->sockfd=sockfd;
+    socketConn.Init(sockfd);
     uid=-1;
 }
 
-Player::~Player(){
-    if(socketConn!=NULL)
-        delete socketConn;
-}
-
 void Player::JoinRoom(int uid,int room_id){
-#ifdef DEBUG
+#if DEBUG>1
     cout<<"Player::JoinRoom"<<endl;
 #endif
 	this->uid=uid;
@@ -25,10 +21,10 @@ void Player::JoinRoom(int uid,int room_id){
 }
 
 int Player::SendMsg(ServerMsg *smsg){
-#ifdef DEBUG
+#if DEBUG>1
     cout<<"Player::SendMsg"<<endl;
 #endif
-    return socketConn->SendMsg(smsg);
+    return socketConn.SendMsg(smsg);
 }
 
 void Player::Update(PlayerInput input){
@@ -36,14 +32,14 @@ void Player::Update(PlayerInput input){
 }
 
 int Player::Recv(){
-#ifdef DEBUG
+#if DEBUG>1
     cout<<"Player::Recv"<<endl;
 #endif
-    return socketConn->Recv();
+    return socketConn.Recv();
 }
 
 int Player::Parse(ClientMsg *cmsg){
-    return socketConn->Parse(cmsg);
+    return socketConn.Parse(cmsg);
 }
 
 void Player::ReconnectFail(){

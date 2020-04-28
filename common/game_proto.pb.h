@@ -328,15 +328,21 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 userid() const;
   void set_userid(::google::protobuf::int32 value);
 
-  // int32 roomid = 5;
+  // int32 roomId = 5;
   void clear_roomid();
-  static const int kRoomidFieldNumber = 5;
+  static const int kRoomIdFieldNumber = 5;
   ::google::protobuf::int32 roomid() const;
   void set_roomid(::google::protobuf::int32 value);
 
-  // bool prepared = 7;
+  // int32 characterId = 7;
+  void clear_characterid();
+  static const int kCharacterIdFieldNumber = 7;
+  ::google::protobuf::int32 characterid() const;
+  void set_characterid(::google::protobuf::int32 value);
+
+  // bool prepared = 8;
   void clear_prepared();
-  static const int kPreparedFieldNumber = 7;
+  static const int kPreparedFieldNumber = 8;
   bool prepared() const;
   void set_prepared(bool value);
 
@@ -350,6 +356,7 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr charactername_;
   ::google::protobuf::int32 userid_;
   ::google::protobuf::int32 roomid_;
+  ::google::protobuf::int32 characterid_;
   bool prepared_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_5fproto_2eproto::TableStruct;
@@ -652,11 +659,11 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 roundnumber() const;
   void set_roundnumber(::google::protobuf::int32 value);
 
-  // int32 roomIdx = 6;
-  void clear_roomidx();
-  static const int kRoomIdxFieldNumber = 6;
-  ::google::protobuf::int32 roomidx() const;
-  void set_roomidx(::google::protobuf::int32 value);
+  // int32 mapIdx = 6;
+  void clear_mapidx();
+  static const int kMapIdxFieldNumber = 6;
+  ::google::protobuf::int32 mapidx() const;
+  void set_mapidx(::google::protobuf::int32 value);
 
   // int32 maxPlayers = 8;
   void clear_maxplayers();
@@ -687,7 +694,7 @@ class RoomInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 roomid_;
   ::google::protobuf::int32 roundtime_;
   ::google::protobuf::int32 roundnumber_;
-  ::google::protobuf::int32 roomidx_;
+  ::google::protobuf::int32 mapidx_;
   ::google::protobuf::int32 maxplayers_;
   ::google::protobuf::int32 curplayernumber_;
   ::google::protobuf::int32 masteruid_;
@@ -1296,18 +1303,18 @@ inline void PlayerInfo::set_allocated_nickname(::std::string* nickname) {
   // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerInfo.nickname)
 }
 
-// int32 roomid = 5;
+// int32 roomId = 5;
 inline void PlayerInfo::clear_roomid() {
   roomid_ = 0;
 }
 inline ::google::protobuf::int32 PlayerInfo::roomid() const {
-  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.roomid)
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.roomId)
   return roomid_;
 }
 inline void PlayerInfo::set_roomid(::google::protobuf::int32 value) {
   
   roomid_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.roomid)
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.roomId)
 }
 
 // string characterName = 6;
@@ -1363,7 +1370,21 @@ inline void PlayerInfo::set_allocated_charactername(::std::string* charactername
   // @@protoc_insertion_point(field_set_allocated:GameProto.PlayerInfo.characterName)
 }
 
-// bool prepared = 7;
+// int32 characterId = 7;
+inline void PlayerInfo::clear_characterid() {
+  characterid_ = 0;
+}
+inline ::google::protobuf::int32 PlayerInfo::characterid() const {
+  // @@protoc_insertion_point(field_get:GameProto.PlayerInfo.characterId)
+  return characterid_;
+}
+inline void PlayerInfo::set_characterid(::google::protobuf::int32 value) {
+  
+  characterid_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.PlayerInfo.characterId)
+}
+
+// bool prepared = 8;
 inline void PlayerInfo::clear_prepared() {
   prepared_ = false;
 }
@@ -1631,18 +1652,18 @@ inline void RoomInfo::set_allocated_mapname(::std::string* mapname) {
   // @@protoc_insertion_point(field_set_allocated:GameProto.RoomInfo.mapName)
 }
 
-// int32 roomIdx = 6;
-inline void RoomInfo::clear_roomidx() {
-  roomidx_ = 0;
+// int32 mapIdx = 6;
+inline void RoomInfo::clear_mapidx() {
+  mapidx_ = 0;
 }
-inline ::google::protobuf::int32 RoomInfo::roomidx() const {
-  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.roomIdx)
-  return roomidx_;
+inline ::google::protobuf::int32 RoomInfo::mapidx() const {
+  // @@protoc_insertion_point(field_get:GameProto.RoomInfo.mapIdx)
+  return mapidx_;
 }
-inline void RoomInfo::set_roomidx(::google::protobuf::int32 value) {
+inline void RoomInfo::set_mapidx(::google::protobuf::int32 value) {
   
-  roomidx_ = value;
-  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.roomIdx)
+  mapidx_ = value;
+  // @@protoc_insertion_point(field_set:GameProto.RoomInfo.mapIdx)
 }
 
 // string password = 7;

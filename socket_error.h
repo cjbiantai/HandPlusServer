@@ -6,6 +6,6 @@ class SocketError{
 	public:
 		static int epfd;
 		static ServerSync *sync;
-		static int Check(int ret,int sockfd);
-        static void Close(int sockfd);
+		static int Check(int ret,int sockfd,const char *str);
+        static void Close(int sockfd,const char *str);
 };

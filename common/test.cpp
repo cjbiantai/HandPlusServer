@@ -72,7 +72,7 @@ class Connection{
         bool Login(string account,string password){
             ClientMsg cmsg;
             PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
-            cmsg.set_type(LogIn);
+            cmsg.set_type(GameProto::Login);
             playerinfo->set_account(account);
             playerinfo->set_password(password);
             return SendMsg(cmsg);
@@ -82,7 +82,7 @@ class Connection{
             ClientMsg cmsg;
             PlayerInfo *playerinfo=cmsg.mutable_playerinfo();
             cmsg.set_type(EnterRoom);
-            playerinfo->set_uid(uid);
+            playerinfo->set_userid(uid);
             playerinfo->set_roomid(roomid);
             RoomInfo *roominfo=cmsg.mutable_roominfo();
             roominfo->set_maxplayers(room_max);
@@ -99,7 +99,11 @@ int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
 
-    Connection conn[N];
+    Connection conn;
+    conn.Connect();
+    conn.JoinRoom(1,1,1);
+
+    /*Connection conn[N];
     for(int i=0;i<N;i++){
         conn[i].Connect();
         conn[i].SendRand();
@@ -116,7 +120,7 @@ int main(int argc,char **argv){
         conn[i].Connect();
         conn[i].JoinRoom(1,atoi(argv[1]),1);
         conn[i].Close();
-    }
+    }*/
 
     /*ServerMsg smsg;
     conn.Connect();
