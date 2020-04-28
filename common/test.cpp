@@ -2,7 +2,7 @@
 #include<unistd.h>
 
 #define SIZE 1024
-#define N 10
+#define N 1000
 
 //#define IP "117.78.9.170"
 //#define PORT 17000
@@ -99,10 +99,6 @@ int main(int argc,char **argv){
     if(argc<2)
         return 0*printf("input port\n"); 
 
-    Connection conn;
-    conn.Connect();
-    conn.JoinRoom(1,1,1);
-
     /*Connection conn[N];
     for(int i=0;i<N;i++){
         conn[i].Connect();
@@ -129,12 +125,11 @@ int main(int argc,char **argv){
         cout<<smsg.type()<<endl;
     }*/
 
-    /*Connection conn[N];
-    int tot=N;
-    for(ll i=1;i<N;i++){
+    Connection conn[N];
+    for(int i=0;i<N;i++){
         conn[i].Connect();
-        conn[i].JoinRoom(i,i);
-    }*/
+        conn[i].JoinRoom(i,i,1);
+    }
     while(1);
     return 0;
 }

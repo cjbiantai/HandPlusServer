@@ -63,6 +63,9 @@ void Room::SendToAll(ServerMsg smsg){
 	smsg.SerializeToArray(sendbuf+HEADER_LEN,len);
 	int ret;
 	for(int i=0;i<players.size();i++){
+        if(players[i]==NULL){
+            printf("room player null, i: %d, room size: %d\n",i,players.size());
+        }
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 	    if(SocketError::Check(ret,players[i]->sockfd,"Room::SendToAll")<=0){
             printf("Room::SendToAll fail\n");

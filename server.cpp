@@ -49,10 +49,11 @@ Server::Server(int port,ServerSync *sync) {
 		printf("epoll_ctl listenfd error\n");
 		exit(0);
 	}
-    /*if(epoll_ctl(epfd,EPOLL_CTL_ADD,hallfd,&event)<0){
+	event.data.fd=hallfd;
+    if(epoll_ctl(epfd,EPOLL_CTL_ADD,hallfd,&event)<0){
         printf("epoll_ctl hallfd error\n");
         exit(0);
-    }*/
+    }
 	events=(struct epoll_event*)malloc(sizeof(event)*MAX_EVENTS);    
 }
 
