@@ -18,3 +18,4 @@
 #include <algorithm>
 #include <queue>
 
+#include "game_proto.pb.h"

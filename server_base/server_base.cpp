@@ -82,6 +82,7 @@ void serverBase::Work() {
             if(clientFd == -1) {
                 printf("accpet socket error: errno = %d, (%s)\n", errno,strerror(errno));
             }
+            printf("====================\n");
             HandleNetIp(inet_ntoa(server_addr.sin_addr), ntohs(server_addr.sin_port), clientFd);
             ev.data.fd = clientFd;
             ev.events = EPOLLIN;

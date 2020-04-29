@@ -96,17 +96,23 @@ public:
     void HandleSelectCharacter(GameProto::ClientMsg clientMsg, int clientFd);
 
     /**
-     * @brief 处理开始游戏事件
+     * @brief 处理准备开始游戏事件
      * @param clientMsg  反序列化的客户端发送的数据
      * @param clientFd 客户端fd
      */
-    void HandleStartGame(GameProto::ClientMsg clientMsg, int clientFd);
+    void HandlePrepareStartGame(GameProto::ClientMsg clientMsg, int clientFd);
     /**
-     * @brief 处理发送数据给单个客户端的情况
-     * @param serverMsg 未序列化的发给客户端的数据
-     * @param clientFd 客户端fd
+     * @brief 处理真正开始游戏事件
+     * @param s2SMsg 战斗服务器发的信息
      */
-    void HandleSendDataToClient(GameProto::ServerMsg serverMsg, int clientFd);
+    void HandleTrueStartGame(GameProto::S2SMsg s2SMsg);
+    /**
+     * @brief 处理发送数据
+     * @param symbol 包的类型
+     * @param msg 未序列化的发给目标的数据
+     * @param fd
+     */
+    void HandleSendData(int symbol, google::protobuf::Message &msg, int fd);
     /**
      * @brief 广播房间信息, 仅当房间信息改变了才会调用
      * @param roomid 
@@ -128,6 +134,7 @@ public:
     void Work();    
 
 private:
+    char logCache[1024];
     std::string tableName; //数据库表名
     int oneRoomMaxUsers, roomNumber, servicePressureLimit;      //单个房间最大的用户数量, 房间的最大数量, 服务器最大负载
     std::map<int, recvDataManager> c2SDataMap;                  //clientfd对应的缓冲区，处理沾包
@@ -144,5 +151,6 @@ private:
     std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
     std::map<std::string, int> addrFdMap;                       //地址到Fd的映射
     std::map<int, std::string> fdAddMap;                        //Fd到地址的映射
+    std::set<int> sFd;
 };
 

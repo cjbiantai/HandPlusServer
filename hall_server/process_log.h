@@ -67,6 +67,9 @@ typedef Singleton<Log> ProcessLog;
 
 #define SETTRACELEVEL ProcessLog::Instance().SetLogLevel
 
+#define LOGFORMAT "[file = %s][func = %s][line = %05d] Log:%s\n", __FILE__, __FUNCTION__, __LINE__ 
+
 
 // #endif
+
 
