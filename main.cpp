@@ -9,6 +9,7 @@
 int main(int argc,char **argv){
 	if(argc<2)
 		return 0*printf("input port\n");
+    srand(time(0));
 #ifdef HALLSERVER
 	ServerSync *sync=new HallSync();
 #endif

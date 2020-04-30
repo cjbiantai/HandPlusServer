@@ -89,6 +89,7 @@ void Room::Broadcast(){
 		*input=players[i]->input;
         input->set_userid(players[i]->uid);
 	}
+    frame.set_nonce(rand());
 	frames.push_back(frame);
 	SendToAll(frame);
     if(frames.size()>=1200){
