@@ -13,17 +13,13 @@ Player::Player(int sockfd){
 }
 
 void Player::JoinRoom(int uid,int room_id){
-#if DEBUG>1
-    cout<<"Player::JoinRoom"<<endl;
-#endif
+    LOG(2,"Player::JoinRoom");
 	this->uid=uid;
 	this->room_id=room_id;
 }
 
 int Player::SendMsg(ServerMsg *smsg){
-#if DEBUG>1
-    cout<<"Player::SendMsg"<<endl;
-#endif
+    LOG(2,"Player::SendMsg");
     return socketConn.SendMsg(smsg);
 }
 
@@ -32,9 +28,7 @@ void Player::Update(PlayerInput input){
 }
 
 int Player::Recv(){
-#if DEBUG>1
-    cout<<"Player::Recv"<<endl;
-#endif
+    LOG(2,"Player::Recv");
     return socketConn.Recv();
 }
 

@@ -1,5 +1,5 @@
-GameServer.out: common/all.h game_sync.o server.o main.o player.o room.o socket_error.o socket_connect.o hall_sync.o common/game_proto.pb.o
-	g++ -std=c++11 -g -o GameServer.out game_sync.o server.o main.o player.o room.o socket_error.o socket_connect.o hall_sync.o -lprotobuf common/game_proto.pb.o
+GameServer.out: common/all.h game_sync.o server.o main.o player.o room.o socket_error.o socket_connect.o hall_sync.o log_manager.o common/game_proto.pb.o
+	g++ -std=c++11 -g -o GameServer.out game_sync.o server.o main.o player.o room.o socket_error.o socket_connect.o hall_sync.o log_manager.o -lprotobuf common/game_proto.pb.o
 main.o: common/all.h main.cpp
 	g++ -std=c++11 -g -c main.cpp
 player.o:common/all.h  player.cpp
@@ -16,5 +16,7 @@ socket_connect.o: common/all.h socket_connect.cpp
 	g++ -std=c++11 -g -c socket_connect.cpp
 hall_sync.o: common/all.h hall_sync.cpp
 	g++ -std=c++11 -g -c hall_sync.cpp
+log_manager.o: common/log_manager.cpp
+	g++ -std=c++11 -g -c common/log_manager.cpp
 clean:
 	sudo rm *.o  GameServer.out

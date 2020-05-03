@@ -10,13 +10,11 @@ Room::Room(int max){
 }
 
 void Room::AddPlayer(Player *player){
-#if DEBUG>1
-    cout<<"Room::AddPlayer uid: "<<player->uid<<endl;
-#endif
+    LOG(2,"Room::AddPlayer uid");
 	players.push_back(player);
 	if(players.size()==max){
 		state=1;
-        printf("room_id %d: game start\n",player->room_id);
+        LOG(0,"room_id %d: game start",player->room_id);
 		//SendToAll(smsg); smsg game start state
 	}
 }
@@ -38,17 +36,17 @@ Player* Room::GetPlayer(int uid){
 }
 
 void Room::Reconnect(int uid,Player *player){
-    printf("uid: %d, fd: %d, roomid: %d, Room::Reconnect\n",uid,player->sockfd,player->room_id);
+    LOG(0,"uid: %d, fd: %d, roomid: %d, Room::Reconnect",uid,player->sockfd,player->room_id);
     DeletePlayer(uid);
     players.push_back(player);
     if(state==2){
-        printf("Room Reconnect fail, beyond 1 min limit\n");
+        LOG(0,"Room Reconnect fail, beyond 1 min limit");
         player->ReconnectFail();
         return;
     }
 	for(int i=0;i<frames.size();i++)
 		if(SocketError::Check(player->SendMsg(&frames[i]),player->sockfd,"Room::Reconnect")<=0){
-            printf("Room::Reconnect fail, send error\n");
+            LOG(0,"Room::Reconnect fail, send error");
 			return;
         }
 }
@@ -64,11 +62,11 @@ void Room::SendToAll(ServerMsg smsg){
 	int ret;
 	for(int i=0;i<players.size();i++){
         if(players[i]==NULL){
-            printf("room player null, i: %d, room size: %d\n",i,players.size());
+            LOG(0,"room player null, i: %d, room size: %d",i,players.size());
         }
 		ret=send(players[i]->sockfd,sendbuf,len+HEADER_LEN,0);
 	    if(SocketError::Check(ret,players[i]->sockfd,"Room::SendToAll")<=0){
-            printf("Room::SendToAll fail\n");
+            LOG(0,"Room::SendToAll fail");
             swap(players[i--],players[players.size()-1]);
             players.pop_back();
 	    }

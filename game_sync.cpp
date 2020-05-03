@@ -10,7 +10,6 @@ GameSync::~GameSync(){
 }
 
 void GameSync::RecvAndHandle(int sockfd){
-    //cout<<"RecvAndHandle"<<endl;
 	if(Recv(sockfd)<=0){
         SocketError::Close(sockfd,"GameSync::RecvAndHandle");
 		return;
@@ -19,26 +18,25 @@ void GameSync::RecvAndHandle(int sockfd){
 	while(Parse(sockfd,&cmsg)>0){
 		switch(cmsg.type()){
 			case EnterRoom:
-				printf("uid: %d, fd: %d, room_id: %d JoinRoom\n",cmsg.playerinfo().userid(),sockfd,cmsg.playerinfo().roomid());
+				LOG(0,"uid: %d, fd: %d, room_id: %d JoinRoom",cmsg.playerinfo().userid(),sockfd,cmsg.playerinfo().roomid());
 				JoinRoom(sockfd,cmsg.playerinfo().userid(),cmsg.playerinfo().roomid());
 				break;
 			case C2SSync:
-                //printf("uid: %d update\n",player[sockfd].uid);
+                //LOG(1,"uid: %d update",player[sockfd].uid);
 				Update(sockfd,cmsg.input());
 				break;
 			default:
-                printf("RecvAndHandle undefined message type, fd: %d\n",sockfd);
+                LOG(0,"RecvAndHandle undefined message type, fd: %d",sockfd);
 				return;
 		}
 	}
 }
 
 void GameSync::S2SRecvAndHandle(int sockfd){
-    //cout<<"S2SRecvAndHandle"<<endl;
     if(hall==NULL)
         hall=new HallSync(sockfd);
 	if(hall->Recv()<=0){
-        printf("hallfd recv error\n");
+        LOG(0,"hallfd recv error");
         SocketError::Close(sockfd,"GameSync::S2SRecvAndHandle");
 		return;
     }
@@ -48,13 +46,13 @@ void GameSync::S2SRecvAndHandle(int sockfd){
 	while(hall->Parse(&msg)>0){
 		switch(msg.type()){
 			case PrepareRoom:
-                printf("Room create, room_id: %d, room_max: %d\n",msg.roominfo().roomid(),msg.roominfo().maxplayers());
+                LOG(0,"Room create, room_id: %d, room_max: %d",msg.roominfo().roomid(),msg.roominfo().maxplayers());
                 room[msg.roominfo().roomid()]=Room(msg.roominfo().maxplayers());
                 p_roominfo->set_roomid(msg.roominfo().roomid());
                 hall->SendMsg(&send_msg);
 				break;
 			default:
-                printf("S2S undefined message type, fd: %d\n",sockfd);
+                LOG(0,"S2S undefined message type, fd: %d",sockfd);
 				return;
 		}
 	}
@@ -70,7 +68,7 @@ void GameSync::Broadcast(){
 
 void GameSync::Exit(int sockfd){
     Player *p_player=&player[sockfd];
-    printf("uid: %d,fd: %d, exit\n",p_player->uid,sockfd);
+    LOG(0,"uid: %d,fd: %d, exit",p_player->uid,sockfd);
     if(p_player->uid<0){
 	    player.erase(sockfd);
         return;
@@ -85,9 +83,10 @@ void GameSync::Exit(int sockfd){
 
 void GameSync::Print(){
     for(auto &r:room){
-        printf("room: %d\n",r.second.players[0]->room_id);
+        if(r.second.players.size()>0)
+            LOG(0,"room: %d",r.second.players[0]->room_id);
         for(auto &p:r.second.players)
-            printf("    uid: %d, fd: %d, room_id: %d\n",p->uid,p->sockfd,p->room_id);
+            LOG(0,"    uid: %d, fd: %d, room_id: %d",p->uid,p->sockfd,p->room_id);
     }
 }
 
@@ -97,7 +96,7 @@ int GameSync::GetRoomId(int sockfd){
 
 int GameSync::Recv(int sockfd){
 	if(!player.count(sockfd)){
-        printf("fd: %d connect\n",sockfd);
+        LOG(0,"fd: %d connect",sockfd);
 		player[sockfd]=Player(sockfd);
 	}
 	return player[sockfd].Recv();
@@ -105,12 +104,12 @@ int GameSync::Recv(int sockfd){
 
 int GameSync::Parse(int sockfd,ClientMsg *cmsg){
 	if(!player.count(sockfd)){
-		printf("player don't exist\n");
+		LOG(0,"player don't exist");
 		return -1;
 	}
 	int ret=player[sockfd].Parse(cmsg);
 	if(ret<0){
-		printf("uid: %d, kick off by server\n",player[sockfd].uid);
+		LOG(0,"uid: %d, kick off by server",player[sockfd].uid);
 		SocketError::Close(sockfd,"GameSync::Parse");
 	}
 	return ret;
@@ -123,11 +122,9 @@ void GameSync::Update(int sockfd,PlayerInput input){
 }
 
 void GameSync::JoinRoom(int sockfd,int uid,int room_id){
-#if DEBUG>1
-    cout<<"GameSync::JoinRoom"<<endl;
-#endif
+    LOG(1,"GameSync::JoinRoom");
     if(room_id<=0||uid<=0){
-        printf("uid: %d, fd: %d, room_id: %d,room_id and uid must above zero!\n",uid,sockfd,room_id);
+        LOG(0,"uid: %d, fd: %d, room_id: %d,room_id and uid must above zero!",uid,sockfd,room_id);
         SocketError::Close(sockfd,"GameSync::JoinRoom");
         return;
     }
@@ -144,12 +141,12 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
             SocketError::Close(p_last->sockfd,"GameSync::JoinRoom");
 	}
 	if(!room.count(room_id)){
-        printf("Room don't exist, uid: %d, sockfd: %d, room_id: %d\n",uid,sockfd,room_id);
+        LOG(0,"Room don't exist, uid: %d, sockfd: %d, room_id: %d",uid,sockfd,room_id);
         SocketError::Close(sockfd,"GameSync::JoinRoom");
         return;
     }
     if(room[room_id].state||room[room_id].max==room[room_id].players.size()){
-        printf("uid: %d, can't join room %d!\n",uid,room_id);
+        LOG(0,"uid: %d, can't join room %d!",uid,room_id);
         return;
     }
 	player[sockfd].JoinRoom(uid,room_id);

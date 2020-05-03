@@ -8,7 +8,7 @@ class Server {
 	    ServerSync *sync;
 	    struct epoll_event* events;
 	    struct timeval start,end;
-	    ll tick;
+	    ll tick,log_tick;
 	public:
 	    Server(int port,ServerSync *sync);
 	    ~Server();

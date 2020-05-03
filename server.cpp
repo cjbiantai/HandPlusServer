@@ -3,7 +3,7 @@
 Server::Server(int port,ServerSync *sync) {
     this->port=port;
     this->sync=sync;
-    tick=0;
+    tick=log_tick=0;
     
     listenfd=socket(AF_INET,SOCK_STREAM,0);
     if(listenfd==-1){
@@ -76,34 +76,36 @@ void Server::WorkOnce() {
    			len=sizeof(caddr);
    			sockfd=accept(listenfd,&caddr,&len);
    			if(sockfd==-1){
-   				printf("accept new sock error: %d\n",errno);
+   				LOG(0,"accept new sock error: %d\n",errno);
    				continue;
    			}
    			event.data.fd=sockfd;
    			event.events=EPOLLIN;
    			if(epoll_ctl(epfd,EPOLL_CTL_ADD,sockfd,&event)<0){
-   				printf("epoll_ctl new sock error,address :%s\n",caddr.sa_data);
+   				LOG(0,"epoll_ctl new sock error,address :%s\n",caddr.sa_data);
    				continue;
    			}
-   		}else if(events[i].data.fd==hallfd){
+   		}
+        else if(events[i].data.fd==hallfd){
             sync->S2SRecvAndHandle(hallfd);
-        }else{
+        }
+        else{
 	        sockfd=events[i].data.fd;
 	        sync->RecvAndHandle(sockfd);
    		}
    	}
    	gettimeofday(&end,NULL);
    	tick+=(end.tv_sec-start.tv_sec)*1000LL+(end.tv_usec-start.tv_usec)/1000;
+    log_tick+=end.tv_sec-start.tv_sec;
    	if(tick>=BROADCAST_RATE){
-#if DEBUG==1
-        printf("tick: %dms\n",tick);
-#endif
+        LOG(1,"tick: %dms\n",tick);
    		tick-=BROADCAST_RATE;
 	   	sync->Broadcast();
-#if DEBUG==1
+        //sync->Print();
+    }
+    if(log_tick>=600){
+        log_tick-=600;
         sync->Print();
-        cout<<endl;
-#endif
     }
 }
 
