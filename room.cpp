@@ -1,12 +1,13 @@
 #include"room.h"
 
 char Room::sendbuf[BUFFER_SIZE]={};
-int Room::serial_id=1;
+int Room::__serial_id=1;
 
 Room::Room(int max){
 	state=0;
 	this->max=max;
-    timestamp=serial_id++;
+    serial_id=__serial_id++;
+    timestamp=time(0);
 }
 
 void Room::AddPlayer(Player *player){

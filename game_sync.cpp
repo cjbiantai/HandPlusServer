@@ -65,8 +65,14 @@ void GameSync::S2SRecvAndHandle(int sockfd){
 
 void GameSync::Broadcast(){
 	map<int,Room>::iterator it;
+    Room *p_room;
+    ll now_time=time(0);
 	for(it=room.begin();it!=room.end();it++){
-		it->second.Broadcast();
+        p_room=&it->second;
+        if(p_room->players.size()==0&&now_time-p_room->timestamp>180)
+            room.erase(it);
+        else
+		    it->second.Broadcast();
     }
 }
 
@@ -135,8 +141,7 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
     int last_room=uid2room[uid].first;
 	if(last_room&&room.count(last_room)){
         Player *p_last=room[last_room].GetPlayer(uid);
-        if(last_room==room_id&&uid2room[uid].second==room[room_id].timestamp){
-            //cout<<uid2room[uid].second<<" "<<room[room_id].timestamp<<endl;
+        if(last_room==room_id&&uid2room[uid].second==room[room_id].serial_id){
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);
 		    return;
@@ -155,6 +160,6 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
     }
 	player[sockfd].JoinRoom(uid,room_id);
 	room[room_id].AddPlayer(&player[sockfd]);
-	uid2room[uid]={room_id,room[room_id].timestamp};
+	uid2room[uid]={room_id,room[room_id].serial_id};
 }
 

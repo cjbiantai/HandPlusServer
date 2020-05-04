@@ -6,9 +6,9 @@
 class Room{
 	private:
 		static char sendbuf[BUFFER_SIZE];
-        static int serial_id;
+        static int __serial_id;
 	public:
-		int max,state,timestamp;
+		int max,state,serial_id,timestamp;
 		vector<Player*> players;
 		vector<ServerMsg> frames;
 		Room(){}

@@ -20,6 +20,7 @@ int main(int argc,char **argv){
 #endif
     SocketError::sync=sync;
     Server server(atoi(argv[1]),sync);
+    DETAILLOG(0,"server start");
     while(true) {
         server.WorkOnce();
     }
