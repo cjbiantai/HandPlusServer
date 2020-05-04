@@ -46,8 +46,8 @@ void GameSync::S2SRecvAndHandle(int sockfd){
 	while(hall->Parse(&msg)>0){
 		switch(msg.type()){
 			case PrepareRoom:
-                LOG(0,"Room create, room_id: %d, room_max: %d",msg.roominfo().roomid(),msg.roominfo().maxplayers());
-                room[msg.roominfo().roomid()]=Room(msg.roominfo().maxplayers());
+                LOG(0,"Room create, room_id: %d, room_max: %d",msg.roominfo().roomid(),msg.roominfo().curplayernumber());
+                room[msg.roominfo().roomid()]=Room(msg.roominfo().curplayernumber());
                 p_roominfo->set_roomid(msg.roominfo().roomid());
                 hall->SendMsg(&send_msg);
 				break;
