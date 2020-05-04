@@ -46,6 +46,10 @@ void GameSync::S2SRecvAndHandle(int sockfd){
 	while(hall->Parse(&msg)>0){
 		switch(msg.type()){
 			case PrepareRoom:
+                if(room.count(msg.roominfo().roomid())){
+                    LOG(0,"S2SRecvAndHandle room_id: %d exist",msg.roominfo().roomid());
+                    break;
+                }
                 LOG(0,"Room create, room_id: %d, room_max: %d",msg.roominfo().roomid(),msg.roominfo().curplayernumber());
                 room[msg.roominfo().roomid()]=Room(msg.roominfo().curplayernumber());
                 p_roominfo->set_roomid(msg.roominfo().roomid());
