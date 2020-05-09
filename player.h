@@ -7,7 +7,7 @@ class Player{
 	private:
 		static unsigned char sendbuf[BUFFER_SIZE];
 		int len;
-		char unsigned buffer[BUFFER_SIZE<<1];
+		unsigned char buffer[BUFFER_SIZE<<1];
 	public:
         SocketConnect socketConn;
 		int uid,room_id,sockfd;

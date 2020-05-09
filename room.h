@@ -5,7 +5,7 @@
 
 class Room{
 	private:
-		static char sendbuf[BUFFER_SIZE];
+		static unsigned char sendbuf[BUFFER_SIZE];
         static int __serial_id;
 	public:
 		int max,state,serial_id,timestamp;

@@ -1,6 +1,6 @@
 #include"room.h"
 
-char Room::sendbuf[BUFFER_SIZE]={};
+unsigned char Room::sendbuf[BUFFER_SIZE]={};
 int Room::__serial_id=1;
 
 Room::Room(int max){
