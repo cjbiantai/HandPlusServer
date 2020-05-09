@@ -141,6 +141,8 @@ void GameSync::JoinRoom(int sockfd,int uid,int room_id){
     int last_room=uid2room[uid].first;
 	if(last_room&&room.count(last_room)){
         Player *p_last=room[last_room].GetPlayer(uid);
+        if(p_last==&player[sockfd])
+            return;
         if(last_room==room_id&&uid2room[uid].second==room[room_id].serial_id){
 		    player[sockfd].JoinRoom(uid,room_id);
 		    room[room_id].Reconnect(uid,&player[sockfd]);

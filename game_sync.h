@@ -9,8 +9,6 @@
 class GameSync:public ServerSync{
 	private:
         int len;
-        char buffer[BUFFER_SIZE];
-        char sendbuf[BUFFER_SIZE];
 		map<int,Player> player;	//fd2player
 		map<int,Room> room;
 		map<int,pii> uid2room;

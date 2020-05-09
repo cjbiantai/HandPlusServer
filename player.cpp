@@ -1,6 +1,6 @@
 #include"player.h"
 
-char Player::sendbuf[BUFFER_SIZE]={};
+unsigned char Player::sendbuf[BUFFER_SIZE]={};
 
 Player::Player(){
     uid=-1;
