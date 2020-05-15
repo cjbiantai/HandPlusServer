@@ -27,6 +27,7 @@ void GameSync::RecvAndHandle(int sockfd){
 				break;
 			default:
                 LOG(0,"RecvAndHandle undefined message type, fd: %d",sockfd);
+                Exit(sockfd);
 				return;
 		}
 	}

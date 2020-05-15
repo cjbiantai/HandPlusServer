@@ -20,7 +20,7 @@
 
 #define HEADER_LEN 5
 #define BROADCAST_RATE 50
-#define BUFFER_SIZE 2048
+#define BUFFER_SIZE 20480
 #define MAX_EVENTS 10000
 #define ROOM_MAX 1
 
