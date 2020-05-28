@@ -92,10 +92,6 @@ bool Config::LoadConfig(const char* pszFileName)
     childNode = node->first_node("sql_table");
     ParseStringValue(childNode, "table_name", tableName, "");
     
-    childNode = node->first_node("room");
-    ParseIntegerValue(childNode, "room_number", roomconfig.roomNumber, -1);
-    ParseIntegerValue(childNode, "room_max_user", roomconfig.roomMaxUser, -1);
-
     childNode = node->first_node("service");
     ParseIntegerValue(childNode, "service_pressure_limit", servicePressureLimit, -1);
 

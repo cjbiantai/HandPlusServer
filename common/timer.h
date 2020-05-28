@@ -1,16 +1,11 @@
 #pragma once
 #include "heads.h"
 
-class Timer
-{
+class TriggerEvent {
 public:
-    Timer();
-    bool WaitForMSeconds(long);
-    
-
+    long GetStartTime();
+    void Action();
 private:
-    struct timeval tv;
-    long timeStamp;
-    long GetMSecondsNow();
+    long startTime;
+    std::function<void()> action;
 };
-

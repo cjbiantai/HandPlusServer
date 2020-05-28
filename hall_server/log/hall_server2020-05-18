@@ -1,0 +1,2 @@
+[12:31:20][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 27.151.67.158, port = 42410, fd = 0
+[12:31:25][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 27.151.67.158, port = 42410, fd = 0

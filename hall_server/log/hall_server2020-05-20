@@ -1,0 +1,14 @@
+[07:10:40][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 79.124.62.254, port = 63960, fd = 0
+[07:10:40][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[07:10:40][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 79.124.62.254, port = 63960, fd = 0
+[14:40:05][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 198.108.67.48, port = 30878, fd = 0
+[14:40:05][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00024] Log:包不完整
+[14:40:06][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 198.108.67.48, port = 30878, fd = 0
+[14:40:07][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 198.108.67.48, port = 13234, fd = 0
+[14:40:07][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[14:40:07][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 198.108.67.48, port = 13234, fd = 0
+[14:40:07][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 198.108.67.48, port = 25684, fd = 0
+[14:40:07][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[14:40:07][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 198.108.67.48, port = 25684, fd = 0
+[14:40:57][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 80.82.77.139, port = 44528, fd = 0
+[14:41:01][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 80.82.77.139, port = 44528, fd = 0

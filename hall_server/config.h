@@ -3,15 +3,9 @@
 #include "../common/xml/rapidxml.hpp"
 #include "../common/xml/rapidxml_print.hpp"
 #include "../common/xml/rapidxml_utils.hpp"
-#include "room_info.h"
 #include "service_mgr.h"
 #include <string>
 #include <vector>
-
-struct roomConfig {
-    int roomNumber;
-    int roomMaxUser;
-};
 
 struct serviceConfig {
     std::string ip;
@@ -32,7 +26,6 @@ public:
 public:
     int hallPort,servicePressureLimit;
     std::string tableName;
-    roomConfig roomconfig;
     std::vector<serviceConfig> serviceConfigs;
 };
 

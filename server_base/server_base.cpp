@@ -77,10 +77,11 @@ void serverBase::Work() {
         }
         if(events[i].data.fd == server_fd) {
             memset(&server_addr, 0, sizeof(server_addr));
-            int lenth;
-            int clientFd = accept(server_fd, (struct sockaddr*)&server_addr, (socklen_t *)&lenth);
+            int length;
+            int clientFd = accept(server_fd, (struct sockaddr*)&server_addr, (socklen_t *)&length);
             if(clientFd == -1) {
                 printf("accpet socket error: errno = %d, (%s)\n", errno,strerror(errno));
+                continue;
             }
             printf("====================\n");
             HandleNetIp(inet_ntoa(server_addr.sin_addr), ntohs(server_addr.sin_port), clientFd);
@@ -92,7 +93,7 @@ void serverBase::Work() {
                 continue;
             }
         }else {
-            int clientFd = events[i].data.fd,ret;
+            int clientFd = events[i].data.fd, ret;
             ret = recv(clientFd, bData.GetBuffArray(), BUFF_SIZE, 0);
             if(ret > 0) {
                 HandleEvent(clientFd, ret);
@@ -117,6 +118,7 @@ void serverBase::Work() {
 void serverBase::SendDataToClient(int clientFd, int length) {
     int ret = send(clientFd, bData.GetBuffArray(), length, 0);
     if(ret == -1) {
+        TRACE_WARN("send to client error : clientFd = %d, errno = %d, (%s)\n", clientFd, errno, strerror(errno));
         printf("send to client error: clientFd = %d, errno = %d, (%s)\n", clientFd, errno, strerror(errno));
         HandleClose(clientFd);
         close(clientFd);

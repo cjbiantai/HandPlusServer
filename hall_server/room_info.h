@@ -11,6 +11,7 @@ public:
     ~roomInfo(){}
 
     void GetProto(GameProto::RoomInfo &roominfo) {
+        roominfo.set_roomname(roomName);
         roominfo.set_roomid(rid);
         roominfo.set_roundtime(roundTime);
         roominfo.set_roundnumber(roundNumber);
@@ -20,6 +21,16 @@ public:
         roominfo.set_maxplayers(maxPlayers);
         roominfo.set_masteruid(master);
         roominfo.set_curplayernumber(Players.size());
+    }
+
+    void SetFromProto(GameProto::RoomInfo roominfo) {
+        roundTime = roominfo.roundtime();
+        roundNumber = roominfo.roundnumber();
+        roomName = roominfo.roomname();
+        mapName = roominfo.mapname();
+        mapIdx = roominfo.mapidx();
+        password = roominfo.password();
+        maxPlayers = roominfo.maxplayers();
     }
 
     int rid;                                 //房间Id

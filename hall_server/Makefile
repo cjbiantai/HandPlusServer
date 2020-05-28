@@ -1,6 +1,6 @@
-Server:*.cpp ../common/log/*.cpp ../server_base/*.cpp ../common/game_proto.proto ../common/mysql/mysql.cpp ../common/*.cpp
-	protoc -I=../common/ --cpp_out=../common/ ../common/game_proto.proto 
-	g++ -g -std=c++11 *.cpp ../common/log/*.cpp ../server_base/*.cpp ../common/game_proto.pb.cc ../common/mysql/mysql.cpp ../common/*.cpp `mysql_config --cflags --libs` -o server -lprotobuf
+erver:*.cpp ../common/log/*.cpp ../server_base/*.cpp ../common/game_proto.proto ../common/mysql/mysql.cpp ../common/*.cpp
+		protoc -I=../common/ --cpp_out=../common/ ../common/game_proto.proto 
+		g++ -g -std=c++11 *.cpp ../common/log/*.cpp ../server_base/*.cpp ../common/game_proto.pb.cc ../common/mysql/mysql.cpp ../common/*.cpp `mysql_config --cflags --libs` -o server -lprotobuf
 
 .PHONY clean:
-	rm -rf *.o
+		rm -rf *.o

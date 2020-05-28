@@ -1,0 +1,16 @@
+[01:31:22][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 188.124.36.157, port = 42955, fd = 0
+[01:31:22][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 188.124.36.157, port = 42955, fd = 0
+[01:31:26][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 188.124.36.157, port = 43092, fd = 0
+[01:31:35][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[01:31:35][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 188.124.36.157, port = 43092, fd = 0
+[01:31:35][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 188.124.36.157, port = 52819, fd = 0
+[01:31:35][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[01:31:35][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 188.124.36.157, port = 52819, fd = 0
+[01:55:53][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 92.53.64.187, port = 51261, fd = 0
+[01:55:53][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 92.53.64.187, port = 51261, fd = 0
+[01:55:53][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 92.53.64.187, port = 51411, fd = 0
+[01:55:53][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[01:55:53][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 92.53.64.187, port = 51411, fd = 0
+[01:55:53][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 92.53.64.187, port = 51709, fd = 0
+[01:55:53][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[01:55:53][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 92.53.64.187, port = 51709, fd = 0

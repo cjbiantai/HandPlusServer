@@ -1,0 +1,696 @@
+[00:14:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:14:36][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:	472813016123456"AASkull
+[00:14:36][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 472813016, the uid is 15
+[00:14:36][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[00:14:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:14:43][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 43
+[00:14:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:14:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:14:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:14:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[00:18:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:18:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:	472813016123456"AASkull
+[00:18:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 472813016, the uid is 16
+[00:18:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[00:18:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:18:41][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 46
+[00:18:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:18:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:18:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:18:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[00:19:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:19:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:	472813016123456"AASkull
+[00:19:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 472813016, the uid is 17
+[00:19:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[00:19:14][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:19:14][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 49
+[00:19:14][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:19:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:19:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:19:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[00:20:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:20:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:	472813016123456"AASkull
+[00:20:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 472813016, the uid is 18
+[00:20:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[00:20:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:20:58][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 52
+[00:20:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:20:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:21:00][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[00:21:00][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[10:51:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[10:51:17][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[10:51:17][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 19
+[10:51:17][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[10:51:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[10:51:24][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 55
+[10:51:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[10:51:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[10:51:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[10:51:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[13:28:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:28:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[13:28:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 20
+[13:28:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[13:28:11][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:28:11][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 58
+[13:28:11][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:28:12][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:28:12][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:28:12][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[13:32:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:32:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:22"2
+[13:32:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 2, the uid is 21
+[13:32:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[13:32:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:32:46][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 61
+[13:32:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:32:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:32:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[13:32:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:01:56][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:01:56][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:01:56][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 22
+[14:01:56][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:01:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:01:58][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 64
+[14:01:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:01:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:01:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:01:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:05:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:05:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:05:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 23
+[14:05:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:05:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:05:18][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 67
+[14:05:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:05:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:05:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:05:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:08:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:08:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:08:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 24
+[14:08:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:08:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:08:08][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 70
+[14:08:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:08:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:08:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:08:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:09:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:09:40][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:09:40][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 25
+[14:09:40][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:09:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:09:43][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 73
+[14:09:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:09:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:09:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:09:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:18:34][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:18:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:18:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 26
+[14:18:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:18:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:18:37][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 76
+[14:18:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:18:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:18:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:18:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:19:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:19:58][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:19:58][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 27
+[14:19:58][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:20:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:20:04][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 79
+[14:20:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:20:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:20:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:20:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:23:02][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:23:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 28
+[14:23:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:23:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:04][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 82
+[14:23:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:06][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:3333"33
+[14:23:06][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 33, the uid is 29
+[14:23:06][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:23:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:23:13][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:13][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 85
+[14:23:13][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:14][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:23:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:27:57][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:27:57][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:27:57][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 30
+[14:27:57][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:27:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:27:59][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 88
+[14:27:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:00][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:01][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:01][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:28:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:28:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 31
+[14:28:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:28:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:50][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 91
+[14:28:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:28:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:32:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:32:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:32:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 32
+[14:32:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:32:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:32:19][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 94
+[14:32:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:32:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:32:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:32:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:42:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:42:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[14:42:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 33
+[14:42:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:42:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:42:48][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 97
+[14:42:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:42:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:42:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:42:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:47:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:47:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:47:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 34
+[14:47:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:47:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:47:21][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 100
+[14:47:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:47:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:47:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:47:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:51:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[14:51:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 35
+[14:51:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:51:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:07][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 103
+[14:51:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:51:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[14:51:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 36
+[14:51:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:51:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:55][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 106
+[14:51:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:56][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:57][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:51:57][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:52:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[14:52:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 37
+[14:52:07][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:52:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:09][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 109
+[14:52:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:10][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:10][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:10][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:52:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:22"2
+[14:52:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 2, the uid is 38
+[14:52:16][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:52:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:18][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 112
+[14:52:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:52:32][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:32][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:33"3
+[14:52:32][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 3, the uid is 39
+[14:52:32][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:52:34][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:34][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 115
+[14:52:34][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:35][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:35][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:52:35][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[14:54:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:54:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[14:54:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 40
+[14:54:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[14:54:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:54:17][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 118
+[14:54:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:54:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:54:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[14:54:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:00:01][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:00:01][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[15:00:01][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 41
+[15:00:01][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:00:03][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:00:03][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 121
+[15:00:03][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:00:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:00:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:00:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:03:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:03:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[15:03:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 42
+[15:03:48][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:03:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:03:51][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 124
+[15:03:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:03:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:03:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:03:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:04:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:04:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:04:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 43
+[15:04:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:04:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:04:30][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 127
+[15:04:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:04:31][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:04:32][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:04:32][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:05:43][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:05:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:1111"11
+[15:05:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 11, the uid is 44
+[15:05:43][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:05:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:05:45][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 130
+[15:05:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:05:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:05:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:05:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:08:02][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:08:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:08:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 45
+[15:08:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:08:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:08:05][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 133
+[15:08:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:08:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:08:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:08:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:09:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:09:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:09:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 46
+[15:09:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:09:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:09:53][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 136
+[15:09:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:09:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:09:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:09:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:20:23][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:20:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:20:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 47
+[15:20:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:20:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:20:27][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 139
+[15:20:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:20:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:20:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:20:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:23:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:23:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:23:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 48
+[15:23:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:23:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:23:24][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 142
+[15:23:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:23:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:23:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:23:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:24:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:24:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:24:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 49
+[15:24:04][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:24:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:24:06][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 145
+[15:24:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:24:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:24:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:24:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:44:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:44:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 50
+[15:44:19][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:44:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:22][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 148
+[15:44:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:23][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:44:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:44:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 51
+[15:44:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:44:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:49][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 151
+[15:44:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:44:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[15:45:35][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:45:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[15:45:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 52
+[15:45:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[15:45:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:45:37][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 154
+[15:45:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:45:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:45:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[15:45:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:02:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:02:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:02:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 53
+[16:02:05][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:02:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:02:07][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 157
+[16:02:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:02:08][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:02:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:02:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:14:54][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00028] Log:错误包， 强制关闭连接
+[16:46:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:46:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:46:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 54
+[16:46:47][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:46:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:46:49][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 160
+[16:46:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:46:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:46:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:46:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:47:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:47:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:47:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 55
+[16:47:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:47:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:47:44][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 163
+[16:47:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:47:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:47:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:47:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:49:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:49:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:49:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 56
+[16:49:37][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:49:39][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:49:39][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 166
+[16:49:39][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:49:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:49:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:49:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:53:35][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:53:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:53:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 57
+[16:53:35][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:53:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:53:37][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 169
+[16:53:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:53:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:53:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:53:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:57:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:57:26][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:57:26][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 58
+[16:57:26][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:57:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:57:30][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 172
+[16:57:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:57:31][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:57:31][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:57:32][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[16:58:39][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:58:39][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[16:58:39][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 59
+[16:58:39][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[16:58:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:58:41][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 175
+[16:58:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:58:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:58:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[16:58:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:02:02][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:02:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:02:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 60
+[17:02:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:02:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:02:04][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 178
+[17:02:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:02:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:02:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:02:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:04:03][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:04:03][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:04:03][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 61
+[17:04:03][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:04:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:04:06][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 181
+[17:04:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:04:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:04:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:04:07][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:05:13][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:05:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:05:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 62
+[17:05:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:05:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:05:16][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 184
+[17:05:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:05:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:05:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:05:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:15:13][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:15:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 63
+[17:15:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:15:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:15][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 187
+[17:15:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:16][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:15:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:38][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:15:38][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 64
+[17:15:38][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:15:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:40][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 190
+[17:15:40][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:15:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:18:23][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:18:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:18:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 65
+[17:18:23][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:18:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:18:25][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 193
+[17:18:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:18:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:18:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:18:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:25:02][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:25:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:25:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 66
+[17:25:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:25:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:25:04][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 196
+[17:25:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:25:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:25:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:25:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[17:29:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:29:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[17:29:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 67
+[17:29:45][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[17:29:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:29:48][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 199
+[17:29:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:29:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:29:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[17:29:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[18:03:44][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:44][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:03:44][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 68
+[18:03:44][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:03:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:46][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 202
+[18:03:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:03:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:05:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 69
+[18:05:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:05:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:45][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 204
+[18:05:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:45][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:46][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:05:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:02][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:22"2
+[18:06:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 2, the uid is 70
+[18:06:02][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:06:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:04][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 206
+[18:06:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:05][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:25][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:06:25][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 71
+[18:06:25][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:06:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:27][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 208
+[18:06:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:06:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:07:34][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:07:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:07:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 72
+[18:07:34][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:07:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:07:36][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 210
+[18:07:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:07:37][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:07:38][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:20][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:08:20][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 73
+[18:08:20][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:08:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:25][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 212
+[18:08:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:25][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:08:34][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:10][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:10][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:19:10][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 74
+[18:19:10][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:19:17][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:17][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 214
+[18:19:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:19:41][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:42][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[18:24:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 75
+[18:24:42][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[18:24:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:49][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 216
+[18:24:49][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:52][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[18:24:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:06:54][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:06:54][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:0000"00
+[19:06:54][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 00, the uid is 76
+[19:06:54][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[19:06:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:06:58][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 218
+[19:06:58][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:06:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:00][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:10][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:23][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:26][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 220
+[19:07:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[19:07:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[21:14:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 77
+[21:14:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[21:14:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:21][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 222
+[21:14:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:14:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[21:15:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:15:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[21:15:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 78
+[21:15:22][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[21:15:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:15:26][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 225
+[21:15:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:15:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:15:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:15:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[21:51:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:51:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[21:51:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 79
+[21:51:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[21:51:29][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:51:29][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 228
+[21:51:29][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:51:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:51:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:51:30][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1
+[21:55:12][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:12][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:11"1
+[21:55:12][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 1, the uid is 80
+[21:55:12][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[21:55:13][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00132] Log:22"2
+[21:55:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00185] Log:new login, the account is 2, the uid is 81
+[21:55:13][detail][file = hall_server.cpp][func = HandleLogIn][line = 00191] Log:返回登录信息 登录成功
+[21:55:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:15][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00262] Log:创建房间成功 房间id= 231
+[21:55:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:19][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 0
+[21:55:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00050] Log:headerType is 1

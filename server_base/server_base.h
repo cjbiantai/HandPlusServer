@@ -1,6 +1,7 @@
 #pragma once
 #include "../common/consts.h"
 #include "../common/heads.h"
+#include "../hall_server/process_log.h"
 #include "base_data.h"
 
 class serverBase {

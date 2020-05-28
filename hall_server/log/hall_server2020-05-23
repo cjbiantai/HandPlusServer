@@ -1,0 +1,103 @@
+[02:05:33][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23488, fd = 6
+[02:05:51][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:05:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:3333"33
+[02:05:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is 33, the uid is 1
+[02:05:51][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[02:05:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:05:55][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00279] Log:创建房间成功 房间id= 1 房间名= 食尸鬼峡谷
+[02:05:55][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:05:57][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:07][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23422, fd = 7
+[02:06:18][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:333333"333
+[02:06:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is 333, the uid is 2
+[02:06:18][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[02:06:20][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:21][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:22][detail][file = hall_server.cpp][func = HandleExitRoom][line = 00376] Log:ok
+[02:06:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:28][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00279] Log:创建房间成功 房间id= 3 房间名= 食尸鬼峡谷
+[02:06:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:29][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:31][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:31][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:32][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:33][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:06:33][detail][file = hall_server.cpp][func = HandlePrepareStartGame][line = 00444] Log:开始游戏 房间id = 3 人数 = 2 roomid = 3
+[02:06:33][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 1
+[02:06:33][detail][file = hall_server.cpp][func = HandleTrueStartGame][line = 00461] Log:HandleTrueStartGame roomid = 3
+[02:06:34][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 3
+[02:06:34][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 3
+[02:17:48][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23425, fd = 6
+[02:17:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:17:48][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:17:48][detail][file = hall_server.cpp][func = HandleReLogIn][line = 00493] Log:new RelogIn Come account = 333, NickName = 333
+[02:17:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:17:50][detail][file = hall_server.cpp][func = HandleExitRoom][line = 00376] Log:ok
+[02:17:54][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:ok
+[05:38:12][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 48612, fd = 6
+[05:38:20][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 48612, fd = 6
+[05:38:20][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 51398, fd = 6
+[05:38:28][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 51398, fd = 6
+[05:38:28][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 54304, fd = 6
+[05:38:28][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[05:38:28][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 54304, fd = 6
+[05:38:28][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 54560, fd = 6
+[05:38:28][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[05:38:28][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 54560, fd = 6
+[05:38:28][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 54580, fd = 6
+[05:38:36][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 54580, fd = 6
+[05:38:36][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 42.240.133.87, port = 56922, fd = 6
+[05:38:36][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[05:38:36][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 42.240.133.87, port = 56922, fd = 6
+[11:47:41][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23336, fd = 6
+[11:49:14][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:49:14][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:333333"333
+[11:49:14][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is 333, the uid is 3
+[11:49:14][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[11:50:16][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23232, fd = 7
+[11:50:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:50:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:3333"33
+[11:50:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is 33, the uid is 4
+[11:50:27][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[11:50:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:50:36][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00279] Log:创建房间成功 房间id= 10 房间名= 食尸鬼峡谷
+[11:50:36][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:51:47][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:52:09][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:52:11][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[11:52:11][detail][file = hall_server.cpp][func = HandlePrepareStartGame][line = 00444] Log:开始游戏 房间id = 10 人数 = 2 roomid = 10
+[11:52:11][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 1
+[11:52:11][detail][file = hall_server.cpp][func = HandleTrueStartGame][line = 00461] Log:HandleTrueStartGame roomid = 10
+[11:52:11][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 10
+[11:52:12][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 10
+[18:45:32][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 36.19.58.186, port = 16131, fd = 6
+[21:36:40][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23345, fd = 7
+[21:36:45][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 101.84.160.34, port = 23110, fd = 8
+[21:36:50][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:36:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:3333"33
+[21:36:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is 33, the uid is 5
+[21:36:50][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[21:36:53][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:36:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:
+[21:36:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is , the uid is 6
+[21:36:53][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[21:36:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:36:59][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00279] Log:创建房间成功 房间id= 15 房间名= 食尸鬼峡谷
+[21:36:59][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:01][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:01][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:03][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:04][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[21:37:06][detail][file = hall_server.cpp][func = HandlePrepareStartGame][line = 00444] Log:开始游戏 房间id = 15 人数 = 2 roomid = 15
+[21:37:06][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 1
+[21:37:06][detail][file = hall_server.cpp][func = HandleTrueStartGame][line = 00461] Log:HandleTrueStartGame roomid = 15
+[21:37:06][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 15
+[21:37:06][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 15

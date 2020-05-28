@@ -106,6 +106,8 @@ public:
      * @param s2SMsg 战斗服务器发的信息
      */
     void HandleTrueStartGame(GameProto::S2SMsg s2SMsg);
+    void HandleResultSync(GameProto::S2SMsg s2SMsg);
+    void HandleReLogIn(GameProto::ClientMsg clientMsg, int clientFd);
     /**
      * @brief 处理发送数据
      * @param symbol 包的类型
@@ -131,12 +133,13 @@ public:
      *@param fd 
      */
     void HandleNetIp(char* addr, int port, int fd);
+
     void Work();    
 
 private:
     char logCache[1024];
     std::string tableName; //数据库表名
-    int oneRoomMaxUsers, roomNumber, servicePressureLimit;      //单个房间最大的用户数量, 房间的最大数量, 服务器最大负载
+    int servicePressureLimit;      //单个房间最大的用户数量, 房间的最大数量, 服务器最大负载
     std::map<int, recvDataManager> c2SDataMap;                  //clientfd对应的缓冲区，处理沾包
     std::map<int, int> fdUserMap;                               //clientfd 到玩家uid的映射
     std::map<int, int> userFdMap;                               //玩家uid到clientfd的映射
@@ -145,12 +148,15 @@ private:
     std::map<int, std::string> uidAccountMap;                   //用户uid到账号的映射
     std::map<int, GameProto::PlayerInfo> userInfoMap;                      //用户uid到用户信息的映射
     std::set<int> onlineUsers;                                  //在线用户uid集合
-    std::set<int> inHallUsers;                                  //未进入房间的用户uid集合
     std::set<std::string> loginAccount;                         //所有已登录的账号集合
     std::set<service_mgr> serviceList;                          //存放战斗服务器信息
     std::map<std::string, int> accountRoomMap;                  //账号到房间号的映射
     std::map<std::string, int> addrFdMap;                       //地址到Fd的映射
     std::map<int, std::string> fdAddMap;                        //Fd到地址的映射
     std::set<int> sFd;
+    std::set<int> onPrepareRoom;
+
+    std::map<int, int>startedUserRoomMap;
+    std::map<int, roomInfo> startedRoomMap;
 };
 

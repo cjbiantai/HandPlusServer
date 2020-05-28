@@ -1,5 +1,5 @@
 #include "timer.h"
-
+/*
 
 Timer::Timer()
 {
@@ -23,3 +23,4 @@ bool Timer::WaitForMSeconds(long uSeconds)
     timeStamp = GetMSecondsNow();
     return true;
 }
+*/

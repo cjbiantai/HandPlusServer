@@ -1,0 +1,19 @@
+[02:12:12][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 27.151.67.158, port = 42180, fd = 0
+[02:12:15][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00139] Log:
+[02:12:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00202] Log:new login, the account is , the uid is 53
+[02:12:15][detail][file = hall_server.cpp][func = HandleLogIn][line = 00208] Log:返回登录信息 登录成功
+[02:12:22][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:24][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:26][detail][file = hall_server.cpp][func = HandleCreateRoom][line = 00279] Log:创建房间成功 房间id= 144 房间名= 食尸鬼峡谷
+[02:12:26][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:27][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 0
+[02:12:28][detail][file = hall_server.cpp][func = HandlePrepareStartGame][line = 00444] Log:开始游戏 房间id = 144 人数 = 1 roomid = 144
+[02:12:28][detail][file = hall_server.cpp][func = HandleEvent][line = 00049] Log:headerType is 1
+[02:12:28][detail][file = hall_server.cpp][func = HandleTrueStartGame][line = 00461] Log:HandleTrueStartGame roomid = 144
+[02:12:28][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:HandleTrueStartGame roomid = 144
+[15:29:38][detail][file = hall_server.cpp][func = HandleNetIp][line = 00062] Log:new connect come addr = 185.202.1.187, port = 65374, fd = 0
+[15:29:38][[33mwarning[0m][file = hall_server.cpp][func = HandleEvent][line = 00027] Log:错误包， 强制关闭连接
+[15:29:38][detail][file = hall_server.cpp][func = HandleClose][line = 00610] Log:new connect come addr = 185.202.1.187, port = 65374, fd = 0
