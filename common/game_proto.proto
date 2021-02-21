@@ -1,0 +1,53 @@
+syntax="proto3";
+package GameProto;
+
+message Position{
+	float x=1;
+	float y=2;
+	float z=3;
+}
+
+//玩家状态
+message PlayerState{
+	int32 fid=1;
+	string name=2;
+	float yaw=3;
+	Position pos=4;
+	int32 state=5;
+}
+
+//玩家一次操作
+message PlayerInput{
+	string name=1;
+	float torque=2;
+	bool grasp=3;
+	bool attach=4;
+}
+
+//客户端数据包
+//登录：type=0,name,password
+//注册：type=1,name,password
+//进房间：type=2,name,id=room_id
+//同步：type=3,input
+//追帧：type=4,name,id=fid
+message ClientMsg{
+	int32 type=1;
+	string name=2;
+	string password=3;
+	int32 id=4;
+	PlayerInput input=5;
+}
+
+//服务器数据包
+//登录成功：code=0,str=ip:port
+//注册成功：code=0
+//进房间成功：code=0,fid=房间人数
+//登录，注册，进房间失败：code=1,str
+//同步：code=2,fid,inputs,(states?)
+message ServerMsg{
+	int32 code=1;
+	int32 fid=2;
+	string str=3;
+	repeated PlayerInput inputs=4;
+	repeated PlayerState states=5;
+}

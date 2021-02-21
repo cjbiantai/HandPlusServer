@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<process log_level="-1">
+    <testnode test_int="333" test_string="wocalei"/>
+    <test_array name="test1" age="66"/>
+    <test_array name="test2" age="666"/>
+</process>
